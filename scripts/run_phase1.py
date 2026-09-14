@@ -18,6 +18,7 @@ Run scripts/download_data.py first so data/*.csv exist.
 
 import csv
 import os
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeoutError
 import time
 from pathlib import Path
 
@@ -34,6 +35,40 @@ RESULTS_PATH = RESULTS_DIR / "phase1_raw.csv"
 
 SEED = 42  # fixed so repeated runs sample the same tasks
 
+# Hard wall-clock ceiling per call. The openai SDK's own `timeout=` only
+# bounds a single HTTP attempt -- it does NOT bound time spent sleeping
+# between retries (e.g. honoring a server-sent Retry-After on a 429), which
+# is what actually caused this run to hang for 40+ minutes on a single
+# deepseek-flash/zh call. Running each call in its own thread and giving up
+# on the future after this many seconds bounds it regardless of what the
+# SDK is doing internally. The underlying thread is abandoned, not killed
+# (Python has no clean way to kill a thread) -- acceptable here since we
+# only care about forward progress and an accurate error row, not reclaiming
+# that thread.
+#
+# 120s, uniform across every dataset (not just GAIA). An earlier 30s value
+# was cutting off genuine GAIA responses mid-flight (successful GAIA calls
+# measured mean=18.2s/median=17.4s/max=29.5s -- right against that wall).
+# One generous ceiling for everything, rather than tuning per-dataset,
+# avoids re-doing this exercise for any slow outlier in MAPS/Math or MGSM
+# and avoids treating datasets differently for a parameter that isn't part
+# of the frozen design. See docs/methodology-notes.md.
+HARD_TIMEOUT_S = 120
+
+
+def call_model_with_hard_timeout(model_name: str, provider: str, question: str) -> dict:
+    # A fresh single-use executor per call, not a shared persistent one --
+    # a shared max_workers=1 pool would permanently wedge on the first hang
+    # (its one worker never frees up), silently blocking every call after
+    # it forever. shutdown(wait=False) lets a hung thread be abandoned
+    # instead of blocking us on cleanup too.
+    executor = ThreadPoolExecutor(max_workers=1)
+    future = executor.submit(call_model, model_name, provider, question)
+    try:
+        return future.result(timeout=HARD_TIMEOUT_S)
+    finally:
+        executor.shutdown(wait=False)
+
 # --- Frozen config (pre_registration.md Section 1) ---------------------
 
 MODELS = [
@@ -41,11 +76,20 @@ MODELS = [
     {"name": "deepseek-flash", "provider": "deepseek"},
 ]
 
-# TODO (Step 3): fill in with today's per-token pricing, $ per 1M tokens.
-# Do not run Step 4 until both are filled in -- see the assertion below.
+# Pulled 2026-09-14. $ per 1M tokens.
+# gpt-5.6-luna:   https://developers.openai.com/api/docs/models/gpt-5.6-luna
+#                 (cached input is $0.02/1M -- not modeled here, Phase 1 calls
+#                 aren't expected to hit cache in a controlled way)
+# deepseek-flash: https://deepseek.ai/pricing (DeepSeek-V4-Flash). Cache-miss
+#                 input rate used as the baseline ($0.0028/1M cache-hit rate
+#                 not modeled, same reasoning as above). Site explicitly notes
+#                 the announced peak-hour surcharge is NOT currently active --
+#                 several aggregator sites (pricepertoken.com, benchlm.ai,
+#                 layer3labs.io) disagree and list an active 2x peak surcharge;
+#                 went with the official page over those.
 PRICES = {
-    "gpt-5.6-luna": {"input_per_1m": None, "output_per_1m": None},
-    "deepseek-flash": {"input_per_1m": None, "output_per_1m": None},
+    "gpt-5.6-luna": {"input_per_1m": 0.20, "output_per_1m": 1.20},
+    "deepseek-flash": {"input_per_1m": 0.14, "output_per_1m": 0.28},
 }
 
 MGSM_LANGS = ["en", "es", "zh"]  # 'ar' dropped -- see Amendments Log
@@ -73,12 +117,14 @@ def get_client(provider: str) -> OpenAI:
             key = os.getenv("OPENAI_API_KEY")
             if not key:
                 raise RuntimeError("OPENAI_API_KEY not set (see .env)")
-            _clients[provider] = OpenAI(api_key=key)
+            _clients[provider] = OpenAI(api_key=key, timeout=60.0, max_retries=2)
         elif provider == "deepseek":
             key = os.getenv("DEEPSEEK_API_KEY")
             if not key:
                 raise RuntimeError("DEEPSEEK_API_KEY not set (see .env)")
-            _clients[provider] = OpenAI(api_key=key, base_url="https://api.deepseek.com")
+            _clients[provider] = OpenAI(
+                api_key=key, base_url="https://api.deepseek.com", timeout=60.0, max_retries=2
+            )
         else:
             raise ValueError(f"unknown provider: {provider}")
     return _clients[provider]
@@ -142,8 +188,33 @@ def append_row(row: dict):
         writer.writerow(row)
 
 
+def _row_key(model_name, dataset, subset, language, task_id, repeat_index):
+    return (model_name, dataset, subset, language, str(task_id), repeat_index)
+
+
+def load_completed_keys() -> set:
+    """Rows already logged with no error, so a re-run after an interrupted
+    batch doesn't repeat (and re-bill) successful calls."""
+    if not RESULTS_PATH.exists():
+        return set()
+    df = pd.read_csv(RESULTS_PATH)
+    done = df[df["error"].isna()]
+    keys = set()
+    for _, r in done.iterrows():
+        subset = None if pd.isna(r["subset"]) else r["subset"]
+        keys.add(_row_key(r["model"], r["dataset"], subset, r["language"], r["task_id"], r["repeat_index"]))
+    return keys
+
+
+_completed = load_completed_keys()
+
+
 def run_one(model: dict, dataset: str, subset: str, language: str,
             task_id, repeat_index: int, question: str, expected_answer: str):
+    key = _row_key(model["name"], dataset, subset, language, task_id, repeat_index)
+    if key in _completed:
+        return
+
     row = {
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "model": model["name"],
@@ -166,7 +237,7 @@ def run_one(model: dict, dataset: str, subset: str, language: str,
         "error": None,
     }
     try:
-        result = call_model(model["name"], model["provider"], question)
+        result = call_model_with_hard_timeout(model["name"], model["provider"], question)
         row["model_answer"] = result["answer_text"]
         row["prompt_tokens"] = result["prompt_tokens"]
         row["completion_tokens"] = result["completion_tokens"]
@@ -175,10 +246,15 @@ def run_one(model: dict, dataset: str, subset: str, language: str,
         row["truncated"] = result["finish_reason"] == "length"
         row["cost_usd"] = cost_usd(model["name"], result["prompt_tokens"], result["completion_tokens"])
         row["correct"] = is_correct(result["answer_text"], expected_answer)
+    except FutureTimeoutError:
+        row["latency_s"] = HARD_TIMEOUT_S
+        row["error"] = f"Hard timeout: no response within {HARD_TIMEOUT_S}s (thread abandoned)"
     except Exception as e:
-        row["error"] = str(e)
+        row["error"] = f"{type(e).__name__}: {e}"
 
     append_row(row)
+    if row["error"] is None:
+        _completed.add(key)
 
 
 # --- MGSM run block ----------------------------------------------------
@@ -241,6 +317,25 @@ def run_maps_block():
 
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--models", type=str, default=None,
+        help="Comma-separated model names to run (default: all). "
+             "E.g. --models gpt-5.6-luna to skip a model that's temporarily "
+             "unavailable -- the resumable design means the rest can be "
+             "filled in later without redoing this pass.",
+    )
+    args = parser.parse_args()
+    if args.models:
+        wanted = {m.strip() for m in args.models.split(",")}
+        unknown = wanted - {m["name"] for m in MODELS}
+        if unknown:
+            raise SystemExit(f"--models: unknown model(s) {unknown}, expected subset of {[m['name'] for m in MODELS]}")
+        MODELS[:] = [m for m in MODELS if m["name"] in wanted]
+        print(f"Running with models restricted to: {[m['name'] for m in MODELS]}")
+
     run_mgsm_block()
     run_maps_block()
     print(f"\nDone. Results -> {RESULTS_PATH}")
