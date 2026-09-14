@@ -1,0 +1,1710 @@
+problem,solution,level,type
+"Für jede positive Ganzzahl $k$ bezeichne $S_k$ die **steigende** arithmetische Folge von Ganzzahlen, deren erster Term 1 und deren gemeinsame Differenz $k$ ist. Beispielsweise ist $S_3$ die Folge $1, 4, 7, \ldots$. Für wie viele Werte von $k$ enthält $S_k$ die Zahl $2005$ als Term?","The general term of the sequence is $a_n = 1 + kn$, where $a_0 = 1$ is the first term. Therefore, we want $1 + kn = 2005$, or $kn = 2004$. We see that this equation has a solution for $n$ if and only if $k$ is a divisor of $2004$. Since $2004 = 2^2 \cdot 3 \cdot 167$, the number of positive divisors of $2004$ is $(2+1)(1+1)(1+1) = \boxed{12}$.",Level 5,Algebra
+"Angenommen, $x$ und $y$ sind reelle Zahlen, die die Gleichungen 
+\begin{align*}
+4y - 4x^2 &= 1 \\
+4x - 4y^2 &= 1
+\end{align*}
+erfüllen. Was ist $\dfrac{1}{x^3 + y^3}$?","The equations are equivalent to  \begin{align*}
+4x^2 - 4y + 1 &= 0, \\
+4y^2 - 4x + 1 &= 0.
+\end{align*} Summing these equations gives $$4x^2 - 4y + 1 + 4y^2 - 4x + 1 =0,$$ or $$(4x^2 - 4x + 1) + (4y^2 - 4y + 1) = 0.$$ Factoring the squares of binomials gives $$(2x - 1)^2 + (2y-1)^2 = 0.$$ Since squares are always non-negative, it follows that $$2x - 1 = 2y-1 = 0,$$ so $x = y = \frac 12$. The desired answer is $\frac{1}{\frac 18 + \frac 18} = \boxed{4}$.",Level 5,Algebra
+"Die Gleichung des Kreises, der durch den Punkt $(-1,6)$ verläuft und dessen Mittelpunkt bei $(2,3)$ liegt, kann in der Form $x^2 + y^2 + Ax + By + C = 0$ geschrieben werden. Gesucht ist das Produkt $A \times B \times C$.","As the center of the circle is at the point $(2,3)$, and one point on the circle is at the point $(-1,6)$, by the distance formula, the radius of the circle is $\sqrt{(2-(-1))^2 + (3-6)^2} = \sqrt{3^2 + 3^2} = \sqrt{18}$. The equation of the circle is then given by $(x -2)^2 + (y-3)^2 = 18$, and expanding, $$x^2 - 4x + 4 + y^2 - 6y + 9 - 18 = 0 \Longrightarrow x^2 + y^2 - 4x - 6y - 5 = 0.$$ Thus, $A\times B\times C= -4\times -6\times -5= \boxed{-120}$.",Level 5,Algebra
+"Der Graph der Gleichung $y = ax^2 + bx - 6$ liegt vollständig unterhalb der $x$-Achse. Wenn $a^2 = 49$, was ist der größtmögliche ganzzahlige Wert von $b$?","Since the parabola is completely below the $x$-axis, it must open downwards (otherwise, it would have to cross the $x$ axis on its way up). This means $a<0$. We have $a^2=49$ so $a=\pm7$, but since $a$ is negative $a=-7$.
+
+Since our graph does not touch the $x$-axis, we must not have any real solutions. Since all solutions must be imaginary, the discriminant must be negative, or \begin{align*}
+b^2-4ac&<0\quad\Rightarrow\\
+b^2-4(-7)(-6)&<0\quad\Rightarrow\\
+b^2-168&<0\quad\Rightarrow\\
+b^2&<168.
+\end{align*} This means that $-\sqrt{168}<b<\sqrt{168}$. The largest integral value of $b$ is the greatest integer less than $\sqrt{168}$. Since $13^2=169$, we know $\sqrt{168}$ is a little less than $13$ but more than $12$. So the greatest integral value of $b$ is $\boxed{12}$.",Level 5,Algebra
+"Wenn $x - y = 6$ und $x^2 + y^2 = 24$, berechnen Sie $x^3 - y^3$.","First, we note  \[x^3-y^3 = (x-y)(x^2 +xy +y^2) = 6(24+xy),\] so we just need to find $xy$ now.  Squaring both sides of $x-y=6$ gives  $$x^2 - 2xy + y^2 = 36.$$ Since $x^2 + y^2 = 24$, we have $24-2xy = 36$, so $xy = -6$, from which we have  \[x^3-y^3 = 6(24 +xy) = 6(24 - 6) = 6(18) = \boxed{108}.\]",Level 5,Algebra
+"Angenommen, $f(x)$ ist ein Polynom vom Grad $6$ und $g(x)$ ist ein Polynom vom Grad $3$. Wenn $h(x)$ ebenfalls ein Polynom ist, sodass $f(g(x)) + g(h(x)) + h(f(x))$ ein Polynom vom Grad $36$ ist, welchen Grad hat dann das Polynom $h$?","Consider two arbitrary polynomials $p(x)$ and $q(x)$ with highest degree terms $x^n$ and $x^m$, respectively. Then $p(q(x)) = (q(x))^n + \cdots = (x^m + \cdots)^n + \cdots = x^{mn} + \cdots$ is a polynomial of degree $mn$. It follows that $f(g(x))$ is a polynomial of degree $18$. Then, either $g(h(x))$ or $h(f(x))$ must be a polynomial of degree $36$. This gives that the degree of $h(x)$ is either $12$ or $6$, but in the former case, the degree of $h(f(x))$ would be $72$. Thus, the degree of $h$ is $\boxed{6}$.",Level 5,Algebra
+"Wenn $a+b=7$ und $a^3+b^3=42$, wie ist dann der Wert der Summe $\dfrac{1}{a}+\dfrac{1}{b}$? Geben Sie Ihre Antwort als gewöhnlichen Bruch an.","Cube both sides of $a+b=7$ to find \[
+a^3+3a^2b+3ab^2+b^3=343.
+\] Substitute 42 for $a^3+b^3$ and factor $3ab$ out of the remaining two terms. \begin{align*}
+42+3ab(a+b)&=343 \implies \\
+3ab(a+b)&=301 \implies \\
+3ab(7)&=301 \implies \\
+3ab&=43 \implies \\
+ab&=\frac{43}{3}.
+\end{align*} Finally, $\frac{1}{a}+\frac{1}{b}=\frac{a+b}{ab}=\frac{7}{43/3}=\boxed{\frac{21}{43}}$.",Level 5,Algebra
+"Sei $f(x)=\left\lfloor\left(-\frac{5}{8}\right)^x\right\rfloor$ eine Funktion, die für alle Werte von $x$ in $[0,\infty)$ definiert ist, sodass $f(x)$ eine reelle Zahl ist. Wie viele verschiedene Werte gibt es im Bereich von $f(x)$?","Since $-\frac58$ is a negative number, $f(x)$ is only defined for integer values of $x$, and will alternate between positive and negative values. Additionally, $\left|-\frac58\right|< 1$, so $|f(x)|$ will continually decrease and approach 0 as $x$ increases in the interval $x\ge0$. Therefore, the largest positive value will occur at $x=0$, giving us the positive upper bound of $\left\lfloor\left(-\frac58\right)^0\right\rfloor=1$. The negative value that is greatest in magnitude then occurs at the next integer value of $x$: $x=1$, giving us the negative lower bound of $\left\lfloor\left(-\frac58\right)^1\right\rfloor=-1$. This tells us that $-1 \le f(x) \le 1$. Since the $f(x)$ must be an integer, the only possible distinct values contained in the range are -1, 0, and 1. This gives us a total of $\boxed{3}$ values of $f(x)$ when $x\ge0$.",Level 5,Algebra
+"Die Parabel mit der Gleichung $y=ax^2+bx+c$ und dem Scheitelpunkt $(h,k)$ wird an der Linie $y=k$ gespiegelt. Daraus ergibt sich die Parabel mit der Gleichung $y=dx^2+ex+f$. Was ist der Wert von $a+b+c+d+e+f$ in Bezug auf $k$?","We can rewrite the equation of the original parabola as $y=f(x)=a(x-h)^2+k$ (for some $a$). After reflection of the parabola, the equation becomes $y=g(x)=-a(x-h)^2+k$. Notice that $f(x)+g(x)=2k$. Since $f(1)=a+b+c$ and $g(1)=d+e+f$, we have $a+b+c+d+e+f=f(1)+g(1)=\boxed{2k}$.",Level 5,Algebra
+Für wie viele ganzzahlige Werte von $a$ hat die Gleichung $x^2 + ax + 5a = 0$ ganzzahlige Lösungen für $x$?,"Suppose the roots of the quadratic are given by $m$ and $n$. Note that $$(x-m)(x-n) = x^2 - (m+n)x + mn = x^2 + ax + 5a,$$ and setting coefficients equal, it follows that  \begin{align*}
+m + n &= -a \\
+mn &= 5a
+\end{align*} (This also follows directly from Vieta's formulas.) Notice that the $a$ can be canceled by either dividing or noting that $$0 = 5a + 5 \cdot (-a) = mn + 5(m+n).$$
+
+Simon's Favorite Factoring Trick can now be applied: $$mn + 5m + 5n + 25 = (m+5)(n+5) = 25.$$ It follows that $m+5$ and $n+5$ are divisors of $25$, whose pairs of divisors are given by $\pm \{(1,25),(5,5),(25,1)\}$. Solving, we see that $(m,n)$ is in the set $$\{(-4,20),(0,0),(20,-4),(-6,-30),(-10,-10),(-30,-6)\}.$$ However, the two pairs of symmetric solutions yield redundant values for $a$, so it follows that the answer is $\boxed{4}$.",Level 5,Algebra
+"Jane hat zwei Bakterienfarmen gezüchtet. 
+
+Die Bakterienfarm **Rod** hat eine Anfangspopulation von **2 Bakterien**, während die Bakterienfarm **Sphere** eine Anfangspopulation von **8 Bakterien** hat. Jane beginnt jedoch mit dem Anbau von **Rod** **fünf Stunden** bevor sie mit dem Anbau von **Sphere** beginnt.
+
+Um **20 Uhr** überprüft Jane ihre Farmen und stellt fest, dass sie genau die gleiche Population haben. Wenn sich die Population von **Rod** stündlich verdoppelt, die von **Sphere** jedoch stündlich vervierfacht, **vor wie vielen Stunden** hat sie dann mit dem Anbau von **Sphere** begonnen?","Let $x$ denote the number of hours Sphere has been growing. We can express this problem as an exponential equation, as follows: $$2^{x+6} = 2\cdot 4^{x+1}.$$Now, since $4 = 2^2$, we have $2\cdot 4^{x+1} = 2\cdot (2^2)^{x+1} = 2\cdot 2^{2x+2} = 2^{2x + 3}$, which means our equation is: $$2^{x + 6} = 2^{2x + 3}.$$Then, we set the exponents equal to each other, and obtain $$x + 6 = 2x + 3.$$Solving for $x$, we get $\boxed{x = 3}$.",Level 5,Algebra
+Krista legte an einem Sonntagmorgen 1 Cent in ihre neue Spardose. Am Montag legte sie 2 Cent ein. Am Dienstag legte sie 4 Cent ein und verdoppelte den Betrag täglich für zwei Wochen. An welchem Wochentag überstieg der Gesamtbetrag in ihrer Spardose erstmals $\$5$?,"If $n$ days have passed since Sunday, then the total number of cents in her bank account is $1+2+\cdots+2^n$. This is a geometric series with first term 1, common ratio 2 and $n+1$ terms. Hence the sum is: $$1+2+\cdots+2^n = \frac{1-2^{n+1}}{1-2} = 2^{n+1}-1.$$If this is greater than $500$ (i.e. if the total amount of money in the account is more than $\$5$) then $2^{n+1}-1\ge 500$, so $2^{n+1}\ge 501$. The smallest power of 2 that is greater than 501 is $2^9$. Thus the first time there is more than $\$5$ in the bank account occurs after $n=8$ days. This is 8 days away from Sunday, so the day of the week is $\boxed{\text{Monday}}$.",Level 5,Algebra
+"Wenn $\left(\sqrt[4]{11}\right)^{3x-3}=\frac{1}{5}$, wie lautet dann der Wert von $\left(\sqrt[4]{11}\right)^{6x+2}$? Geben Sie Ihre Antwort als Bruch an.","We rewrite $\left(\sqrt[4]{11}\right)^{6x+2}$ and then substitute the given equation: \begin{align*}
+\left(\sqrt[4]{11}\right)^{6x+2}&=\left(\sqrt[4]{11}\right)^{6x-6}\cdot \left(\sqrt[4]{11}\right)^{8}\\
+&=\left(\left(\sqrt[4]{11}\right)^{3x-3}\right)^2\cdot\left(11^{1/4}\right)^{8}\\
+&=\left(\frac{1}{5}\right)^2\cdot11^{(8/4)}\\
+&=\frac{1}{25}\cdot121\\
+&=\boxed{\frac{121}{25}}
+\end{align*}",Level 5,Algebra
+"Finden Sie das Produkt der $y$-Koordinaten aller unterschiedlichen Lösungen $(x,y)$ für die beiden Gleichungen $y=x^2-8$ und $y^2=-5x+44$.","Squaring $y=x^2-8$, we obtain $y^2=x^4-16x^2+64$. Setting the right-hand sides equal to each other, we find \begin{align*}
+-5x+44&=x^4-16x^2+64\quad\Rightarrow\\
+0&=x^4-16x^2+5x+20\quad\Rightarrow\\
+&=x^2(x^2-16)+5(x+4)\quad\Rightarrow\\
+&=x^2(x-4)(x+4)+5(x+4)\quad\Rightarrow\\
+&=(x+4)(x^3-4x^2+5).
+\end{align*} Therefore, one of the solutions has an $x$-value of $-4$. Then there is the polynomial $x^3-4x^2+5$. The only possible rational roots are now $\pm1$ and $\pm5$. Using synthetic or long division, it can be determined that $(x+1)$ is a factor: \[(x+1)(x^2-5x+5)=x^3-4x^2+5\] Therefore, one of the solutions has an $x$-value of $-1$. Because $x^2-5x+5$ does not factor easily, we use the quadratic formula to get \begin{align*}
+x&=\frac{5\pm\sqrt{25-4\cdot1\cdot5}}{2}\quad\Rightarrow\\
+&=\frac{5\pm\sqrt{5}}{2}.
+\end{align*} The four values for $x$ are then $-4, -1, \frac{5\pm\sqrt{5}}{2}$. Squaring each: \[(-4)^2=16\] \[(-1)^2=1\] \[\left(\frac{5+\sqrt{5}}{2}\right)^2=\frac{25+10\sqrt{5}+5}{4}=\frac{15+5\sqrt{5}}{2}\] \[\left(\frac{5-\sqrt{5}}{2}\right)^2=\frac{25-10\sqrt{5}+5}{4}=\frac{15-5\sqrt{5}}{2}\] And subtracting $8$: \[16-8=8\] \[1-8=-7\] \[\frac{15+5\sqrt{5}}{2}-\frac{16}{2}=\frac{-1+5\sqrt{5}}{2}\] \[\frac{15-5\sqrt{5}}{2}-\frac{16}{2}=\frac{-1-5\sqrt{5}}{2}\] Therefore, the four solutions are $$(-4,8),(-1,-7),$$ $$\left(\frac{5+\sqrt{5}}{2},\frac{-1+5\sqrt{5}}{2}\right),\left(\frac{5-\sqrt{5}}{2},\frac{-1-5\sqrt{5}}{2}\right).$$
+
+Multiplying the $y$-coordinates: \[8\cdot-7\cdot\frac{-1+5\sqrt{5}}{2}\cdot\frac{-1-5\sqrt{5}}{2}=\frac{-56(1-25\cdot5)}{4}=\boxed{1736}.\]",Level 5,Algebra
+"Die dargestellten Kreise setzen sich unendlich fort und haben Durchmesser von 16 Zoll, 8 Zoll, 4 Zoll usw. Der Durchmesser jedes Kreises ist halb so groß wie der des vorherigen Kreises. Wie viele Quadratzoll beträgt die Summe der Flächen aller Kreise? Geben Sie Ihre Antwort auf die nächste ganze Zahl gerundet an.
+
+[asy]
+size(200); import geometry; import olympiad; import graph;
+real radius = 8.0;
+real center = 0.0;
+for(int i = 0; i < 20; ++i){
+  if (i == 0) {
+    radius = 8.0;
+    center = radius;
+  } else {
+    radius = radius / 2.0;
+    center = center + radius;
+  }
+  draw(Circle((center,0.0),radius));
+  center += radius;
+}
+[/asy]","The radii of the circles form a geometric sequence with first term $\frac{16}{2} = 8$ and common ratio $\frac12$. Therefore the radius of the $n^{th}$ circle is $8\left(\frac{1}{2}\right)^{n-1}$. The area of the $n^{th}$ circle is thus $\pi\left[8\left(\frac{1}{2}\right)^{n-1}\right]^2 = 64\pi\left(\frac14\right)^{n-1}$.
+
+The sum of the areas of all the circles is therefore: $$A = 64\pi+16\pi+4\pi+1\pi+\frac{1}{4}\pi\cdots.$$This is an infinite geometric series with first term $64\pi$ and common ratio $\frac14$, so it's sum is: $$A=\frac{64\pi}{1-\frac14}=\frac{256\pi}{3}$$Using the approximation $\pi\approx\frac{22}{7} = 3.1428\ldots$ this is approximately: $$A\approx\frac{256}{3}\cdot\frac{22}{7} = \frac{5632}{21}\approx\boxed{268}.$$",Level 5,Algebra
+"Es gibt die Zahlen $A$ und $B$, für die 
+\[\frac{A}{x-1} + \frac{B}{x+1} = \frac{x+2}{x^2-1}\]
+für jede Zahl $x \neq \pm 1$ gilt. Finden Sie $B$.","We can approach this problem by picking clever values for $x$.  If $x=-2$ we get  \[\frac A{-2-1}+\frac B{-2+1}=0,\] so \[A+3B=0.\]
+
+If $x=0$ we get  \[\frac A{0-1}+\frac B{0+1}=\frac{0+2}{0^2-1},\] or  \[-A+B=-2.\] To solve for $B$ we add these two expressions: \[4B=-2,\] so $B=\boxed{-\frac12}$.",Level 5,Algebra
+Lassen Sie $f(x) = \sqrt{x}$ und $g(x) = x^2$. Finden Sie $f(g(f(g(f(8))))).$,"We can evaluate this the hard way, or we can see that $g(f(8)) = (\sqrt{8})^2 = 8$. Therefore, $f(g(f(g(f(8))))) = f(g(f(8))) = f(8) = \sqrt{8} = \boxed{2\sqrt{2}}.$",Level 5,Algebra
+Ermitteln Sie die Summe der Quadrate der Lösungen von $2x^2+4x-1=0$.,"We use the fact that the sum and product of the roots of a quadratic equation $ax^2+bx+c = 0$ are given by $-b/a$ and $c/a$, respectively. Letting the solutions to the given equation be $p$ and $q$, we have $p+q = -4/2 = -2$ and $pq = -1/2$, so the answer is $p^2+q^2 = (p+q)^2-2pq=(-2)^2-2(-1/2) = \boxed{5}$.",Level 5,Algebra
+"Eric und Charles denken sich jeweils ein quadratisches Polynom aus. Zu ihrer Überraschung beginnen beide Polynome mit $x^2 + 4x + \cdots$. Das Verhältnis der Diskriminante $b^2 - 4ac$ von Erics Polynom zur Diskriminante von Charles' Polynom ist gleich dem Verhältnis des konstanten Terms von Charles' Polynom zum konstanten Term von Erics Polynom. Wenn ihre konstanten Terme nicht gleich sind, berechnen Sie die Summe der konstanten Terme.","Let the constant term of Charles's quadratic be $c$, and the constant term of Eric's quadratic be $d$. Then Charles's discriminant is $(4)^2-4(1)(c)=16-4c$, and Eric's discriminant is $(4)^2-4(1)(d)=16-4d$. We're given that $$\frac{\text{Discriminant}_{\text{Eric}}}{\text{Discriminant}_{\text{Charles}}}=\frac{\text{Constant}_{\text{Charles}}}{\text{Constant}_{\text{Eric}}},$$or $\frac{16-4d}{16-4c}=\frac{c}{d}$. Cross multiplying gives  \begin{align*}
+d(16-4d)&=c(16-4c)\quad\Rightarrow\\
+16d-4d^2&=16c-4c^2\quad\Rightarrow\\
+4c^2-4d^2&=16c-16d\quad\Rightarrow\\
+4(c+d)(c-d)&=16(c-d).
+\end{align*}Since $c\neq d$, we know that $c-d\neq 0$, so we can cancel this term to find  \begin{align*}
+4(c+d)&=16\quad\Rightarrow\\
+c+d&=4.
+\end{align*}Thus the sum of Eric's and Charles's constant terms is $\boxed{4}$.",Level 5,Algebra
+"Wie viele nicht kongruente rechtwinklige Dreiecke gibt es, deren Seiten alle positive ganzzahlige Längen haben und bei denen eine der Katheten (d. h. nicht die Hypotenuse) die Länge $162$ hat?","Let $x$ be the length of the hypotenuse, and let $y$ be the length of the other leg.  Then we have $x^2-y^2=162^2$.  Factoring both sides gives $(x+y)(x-y)=(2\times3^4)^2=2^2\times3^8$.  A pair of positive integers $(x,y)$ gives a solution to this equation if and only if $(x+y)$ and $(x-y)$ are factors whose product is $2^2*3^8$.  For positive integers $a$ and $b$, the equations $x+y=a$ and $x-y=b$ have positive integer solutions if and only if  $a-b$ is an even positive integer.  Thus if $ab=2^2*3^8$ and the difference between $a$ and $b$ is even, then we get a valid triangle with $x+y=a$ and $x-y=b$.  Since $ab$ is even, at least one of the factors is even, and since their difference is even, the other must be as well.  Since $x+y>x-y$ we have $a>b$ i.e. $a>2\times3^4.$  Since the prime factorization of $a$ must have exactly one $2$, the choices for $a$ that give valid triangles are $2\times3^5,2\times3^6,2\times3^7,2\times3^8.$  Thus there are $\boxed{4}$ valid triangles.",Level 5,Algebra
+"Für wie viele dreielementige Mengen (Reihenfolge ist egal) positiver ganzer Zahlen $\{a, b, c\}$ gilt $a \times b \times c = 2310$? (Die positiven ganzen Zahlen $a, b$ und $c$ sind verschieden.)","The prime factorization of $2310$ is $2310 = 2 \cdot 3 \cdot 5 \cdot 7 \cdot 11.$ Therefore, we have the equation \[ abc = 2310 = 2 \cdot 3 \cdot 5 \cdot 7 \cdot 11,\]where $a, b, c$ must be distinct positive integers and order does not matter. There are $3$ ways to assign each prime number on the right-hand side to one of the variables $a, b, c,$ which gives $3^5 = 243$ solutions for $(a, b, c).$ However, three of these solutions have two $1$s and one $2310,$ which contradicts the fact that $a, b, c$ must be distinct. Because each prime factor appears only once, all other solutions have $a, b, c$ distinct. Correcting for this, we get $243 - 3 = 240$ ordered triples $(a, b, c)$ where $a, b, c$ are all distinct.
+
+Finally, since order does not matter, we must divide by $3!,$ the number of ways to order $a, b, c.$ This gives the final answer, \[\frac{240}{3!} = \frac{240}{6} = \boxed{40}.\]",Level 5,Counting & Probability
+"Drei Paare gehen ins Kino. Sie möchten die Personen so platzieren, dass jeder neben seinem oder ihrer Partnerin sitzt, um den Kinobesuch maximal zu genießen, doch stattdessen reihen sie sich zufällig in eine Reihe mit sechs Sitzen ein. Wie hoch ist die Wahrscheinlichkeit, dass sie in einer sozial optimalen Konfiguration sitzen, in der jeder neben seinem oder ihrer Partnerin sitzt?","There are $\binom{6}{2} = 15$ ways to pick people to fill the first two seats, and 3 ways for those two people to be a couple, for a probability $3/15 = 1/5$ that the first two seats are a couple. If a couple is seated successfully, there are $\binom{4}{2} = 6$ ways to seat people in the next two seats, and 2 ways for those two people to be a couple (you could pick either of the two remaining couples), for a probability $2/6 = 1/3$ that those two seats are a couple. If the first two couples are seated successfully, the last two seats will be guaranteed to go to the last couple. So, the probability that everything goes right is $1/5 \cdot 1/3 = \boxed{\frac{1}{15}}$.",Level 5,Counting & Probability
+"Ein Senatsausschuss besteht aus 5 Demokraten, 5 Republikanern und 1 Unabhängigen. Auf wie viele Arten können sie sich um einen runden Tisch setzen, wenn alle Mitglieder jeder Partei nebeneinander sitzen? (Zwei Sitzordnungen gelten als gleich, wenn eine eine Rotation der anderen ist.)","Choose any seat in which to place the Independent -- it doesn't matter which seat that we choose, since we can rotate the table. Once the Independent's seat has been chosen, either all the Democrats sit to their left and all the Republicans sit to their right, or the other way around. Either way, there are $5!$ ways to put the Democrats in their seats, and $5!$ ways to put the Republicans in their seats. So, the total number of ways to seat the people around the table is $2\cdot5!\cdot5!=2\cdot120\cdot120=\boxed{28800}$.",Level 5,Counting & Probability
+"Angenommen, $*(n) = \left\{ n-2, n+2, 2n, \frac{n}{2} \right\}$. Zum Beispiel $*(6) = \{4, 8, 12, 3\}$. Für wie viele verschiedene Ganzzahlen $n$ hat $*(n)$ genau drei verschiedene Elemente?","To have three distinct elements, two of $n-2$, $n+2$, $2n$, and $\frac{n}{2}$ must be equal. It is clear that $n-2$ can never equal $n+2$. However, any other equality pairing among the four is possible, so we simply check for distinctness. If $2n = \frac{n}{2}$, the solution is $n= 0$. If $n+ 2 = 2n$, $n = 2$. If $n - 2 = 2n$, $n = -2$. If $\frac{n}{2} = n - 2$, $n = 4$. Finally, if $\frac{n}{2} = n+ 2$, $n = -4$. Thus, there are $\boxed{5}$ such $n$.",Level 5,Counting & Probability
+"Annie und Xenas treffen jeweils zu einer zufälligen Zeit zwischen 14:00 und 16:00 Uhr auf einer Party ein. Jede bleibt 45 Minuten und geht dann. Wie hoch ist die Wahrscheinlichkeit, dass Annie und Xenas sich auf der Party sehen?","We let the $x$ axis represent the time Annie arrives, and the $y$ axis represent the time Xenas arrives.
+
+[asy]
+defaultpen(.7);
+
+draw((0,0)--(120,0), Arrow);
+draw((0,0)--(0,120), Arrow);
+label(""2:00"", (0,0), SW);
+label(""2:45"", (0,45), W);
+label(""3:15"", (120,75), E);
+label(""2:45"", (45,0), S);
+label(""4:00"", (120,0), S);
+label(""4:00"", (0,120), W);
+fill((0,0)--(45,0)--(120,75)--(120,120)--(75,120)--(0,45)--cycle, gray(.7));
+draw((120,0)--(120,120)--(0,120),dashed);
+[/asy]
+
+The shaded region represents the times that Annie and Xenas would see each other at the party.  For example, if Annie arrived at 2:00, Xenas could arrive at any time between 2:00 and 2:45 and see Annie at the party.  Let one hour equal one unit.  Then, we can calculate the area of the shaded region as the area of the entire square minus the areas of the two unshaded triangles.  This equals $$2\cdot \frac{1}{2} \cdot \frac{5}{4} \cdot \frac{5}{4}=\frac{25}{16}.$$ So the area of the shaded region is $$4-\frac{25}{16}=\frac{64-25}{16}= \frac{39}{16}.$$ Since the area of the square is 4, the probability that Annie and Xenas see each other at the party is $$\dfrac{39/16}{4} = \boxed{\dfrac{39}{64}}.$$",Level 5,Counting & Probability
+"Bob spielt ein Spiel, bei dem er für eine Zahl $n$ eine zufällige Ganzzahl zwischen 0 und $n-1$ (einschließlich) wählt. Wenn Bob dieses Spiel für jede der ersten vier Primzahlen spielt, wie hoch ist dann die Wahrscheinlichkeit, dass die Summe der Zahlen, die er erhält, größer als 0 ist?","The first four primes are 2, 3, 5, and 7. The only way for the sum of the numbers Bob gets to not be greater than 0 is if he gets a 0 each time he plays the game. The chance that Bob will get a 0 each time he plays is $\frac{1}{2}\cdot \frac{1}{3} \cdot \frac{1}{5} \cdot \frac{1}{7}=\frac{1}{210}$. Therefore, the probability that Bob will not get all 0's is $1-\frac{1}{210}=\boxed{\frac{209}{210}}$.",Level 5,Counting & Probability
+"Ein reguläres Dodekaeder ist ein konvexes Polyeder mit 12 regelmäßigen Fünfeckflächen und 20 Eckpunkten. Wenn zwei unterschiedliche Eckpunkte zufällig ausgewählt werden, wie hoch ist die Wahrscheinlichkeit, dass die sie verbindende Gerade innerhalb des Dodekaeders liegt?","There are a total of $\dbinom{20}{2}=190$ ways to choose two distinct vertices.  When the line is drawn connecting these vertices, some will correspond to edges or face diagonals, and the rest will lie inside the dodecahedron. Each of the 12 pentagonal faces has 5 edges.  This makes a total of $5\cdot12=60$ edges.  This counts each edge twice, once for each adjacent face, so there are only $60/2=30$ edges.  Each of the 12 pentagonal faces also has $5$ face diagonals.  This can be seen by drawing out an example, or remembering that an $n$ sided polygon has $\frac{n(n-3)}{2}$ face diagonals.  This is a total of $5\cdot 12= 60$ face diagonals.
+
+Therefore, of the 190 ways to choose two vertices, $190-30-60=100$ will give lines that lie inside the dodecahedron when connected.  The probability of selecting such a pair is then: $$\frac{100}{190}=\boxed{\frac{10}{19}}$$",Level 5,Counting & Probability
+"Beim Spiel Twister wählt ein Spinner zufällig entweder einen Arm oder ein Bein sowie eine von vier Farben aus, darunter Rot, jeweils mit gleicher Wahrscheinlichkeit. Die Spieler müssen das entsprechende Körperteil zum passend farbigen Punkt auf dem Boden bewegen. Es gibt vier Spieler. Jeder Spieler dreht einmal und führt die vom Spinner ausgewählte Bewegung aus. Wie hoch ist die Wahrscheinlichkeit, dass bei diesen vier Drehungen genau zwei Bewegungen zu einem roten Punkt erfolgen und der ausgewählte Körperteil genau $3$-mal ein Arm ist?","There are  $\binom{4}{2}=6$ ways to pick which $2$ of the $4$ spins will come up red. Each spin has a $1/4$ chance of coming up red, and $3/4$ chance of not coming up red, so once we pick which $2$ spins we want to come up red, there is a $\left(\frac{1}{4}\right)^{\!2}\left(\frac{3}{4}\right)^{\!2}$ chance that the two spins we pick come up red and the other two do not. So, there is a $$6\left(\frac{1}{4}\right)^{\!2}\left(\frac{3}{4}\right)^{\!2}=\frac{27}{128}$$chance that exactly $2$ come up red.
+
+There are  $\binom{4}{3}=4$ ways to pick which 3 of the 4 spins will point to an arm. Each spin has a $1/2$ chance of pointing to an arm, and $1/2$ chance of not pointing to an arm, so once we pick which $3$ spins we want to point to an arm, there is a $\left(\frac{1}{2}\right)^{\!3}\left(\frac{1}{2}\right)^{\!1}$ chance that the three spins we pick come up arm and the other one does not. So, there is a $$4\left(\frac{1}{2}\right)^{\!3}\left(\frac{1}{2}\right)^{\!1} = \frac{1}{4}$$chance that exactly $3$ spins point to an arm.
+
+The color selection and limb selection are independent events, so the probability that they both happen is the product of their individual probabilities; $\frac{27}{128} \cdot \frac{1}{4} = \boxed{\frac{27}{512}}$.",Level 5,Counting & Probability
+"Auf wie viele Arten können 8 Personen an einem runden Tisch Platz nehmen, wenn Pierre und Thomas nebeneinander sitzen möchten, Rosa jedoch nicht neben einem von beiden sitzen möchte? (Dabei werden Rotationen als nicht unterscheidbar, Spiegelungen jedoch als unterscheidbar betrachtet.)","Solution 1: We choose any seat for Pierre, and then seat everyone else relative to Pierre.  There are 2 choices for Thomas; to the right or left of Pierre.  Then, there are 4 possible seats for Rosa that aren't adjacent to Pierre or Thomas. The five remaining people can be arranged in any of $5!$ ways, so there are a total of $2\cdot 4\cdot 5!=960$ valid ways to arrange the people around the table.
+
+Solution 2: The total number of ways in which Pierre and Thomas sit together is $6! \cdot 2 = 1440$. The number of ways in which Pierre and Thomas sit together and Rosa sits next to one of them is $5! \cdot 2 \cdot 2 = 480$. So the answer is the difference $1440 - 480 = \boxed{960}$.",Level 5,Counting & Probability
+"Krishanu und Shaunak wählen jeweils eine Ganzzahl zwischen 1 und 10 (einschließlich). Wie hoch ist die Wahrscheinlichkeit, dass das Produkt ihrer Zahlen größer als 10 ist? Geben Sie Ihre Antwort als gewöhnlichen Bruch an.","Since 10 is small for a product, we consider the complementary probability, that their product is at most 10. To do this, we count the number of ordered pairs of positive integers $(m,n)$ with $mn\le10$ ($m$ is Krishanu's number and $n$ is Shaunak's number). If $m=1$, there are 10 such pairs; if $m=2$, there are 5; if $m=3$ there are 3; if $m=4$ or $m=5$, there are 2, and if $m=6,7,8,9,10$ there is 1, for a total of $$10+5+3+2+2+1+1+1+1+1=27$$ordered pairs with product at most 10. The probability one of these is picked is then $27/100$, since there are $10\cdot10=100$ possible ordered pairs. Therefore, the probability that the product of their numbers is greater than 10 is $1-27/100=\boxed{\frac{73}{100}}$.",Level 5,Counting & Probability
+"Auf wie viele Arten können 7 Personen an einem runden Tisch sitzen, wenn keine zwei der 3 Personen Pierre, Rosa und Thomas nebeneinander sitzen dürfen? (Sitzordnungen, die Rotationen voneinander sind, werden als gleich behandelt.)","After Pierre sits, we can place Rosa either two seats from Pierre (that is, with one seat between them) or three seats from Pierre. We tackle these two cases separately:
+
+Case 1: Rosa is two seats from Pierre. There are $2$ such seats. For either of these, there are then four empty seats in a row, and one empty seat between Rosa and Pierre. Thomas can sit in either of the middle two of the four empty seats in a row. So, there are $2\cdot 2 = 4$ ways to seat Rosa and Thomas in this case. There are then $4$ seats left, which the others can take in $4! = 24$ ways. So, there are $4\cdot 24 = 96$ seatings in this case.
+
+Case 2: Rosa is three seats from Pierre (that is, there are $2$ seats between them). There are $2$ such seats. Thomas can't sit in either of the $2$ seats directly between them, but after Rosa sits, there are $3$ empty seats in a row still, and Thomas can only sit in the middle seat of these three. Once again, there are $4$ empty seats remaining, and the $4$ remaining people can sit in them in $4! = 24$ ways. So, we have $2\cdot 24 = 48$ seatings in this case.
+
+Putting our two cases together gives a total of $96+48 = \boxed{144}$ seatings.",Level 5,Counting & Probability
+"Zwei Standard-Sechseckwürfel werden geworfen. Jean gewinnt, wenn das Produkt der beiden gewürfelten Zahlen ungerade oder ein Vielfaches von drei ist, andernfalls gewinnt Allen. Wie hoch ist die Wahrscheinlichkeit, dass Jean gewinnt? Geben Sie Ihre Antwort als gemeinen Bruch an.","When two dice are rolled, there are 36 total outcomes. Let's compute the probability that Allen wins. Allen wins if the product of the two numbers is even and not a multiple of 3. In other words, Allen wins if the product is 2 $(1\cdot2, 2\cdot1)$, 4 $(1\cdot4, 4\cdot1, 2\cdot2)$, 8 $(2\cdot4, 4\cdot2)$, 10 $(2\cdot5, 5\cdot2)$, 16 $(4\cdot4)$, or 20 $(4\cdot5, 5\cdot4)$. Therefore, the probability that Allen wins is $\frac{2+3+2+2+1+2}{36}=12/36=1/3$. Then, the probability that Jean wins is $1-1/3=\boxed{\frac{2}{3}}$.",Level 5,Counting & Probability
+"Maria hat drei gleiche Äpfel und drei gleiche Orangen. Wie viele Möglichkeiten gibt es, die Früchte unter ihren vier Freunden zu verteilen, wenn Jacky keine Orangen erhält? (Hinweis: Maria behält selbst keine Früchte, und es ist möglich, dass einige ihrer Freunde gar keine Früchte erhalten.)","First, just consider the apples. Imagine putting three dividers among the apples, so that Maria's first friend gets the apples to the left of the first divider, Maria's second friend gets the apples between the first and second dividers, Maria's third friend gets the apples between the second and third dividers, and Maria's last friend gets the apples after the third divider. With three dividers and three apples, there are $\binom{6}{3}=20$ ways to arrange the dividers. Now, consider the oranges. Since Maria won't give Jacky any oranges, Maria has to distribute the oranges among her other three friends. With three oranges and two dividers, there are $\binom{5}{2}=10$ ways for Maria to distribute the oranges. The total number of ways for Maria to distribute the fruit is $20\cdot 10=\boxed{200}$.",Level 5,Counting & Probability
+"Jeden Tag werden zwei von drei Teams einer Klasse zufällig ausgewählt, um an einem MATHCOUNTS-Probewettbewerb teilzunehmen. Wie hoch ist die Wahrscheinlichkeit, dass Team A an mindestens zwei der nächsten drei Tage ausgewählt wird? Geben Sie Ihre Antwort als gewöhnlichen Bruch an.","We can compute this a few ways, but the numbers seem small enough that we can go ahead and just compute the probability of A being selected all three days, and the probability of A being selected exactly 2 of the three days. Team A is selected on any given day with probability $\frac{2}{3}$, because there are ${3 \choose 2} = 3$ possible pairs of teams, and 2 of them contain A. So, there is a $\left(\frac{2}{3}\right)^3 = \frac{8}{27}$ chance of being selected all three days. Of being selected exactly twice, there is a $\frac{2}{3} \cdot \frac{2}{3} \cdot \frac{1}{3} \cdot {3 \choose 2} = \frac{4}{9}$ chance. Adding these two yields $\frac{8}{27} + \frac{4}{9} = \frac{8+12}{27} = \boxed{\frac{20}{27}}$.",Level 5,Counting & Probability
+"Das Rechteck $ABCD$ hat den Mittelpunkt $O$ und $AB/AD=k$. Ein Punkt wird zufällig aus dem Inneren des Rechtecks $ABCD$ ausgewählt. Wie hoch ist die Wahrscheinlichkeit, dass er näher an $O$ liegt als an einem der vier Eckpunkte? [asy]
+size(200);
+draw((-250,100)--(250,100)--(250,-100)--(-250,-100)--cycle);
+dot((0,0));
+label(""$O$"",(0,0),N);
+label(""$A$"",(-250,100),NW); label(""$B$"",(250,100),NE); label(""$C$"",(250,-100),SE); label(""$D$"",(-250,-100),SW);[/asy]","The original rectangle may be subdivided into four smaller congruent rectangles, all sharing $O$ as a vertex. Each of these rectangles is analogous, so we can consider our random point $P$ to be without loss of generality in the smaller rectangle with $A$ as a vertex. All points in this smaller rectangle are closer to $A$ than they are to $B$, $C$, or $D$, so we just need to determine the probability that $OP<AP$. [asy]
+size(100);
+draw((0,0)--(0,100)--(-250,100)--(-250,0)--cycle);
+label(""$A$"",(-250,100),NW); label(""$O$"",(0,0),SE);
+draw((-105,100)--(-145,0));
+fill((-105,100)--(-145,0)--(0,0)--(0,100)--cycle, gray(.7));
+[/asy] Since a $180^\circ$ rotation about the center of the smaller rectangle takes $O$ to $A$, it takes the shaded region to the unshaded region. Therefore, exactly half the area is shaded, and the overall probability is $\boxed{\frac{1}{2}}$, independent of $k$.",Level 5,Counting & Probability
+"Auf einem Kreis werden drei Punkte zufällig und unabhängig voneinander ausgewählt. Wie groß ist die Wahrscheinlichkeit, dass alle drei paarweisen Abstände zwischen den Punkten kleiner sind als der Radius des Kreises?","We can assume that the circle has its center at $(0,0)$ and a radius of $1$. Call the three points $A$, $B$, and $C$, and let $a$, $b$, and $c$ denote the length of the counterclockwise arc from $(1,0)$ to $A$, $B$, and $C$, respectively. Rotating the circle if necessary, we can also assume that $a= \pi/3$. Since $b$ and $c$ are chosen at random from $[0, 2\pi)$, the ordered pair $(b,c)$ is chosen at random from a square with area $4\pi^2$ in the $bc$-plane. The condition of the problem is met if and only if \[
+0<b<\frac{2\pi}{3}, \quad 0<c<\frac{2\pi}{3},
+\quad\text{and}\quad |b-c|<\frac{\pi}{3}.
+\]This last inequality is equivalent to $b-\dfrac{\pi}{3}<c<b+\frac{\pi}{3}$.
+
+[asy]
+fill((0,0)--(0.33,0)--(0.66,0.33)--(0.66,0.66)--(0.33,0.66)--(0,0.33)--cycle,gray(0.7));
+draw((0,0)--(2,0)--(2,2)--(0,2)--cycle,dashed);
+draw((0,-0.33)--(1,0.66),dashed);
+draw((-0.33,0)--(0.66,1),dashed);
+draw((0.66,0)--(0.66,0.66)--(0,0.66),dashed);
+draw((-0.5,0)--(2.5,0),Arrow);
+draw((0,-0.5)--(0,2.5),Arrow);
+label(""$c$"",(0,2.5),W);
+label(""$b$"",(2.5,0),S);
+label(""$\frac{2}{3}\pi$"",(0.66,0),S);
+label(""$\frac{2}{3}\pi$"",(0,0.66),W);
+label(""$2\pi$"",(2,0),S);
+label(""$2\pi$"",(0,2),W);
+[/asy]
+
+The graph of the common solution to these inequalities is the shaded region shown. The area of this region is \[
+\left(\frac{6}{8}\right)\left(\frac{2\pi}{3}\right)^2 =
+\pi^2/3,
+\]so the requested probability is \[
+\frac{\pi^2/3}{4\pi^2} = \boxed{\frac{1}{12}}.
+\]",Level 5,Counting & Probability
+Für wie viele Ganzzahlen $n$ mit $2 \le n \le 100$ ist $\binom{n}{2}$ ungerade?,"$\binom{n}{2} = \frac{n(n-1)}{2}$. In order for this fraction to be odd, neither $n$ nor $n-1$ can be divisible by $4$, because only one of $n$ and $n-1$ can be even. There are $25$ integers where $n$ is divisible by $4$, namely the multiples of $4$ from $4$ to $100$. There are $24$ integers where $n-1$ is divisible by $4$. We can obtain these integers by incrementing all the multiples of $4$ by $1$, but we must not include $100$ since $100+1 = 101 > 100$. Therefore, there are $49$ invalid integers, so there are $99 - 49 = \boxed{50}$ valid integers.",Level 5,Counting & Probability
+"Camy hat eine Liste aller möglichen **unterschiedlichen** fünfstelligen positiven Ganzzahlen erstellt, die sich bilden lassen, indem jede der Ziffern 1, 3, 4, 5 und 9 **genau einmal** in jeder Ganzzahl verwendet wird. Wie groß ist die Summe der Ganzzahlen auf Camys Liste?","Note that there are $4! = 24$ numbers ending in 1, since we have 4 choices for the 10s digit, 3 choices for the 100s digit, 2 choices for the 1000s digit, and 1 choice for the remaining digit.  Thus there are also 24 numbers ending in each of 3, 4, 5, 9, and the total contribution of ones digits to the sum is $24 (1 + 3 + 4 + 5 + 9) = 528$.  But we can make a similar argument about the contribution of the digits in the other places (10s, 100s, etc.), so our total sum is $528 + 5280 + \ldots + 5280000 = 528 (1 + 10 + \ldots + 10000) = 528\cdot 11,111 = \boxed{5,\!866,\!608}$.",Level 5,Counting & Probability
+"Wie viele Tripel $(a,b,c)$ aus geraden positiven Ganzzahlen erfüllen die Bedingung $a^3 + b^2 + c \leq 50$?","If $a \geq 4$, then $a^3+b^2+c>a^3\geq 4^3>50$. But we want $a^3+b^2+c \leq 50$, so we must have $a=2$.  Now we substitute $a=2$ into $a^3+b^2+c \leq 50$, which gives $b^2+c\leq 42$. Since $b^2<42$, we know that $b$ must be one of 2, 4, or 6.
+
+When $b=2,$ $c\leq 38$. There are 19 even positive integers less than or equal to 38, namely $2\times 1$, $2\times 2$, $\ldots$, $2\times 19$.
+
+When $b=4,$ $c\leq 26$. There are 13 even positive integers less than or equal to 26.
+
+When $b=6,$ $c\leq 6$. There are 3 even positive integers less than or equal to 6.
+
+Thus the answer is $19+13+3=\boxed{35}$.",Level 5,Counting & Probability
+"Zwei Zahlen zwischen $0$ und $1$ auf einer Zahlengeraden sollen zufällig ausgewählt werden. Wie hoch ist die Wahrscheinlichkeit, dass die zweite gewählte Zahl die erste gewählte Zahl um mehr als $\frac{1}{4}$ Einheiten auf der Zahlengeraden übertrifft? Geben Sie Ihre Antwort als gewöhnlichen Bruch an.","The probability that the second number is more than $\frac14$ unit greater than the first number decreases linearly from $\frac34$ to $0$ as the first number increases linearly from $0$ to $\frac34$. The average of this probability is $\frac12 \cdot \frac34= \frac38$. Since there is a $\frac34$ chance of choosing a number from $0$ to $\frac34$, the probability is $\frac34 \cdot \frac38 = \boxed{\frac{9}{32}}$.",Level 5,Counting & Probability
+"Die Punkte $A\, (5,-5)$ und $B\, (-1,-1)$ sind die Endpunkte der Hypotenuse eines gleichschenkligen rechtwinkligen Dreiecks $\triangle ABC$. Wie groß ist die Fläche von $ABC$?","The length of the hypotenuse is given by the distance formula to be $\sqrt{(5-(-1))^2 + (-5-(-1))^2} = \sqrt{6^2+4^2} = \sqrt{52}$. The length of the leg is then given by $\sqrt{52}/\sqrt{2} = \sqrt{26}$ (alternatively, the Pythagorean Theorem can be applied), and the area of the isosceles right triangle is then equal to $\frac 12 \cdot \sqrt{26} \cdot \sqrt{26} = \boxed{13}.$",Level 5,Geometry
+"Im Trapez $ABCD$ stehen $\overline{AB}$ und $\overline{CD}$ senkrecht auf $\overline{AD}$, wobei $AB + CD = BC$, $AB < CD$ und $AD = 7$. Was ist $AB \cdot CD$? Geben Sie Ihre Antwort in Dezimalform an.","Let $E$ be the foot of the perpendicular from $B$ to $\overline{CD}$. Then $AB = DE$ and $BE =
+AD = 7$. By the Pythagorean Theorem, \begin{align*}
+AD^2 = BE^2 &= BC^2 - CE^2\\
+&= (CD+AB)^2 - (CD - AB)^2\\
+&=(CD+AB+CD-AB)(CD+AB-CD+AB)\\
+&=4\cdot CD \cdot AB.
+\end{align*}Hence, $AB \cdot CD = AD^2/4=7^2/4=49/4=\boxed{12.25}$.
+
+[asy]
+pair A,B,C,D,I;
+A=(0,0);
+B=(0,5);
+C=(7,7);
+I=(7,5);
+D=(7,0);
+draw(A--B--C--D--cycle);
+draw(B--I);
+label(""$A$"",A,W);
+label(""$B$"",B,W);
+label(""$C$"",C,E);
+label(""$E$"",I,E);
+label(""$D$"",D,E);
+[/asy]",Level 5,Geometry
+"$ABCD$ ist ein regelmäßiges Tetraeder. Wenn $M$ der Mittelpunkt von $\overline{CD}$ ist, was ist dann $\tan\angle AMB$?","The tetrahedron is shown below.  In order to find $\tan\angle AMB$, we build a right triangle with $\angle AMB$ among its angles.  The foot of the altitude from $A$ to face $BCD$ is the centroid, $G$, of triangle $BCD$.
+
+[asy]
+
+import three;
+
+currentprojection = orthographic(1.5,1.1,-1);
+
+triple A = (1,1,1);
+
+triple B = (1,0,0);
+
+triple C = (0,1,0);
+
+triple D = (0,0,1);
+
+draw(A--B--C--A);
+
+draw(A--D,dashed);
+
+draw(C--D--B,dashed);
+
+label(""$A$"",A,NW);
+
+label(""$B$"",B,W);
+
+label(""$C$"",C,S);
+
+label(""$D$"",D,NW);
+
+triple M = (0,0.5,0.5);
+
+draw(A--M--B,dashed);
+
+label(""$M$"",M,NE);
+
+triple G = B/3 + 2*M/3;
+
+draw(A--G,dashed);
+
+label(""$G$"",G,S);
+
+[/asy]
+
+Since $\overline{BM}$ is a median of $\triangle BCD$, point $G$ is on $\overline{BM}$ such that $GM = \frac13BM$.  Furthermore, we have $AM = BM$, so $GM = \frac{AM}{3}$.  The Pythagorean Theorem gives us  \[AG = \sqrt{AM^2 - GM^2} = \sqrt{AM^2 - \frac{AM^2}{9}} = AM\cdot \sqrt{\frac89} = \frac{2\sqrt{2}}{3}\cdot AM.\] Finally, we have  \[\tan \angle AMB = \tan\angle AMG =\frac{AG}{GM} = \frac{(2\sqrt{2}/3)AM}{AM/3} = \boxed{2\sqrt{2}}.\]",Level 5,Geometry
+"Ein Einheitsquadrat wird um $45^\circ$ um seinen Mittelpunkt gedreht. Wie groß ist die Fläche der Region, die vom Inneren des Quadrats überstrichen wird?","The shape created is shown below:
+[asy]
+size(170);
+defaultpen(linewidth(0.8));
+path square=shift((-.5,-.5))*unitsquare,square2=rotate(45)*square;
+//fill(square^^square2,grey);
+for(int i=0;i<=3;i=i+1)
+{
+path arcrot=arc(origin,sqrt(2)/2,45+90*i,90*(i+1));
+draw(arcrot);
+//fill(arcrot--((sqrt(2)-1)/(2*sqrt(2)),0)--cycle,grey);
+draw(arc(origin,sqrt(2)/2+1/8,50+90*i,90*(i+1)-10),EndArrow);
+}
+draw(square^^square2);[/asy]
+We can decompose this area into four circular sectors, four small triangles, and four large triangles, as shown:
+[asy]
+size(170);
+defaultpen(linewidth(0.8));
+path square=shift((-.5,-.5))*unitsquare,square2=rotate(45)*square;
+//fill(square^^square2,grey);
+for(int i=0;i<=3;i=i+1)
+{
+path arcrot=arc(origin,sqrt(2)/2,45+90*i,90*(i+1));
+draw(arcrot);
+fill(arcrot--(0,0)--cycle,grey);
+fill((0,0)--.5*dir(90*i)--sqrt(2)/2*dir(90*i+45)--cycle,lightblue);
+}
+for (int i=0; i<=7; ++i) { draw ((0,0) -- dir(45*i)*sqrt(2)/2); }
+draw(square^^square2);
+dot(""$A$"",(0,sqrt(2)/2),N);
+dot(""$B$"",(0,1/2),SE);
+dot(""$O$"",(0,0),3*dir(25));
+[/asy]
+Points $A,$ $B,$ and $O$ are marked above for convenience. Because the square was rotated $45^\circ,$ each circular sector (shown in gray) has a central angle of $45^\circ$ and a radius of $AO = \tfrac{\sqrt2}{2}.$ Therefore, put together, they form a semicircle of radius $\tfrac{\sqrt2}{2},$ which has area \[\frac12 \pi \left(\frac{\sqrt2}{2}\right)^2 = \frac{\pi}{4}.\]The four larger triangles (shown in blue) have area equal to half the area of the original square, so they contribute $\tfrac12$ to the overall area. Finally, each of the smaller triangles (shown unshaded) has legs of length $AB = AO - BO = \tfrac{\sqrt2}{2} - \tfrac{1}{2},$ so their total area is \[4 \cdot \frac{1}{2} \left(\frac{\sqrt2}{2} - \frac{1}{2}\right)^2 = \frac{3-2\sqrt2}{2}.\]Thus, the area of the entire given region is \[\frac \pi 4 + \frac12 + \frac{3-2\sqrt2}{2} = \boxed{\frac \pi4 + 2 - \sqrt2}.\]",Level 5,Geometry
+"Drei Halbkreise mit Radius 1 werden auf dem Durchmesser $\overline{AB}$ eines Halbkreises mit Radius 2 konstruiert. Die Mittelpunkte der kleinen Halbkreise teilen $\overline{AB}$ in vier gleich lange Liniensegmente, wie dargestellt. Wie groß ist die Fläche des schattierten Bereichs, der innerhalb des großen Halbkreises, aber außerhalb der kleineren Halbkreise liegt? Geben Sie Ihre Antwort in Bezug auf $\pi$ und in der einfachsten Wurzelform an.
+
+[asy]
+fill((0,2)..(2,0)--(-2,0)..cycle,gray(0.7));
+fill((-1,1)..(0,0)--(-2,0)..cycle,white);
+fill((1,1)..(0,0)--(2,0)..cycle,white);
+fill((0,1)..(1,0)--(-1,0)..cycle,white);
+draw((0,1)..(1,0)--(-1,0)..cycle,dashed);
+draw((0,2)..(2,0)--(-2,0)..cycle);
+label(""$A$"",(-2,0),W);
+label(""$B$"",(2,0),E);
+label(""1"",(-1.5,0),S);
+label(""2"",(0,0),S);
+label(""1"",(1.5,0),S);
+dot((0,0));
+dot((-1,0));
+dot((1,0));
+draw((-2,-0.1)--(-2,-0.4));
+draw((-1,-0.1)--(-1,-0.4));
+draw((2,-0.1)--(2,-0.4));
+draw((1,-0.1)--(1,-0.4));
+[/asy]","The area of the larger semicircle is \[
+\frac{1}{2}\pi \cdot (2)^2 = 2\pi.
+\] The region deleted from the larger semicircle consists of five congruent sectors and two equilateral triangles. The area of each of the sectors is \[
+\frac{1}{6}\pi \cdot (1)^2 = \frac{\pi}{6}
+\] and the area of each triangle is \[
+\frac{1}{2}\cdot 1\cdot \frac{\sqrt{3}}{2} = \frac{\sqrt{3}}{4},
+\] so the area of the shaded region is \[
+2\pi - 5\cdot\frac{\pi}{6}-2\cdot\frac{\sqrt{3}}{4} = \boxed{\frac{7}{6}\pi - \frac{\sqrt{3}}{2}}.
+\] [asy]
+fill((0,2)..(2,0)--(-2,0)..cycle,gray(0.7));
+fill((-1,1)..(0,0)--(-2,0)..cycle,white);
+fill((1,1)..(0,0)--(2,0)..cycle,white);
+fill((0,1)..(1,0)--(-1,0)..cycle,white);
+draw((0,1)..(1,0)--(-1,0)..cycle,dashed);
+draw((0,2)..(2,0)--(-2,0)..cycle);
+label(""$A$"",(-2,0),W);
+label(""$B$"",(2,0),E);
+label(""1"",(-1.5,0),S);
+label(""1"",(-0.5,0),S);
+label(""1"",(0.5,0),S);
+draw((-1.5,0.87)--(-1,0)--(-0.5,0.87)--(0,0)--(0.5,0.87)--(1,0)--(1.5,0.87),linewidth(0.7));
+label(""1"",(1.5,0),S);
+dot((0,0));
+dot((-1,0));
+dot((1,0));
+draw((-2,-0.1)--(-2,-0.4));
+draw((-1,-0.1)--(-1,-0.4));
+draw((2,-0.1)--(2,-0.4));
+draw((1,-0.1)--(1,-0.4));
+draw((0,-0.1)--(0,-0.4));
+[/asy]",Level 5,Geometry
+Eine Sehne der Länge $6$ Einheiten teilt einen Kreis mit einem Radius von $6$ Einheiten in zwei Bereiche. Wie groß ist die Fläche des größeren Bereichs in Quadrateinheiten? Geben Sie Ihre Antwort in der einfachsten Wurzelform in Bezug auf $\pi$ an.,"Draw radii to the intersection points of the chord with the circle. An equilateral triangle is formed with area $\frac{6^2\sqrt{3}}{4} = 9\sqrt{3}$. However, the whole section has area $\frac{36\pi}{6} = 6\pi$. If we take the area of the sector away from the area of the entire circle and then add back in the area of the equilateral triangle, we will get the area of the larger region. The area is therefore $36\pi - 6\pi + 9\sqrt{3} = \boxed{30\pi + 9\sqrt{3}}$.",Level 5,Geometry
+"Im Dreieck $ABC$ ist $\angle ABC = 90^\circ$ und Punkt $D$ liegt auf dem Streckenabschnitt $BC$, sodass $AD$ eine Winkelhalbierende ist. Wenn $AB = 105$ und $BD = 42$, dann bestimme $AC$.","By the angle bisector theorem, $AC/CD = AB/BD = 105/42 = 5/2$.  Let $AC = 5x$ and $CD = 2x$.
+
+[asy]
+unitsize(0.03 cm);
+
+pair A, B, C, D;
+
+A = (0,105);
+B = (0,0);
+C = (100,0);
+D = (42,0);
+
+draw(A--B--C--cycle);
+draw(A--D);
+
+label(""$A$"", A, NW);
+label(""$B$"", B, SW);
+label(""$C$"", C, SE);
+label(""$D$"", D, S);
+label(""$42$"", (B + D)/2, S);
+label(""$105$"", (A + B)/2, W);
+label(""$2x$"", (C + D)/2, S);
+label(""$5x$"", (A + C)/2, NE);
+[/asy]
+
+Then by Pythagoras, $(2x + 42)^2 + 105^2 = (5x)^2$.  This simplifies to $21x^2 - 168x - 12789 = 0$, which factors as $21(x - 29)(x + 21) = 0$, so $x = 29$.  Therefore, $AC = 5x = \boxed{145}$.",Level 5,Geometry
+"Ein regelmäßiges Tetraeder ist eine Pyramide mit vier Flächen, von denen jede ein gleichseitiges Dreieck ist. Sei $ABCD$ ein regelmäßiges Tetraeder und $P$ der einzige Punkt, der gleich weit von den Punkten $A, B, C, D$ entfernt ist. Verlängere $\overrightarrow{AP}$, bis sie die Fläche $BCD$ im Punkt $Q$ schneidet. Wie ist das Verhältnis $PQ/AQ$?","Let's start with a picture: [asy]
+import three;
+triple d = (0,0,0);
+triple b = (1,0,0);
+triple c = (1/2,sqrt(3)/2,0);
+triple a = (1/2,sqrt(3)/6,sqrt(6)/3);
+triple p = (a+b+c+d)/4;
+triple q = (d+b+c)/3;
+draw(a--b--c--a); draw(c--d--b,dotted); draw(d--a,dotted); draw(a--q,dashed);
+dot(a); dot(b); dot(c); dot(d); dot(p); dot(q);
+label(""$A$"",a,N);
+label(""$B$"",b,WSW);
+label(""$C$"",c,ESE);
+label(""$D$"",d,ENE);
+label(""$P$"",p,W);
+label(""$Q$"",q,W);
+[/asy] We can carve $ABCD$ into four (non-regular) tetrahedra that share $P$ as a vertex and have respective bases $ABC$, $ABD$, $ACD$, and $BCD$ (the faces of $ABCD$). For example, this diagram shows one of these four tetrahedra, namely $BCDP$: [asy]
+import three;
+triple d = (0,0,0);
+triple b = (1,0,0);
+triple c = (1/2,sqrt(3)/2,0);
+triple a = (1/2,sqrt(3)/6,sqrt(6)/3);
+triple p = (a+b+c+d)/4;
+triple q = (d+b+c)/3;
+draw(a--b--c--a); draw(c--d--b,dotted); draw(d--a,dotted); draw(a--q,dashed);
+draw(surface(b--p--c--cycle),red,nolight);
+draw(surface(d--p--c--cycle),red+white,nolight);
+dot(a); dot(b); dot(c); dot(d); dot(p);
+label(""$A$"",a,N);
+label(""$B$"",b,WSW);
+label(""$C$"",c,ESE);
+label(""$D$"",d,ENE);
+label(""$P$"",p,W);
+[/asy] The four tetrahedra formed in this way are congruent, so each contains one-quarter the volume of $ABCD$.
+
+The height of tetrahedron $BCDP$ is $PQ$, so the volume of $BCDP$ is $$\frac 13\cdot (\text{area of }\triangle BCD)\cdot PQ.$$The volume of the original tetrahedron, $ABCD$, is $$\frac 13\cdot (\text{area of }\triangle BCD)\cdot AQ.$$Thus $PQ/AQ$ is equal to the ratio of the volume of $BCDP$ to the volume of $ABCD$, which we already know to be $\boxed{\frac{1}{4}}$.",Level 5,Geometry
+"Das regelmäßige Sechseck $ABCDEF$ ist die Basis der geraden Pyramide $PABCDEF.$. Wenn $PAD$ ein gleichseitiges Dreieck mit der Seitenlänge 6 ist, wie hoch ist dann die Summe der Kantenlängen der Pyramide?","[asy]
+import three;
+triple A = (1,0,0);
+triple B = (0.5,sqrt(3)/2,0);
+triple C = (-0.5,sqrt(3)/2,0);
+triple D = (-1,0,0);
+triple EE = (-0.5,-sqrt(3)/2,0);
+triple F = (0.5,-sqrt(3)/2,0);
+
+triple P = (0,0,1);
+
+draw(F--A--B--C);
+draw(C--D--EE--F,dashed);
+draw(A--P--C);
+draw(EE--P--D,dashed);
+draw(B--P--F);
+label(""$A$"",A,S);
+label(""$B$"",B,S);
+label(""$C$"",C,E);
+label(""$D$"",D,S);
+label(""$P$"",P,N);
+label(""$E$"",EE,S);
+draw(A--D,dashed);
+label(""$F$"",F,W);
+draw(EE--B,dashed);
+draw(C--F,dashed);
+[/asy]
+
+Drawing the long diagonals of a regular hexagon divides the hexagon into equilateral triangles with side length equal to half the length of each long diagonal.  So, the side length of the base is 3.  Since the pyramid is a right regular pyramid, each edge from the apex to a vertex of the base has the same length.  So, the sum of the lengths of the edges from the apex to the vertices on the base is $6\cdot 6 = 36$.  Adding the perimeter of the base gives us the sum of all the edge lengths, which is $36 + 6\cdot 3 = \boxed{54}$.",Level 5,Geometry
+"Eine Pyramide mit quadratischer Grundfläche wird von einer Ebene geschnitten, die parallel zur Grundfläche verläuft und 2 Einheiten von der Grundfläche entfernt ist. Die Oberfläche der kleineren, abgeschnittenen Pyramide ist halb so groß wie die Oberfläche der ursprünglichen Pyramide. Wie groß ist die Höhe der ursprünglichen Pyramide?","Let $h$ be the altitude of the original pyramid.  Then the altitude of the smaller pyramid is $h-2$.  Because the two pyramids are similar, the ratio of their altitudes is the square root of the ratio of their surface areas.  Thus $h/(h-2)=\sqrt{2}$, so \[h=\frac{2\sqrt{2}}{\sqrt{2}-1}=\boxed{4+2\sqrt{2}}.\]",Level 5,Geometry
+"Alana bastelt einen Ball aus Gummibändern. Wenn der Ball 54 Gummibänder hat, beträgt sein Durchmesser 3 cm. Wie viele Gummibänder muss Alana hinzufügen, um den Durchmesser um 1 cm zu vergrößern? Gehen Sie davon aus, dass alle Gummibänder von Alana das gleiche Volumen haben.","Since the volume of a sphere is directly proportional to its diameter cubed, the ratio of the volume of the ball with a diameter of 4 cm to the volume of the ball with a diameter of 3 cm is $(4/3)^3
+= 64/27$.  Since all of the rubber bands have the same volume, it follows that the number of rubber bands in the ball with diameter 4 is \[ (4/3)^3 \cdot 54 = \frac{64}{27} \cdot 54 = 64 \cdot 2 = 128. \]Therefore the number of rubber bands that Alana needs to add to the ball is $128 - 54 = \boxed{74}$.",Level 5,Geometry
+"Ein gleichwinkliges Achteck hat vier Seiten der Länge $1$ und vier Seiten der Länge $\frac{\sqrt{2}}{2}$, die so angeordnet sind, dass keine zwei aufeinanderfolgenden Seiten die gleiche Länge haben. Wie groß ist die Fläche des Achtecks?","The octagon can be partitioned into five squares and four half squares, each with side length $\sqrt{2}/2$, so its area is \[
+\displaystyle\left(5+4 \cdot \frac{1}{2}\right)\left(\frac{\sqrt{2}}{2}\displaystyle\right)^{2}= \boxed{\frac{7}{2}}.
+\][asy]
+unitsize(2cm);
+for (int i=0; i<4; ++i) {
+for (int j=0; j<4; ++j) {
+draw((i,0)--(i,3),dashed);
+draw((0,j)--(3,j),dashed);
+};}
+draw((1,0)--(2,0)--(3,1)--(3,2)--(2,3)--(1,3)--(0,2)--(0,1)--cycle,linewidth(0.7));
+for (int i=0; i<2; ++i) {
+label(""1"",(0.5+2i,2.5),S);
+label(""1"",(0.5+2i,0.5),N);}
+label(""$\frac{\sqrt{2}}{2}$"",(0,1.5),E);
+label(""$\frac{\sqrt{2}}{2}$"",(3,1.5),W);
+[/asy]",Level 5,Geometry
+Ein Würfel mit einer Kantenlänge von 3 Zoll hat an jeder Ecke einen Würfel mit einer Kantenlänge von 1 Zoll abgeschnitten. Anschließend wird in jede Ecke ein Würfel mit einer Kantenlänge von 2 Zoll eingesetzt. Wie groß ist die Oberfläche des resultierenden Körpers in Quadratzoll?,"Our initial cube has 6 faces with 9 square inches of surface area each for a total of 54 square inches. When we cut away the 8 cubes of side length one, we remove 3 square inches of surface area for each one for a total of 24 square inches of surface area lost. We then add a 2 inch cube to each corner for a total of 8 more cubes. A 2 inch cube has a surface area of 24 but each of these cubes is missing 3 $\text{in}^2$ of surface area, so the total surface area is $54-24+8(24-3)=\boxed{198}$ square inches.",Level 5,Geometry
+"Das Dreieck ABC hat die Eckpunkte $A(0, 0)$, $B(0, 3)$ und $C(5, 0)$. Ein Punkt $P$ innerhalb des Dreiecks ist $\sqrt{10}$ Einheiten vom Punkt $A$ und $\sqrt{13}$ Einheiten vom Punkt $B$ entfernt. Wie viele Einheiten ist $P$ vom Punkt $C$ entfernt? Geben Sie Ihre Antwort in der einfachsten Wurzelform an.","Let the coordinates of point $P$ be $(a,b)$.  We have $a^2+b^2=10$ since $AP = \sqrt{10}$, and $a^2+(b-3)^2=13$ since $AB = \sqrt{13}$. Expanding $(b-3)^2$ gives us  \[a^2 +b^2 - 6b + 9 = 13.\]Since $a^2 + b^2 = 10$, we have $10-6b+9=13$, so $b=1$.  From $a^2+b^2=10$, we have $a^2=9$, so $a=\pm 3$.  If $a$ is $-3$, the point is not inside the triangle, so $a=3$.  So the point is $(3,1)$ and the distance from $C$ is $$\sqrt{(3-5)^2+1^2}=\boxed{\sqrt{5}}.$$",Level 5,Geometry
+Ein Bogen von $55$ Grad auf dem Kreis $A$ hat die gleiche Länge wie ein Bogen von $40$ Grad auf dem Kreis $B$. Wie ist das Verhältnis der Fläche des Kreises $A$ zur Fläche des Kreises $B$? Geben Sie Ihre Antwort als gewöhnlichen Bruch an.,"For a circle of radius $r$ and an arc of $\theta$ degrees, the arc length is $(2\pi r)\frac{\theta}{360}$. Thus, for the same arc length, the arc angle is inversely proportional to the radius, so the ratio of the radius of circle $A$ to the radius of circle $B$ is $40:55$, or $8:11$. Since the ratio of the areas of two circles is the square of the ratio of their radii, the ratio of the area of circle $A$ to the area of circle $B$ is $(8/11)^2=\boxed{\frac{64}{121}}$.",Level 5,Geometry
+Ein Kegel entsteht durch die Drehung eines gleichschenkligen rechtwinkligen Dreiecks mit der Kathetenlänge 2 um eine seiner Katheten. Seine Oberfläche beträgt $\pi$ mal welche Zahl?,"Rotating the triangle about one of its legs produces a cone with radius 2 and height 2:  [asy]
+size(90);
+import solids; currentprojection = orthographic(5,0,1);
+revolution c = cone((0,0,0), 2,2);
+draw(c,heavycyan);
+draw((0,0,0)--(0,2,0)--(0,0,2)--cycle);
+label(""2"",(0,1,0),S); label(""2"",(0,0,1),W);
+[/asy]
+
+The base of the cone is a circle with radius 2, which has area $2^2\pi=4\pi$.
+
+When unrolled, the curved lateral area of the cone becomes a flat sector of a circle: [asy]
+size(110);
+draw(Arc((0,0),1,0,254.56),heavycyan);
+draw(Arc((0,0),1,254.56,360),heavycyan+linetype(""2 4""));
+draw((cos(4.44),sin(4.44))--(0,0)--(1,0),heavycyan);
+[/asy] The sector's radius is the cone's slant height, which, by the Pythagorean theorem, is \[\sqrt{2^2+2^2}=2\sqrt{2}.\]The sector's arc length is the cone's base perimeter, which is \[2(\pi)(2)=4\pi.\]The circle's circumference is \[2(\pi)(2\sqrt{2}) = 4\sqrt{2}\pi,\]so the ratio of the sector's area to the circle's area is $\frac{4\pi}{4\sqrt{2}\pi}=\frac{1}{\sqrt{2}}$.  The circle's area is \[(2\sqrt{2})^2\pi=8\pi,\]so the sector's area is \[\frac{1}{\sqrt{2}}\cdot 8\pi = 4\sqrt{2}\pi.\]Summing the lateral area and the base area gives a total surface area of ${4\sqrt{2}\pi+4\pi}$, so its total surface area is $\boxed{4\sqrt{2} + 4}$ times $\pi$.",Level 5,Geometry
+"Das Quadrat \(ABCD\) hat die Seitenlänge \(s\), ein Kreis mit Mittelpunkt \(E\) hat den Radius \(r\), und \(r\) und \(s\) sind beide rational. Der Kreis verläuft durch \(D\), und \(D\) liegt auf \(\overline{BE}\). Der Punkt \(F\) liegt auf dem Kreis, auf derselben Seite von \(\overline{BE}\) wie \(A\). Das Segment \(AF\) ist tangential zum Kreis, und \(AF = \sqrt{9 + 5\sqrt{2}}\). Was ist \( \frac{r}{s} \)?
+
+[asy]
+pair A, B, C, D, E, F;
+A = (0, 10); B = (0, 0); C = (10, 0); D = (10, 10);
+E = (14, 13); F = (11, 17);
+draw(A--B--C--D--cycle, linewidth(0.7));
+draw(Circle(E, 5), linewidth(0.7));
+draw(A--F, linewidth(0.7));
+label(""$A$"", A, NW);
+label(""$B$"", B, SW);
+label(""$C$"", C, SE);
+label(""$D$"", D, NE);
+label(""$F$"", F, N);
+label(""$E$"", E, E);
+dot(E);
+[/asy]","Let $B=(0,0)$, $C=(s,0)$, $A=(0,s)$, $D=(s,s)$, and $E=\left(s+\frac{r}{\sqrt{2}},s+\frac{r}{\sqrt{2}} \right)$. Apply the Pythagorean Theorem to $\triangle AFE$ to obtain \[
+r^2+\left(9+5\sqrt{2}\right)=\left(s+\frac{r}{\sqrt{2}}\right)^2+\left(\frac{r}{\sqrt{2}}\right)^2,
+\]from which $9+5\sqrt{2}=s^2+rs\sqrt{2}$.  Because $r$ and $s$ are rational, it follows that $s^2=9$ and $rs=5$, so $r/s = \boxed{\frac{5}{9}}$.
+
+OR
+
+Extend $\overline{AD}$ past $D$ to meet the circle at $G \ne D$. Because $E$ is collinear with $B$ and $D$, $\triangle EDG$ is an isosceles right triangle.  Thus $DG = r\sqrt{2}$.  By the Power of a Point Theorem, \begin{align*}
+9+5\sqrt{2} &= AF^2 \\
+&= AD\cdot AG\\
+& = AD\cdot \left(AD+DG\right) \\
+&=
+s\left(s+r\sqrt{2}\right) \\
+&= s^2+rs\sqrt{2}.\end{align*}As in the first solution, we conclude that $r/s=\boxed{\frac{5}{9}}$.",Level 5,Geometry
+"Die Diagonalen des Rechtecks $PQRS$ schneiden sich im Punkt $X$. Wenn $PS = 6$ und $RS=8$, was ist dann $\sin \angle PXS$?","[asy]
+
+pair P,Q,R,SS,X,F;
+
+SS = (0,0);
+
+P = (0,6);
+
+R = (8,0);
+
+Q= R+P;
+
+X = Q/2;
+
+F = foot(SS,P,R);
+
+draw(F--SS--R--Q--P--SS--Q);
+
+draw(P--R);
+
+label(""$P$"",P,NW);
+
+label(""$Q$"",Q,NE);
+
+label(""$R$"",R,SE);
+
+label(""$S$"",SS,SW);
+
+label(""$X$"",X,S);
+
+label(""$F$"",F,NE);
+
+draw(rightanglemark(S,F,X,12));
+
+[/asy]
+
+To find $\sin \angle PXS$, we build a right triangle with $\angle PXS$ as one of its acute angles.  We do so by drawing altitude $\overline{SF}$ from $S$ to diagonal $\overline{PR}$ as shown.  We then have $\sin \angle PXS = \sin\angle FXS = \frac{FS}{XS}$.
+
+The Pythagorean Theorem gives us $PR = QS = 10$, so $SX = QS/2 = 5$.  We also have $\triangle FPS \sim \triangle SPR$ by AA Similarity (both are right triangles and $\angle SPR = \angle FPS$), so
+\[\frac{FS}{PS} = \frac{SR}{PR}.\]This gives us
+\[FS = PS \cdot \frac{SR}{PR} = \frac{6\cdot 8}{10} = \frac{24}{5}.\]Finally, we have \[\sin \angle PXS = \frac{FS}{XS} = \frac{24/5}{5} = \boxed{\frac{24}{25}}.\]",Level 5,Geometry
+"Punkt $P$ liegt innerhalb des gleichseitigen Dreiecks $ABC$, sodass die Höhen von $P$ auf $\overline{AB}$, $\overline{BC}$ und $\overline{CA}$ die Längen 5, 6 bzw. 7 haben. Wie groß ist die Fläche des Dreiecks $ABC$?","We begin by drawing a diagram:
+
+[asy]
+pair A,B,C,P,X,Y,Z;
+real s=12*sqrt(3);
+A=(0,0); C=(s,0); B=(s/2,s/2*sqrt(3)); P=(9.5,7); X= foot(P,B,C); Y=foot(P,A,B); Z=foot(P,A,C);
+draw(A--B--C--cycle); draw(P--Z); draw(P--Y); draw(P--X);
+draw(rightanglemark(P,X,B,25)); draw(rightanglemark(P,Z,C,25)); draw(rightanglemark(P,Y,A,25));
+
+label(""$A$"",A,SW); label(""$B$"",B,N); label(""$C$"",C,SE); label(""$P$"",P,SE);
+label(""$7$"",P--Z,W); label(""$6$"",P--X,S); label(""$5$"",P--Y,NE);
+[/asy]
+
+Let the side length of triangle $ABC$ be $s$; since it is equilateral, its area is $\frac{s^2\sqrt{3}}{4}$.
+
+Now, we draw segments from $P$ to the three vertices of triangle $ABC$, which divides the triangle into three smaller triangles: $\triangle APB$, $\triangle BPC$, and $\triangle CPA$.
+
+[asy]
+pair A,B,C,P,X,Y,Z;
+real s=12*sqrt(3);
+A=(0,0); C=(s,0); B=(s/2,s/2*sqrt(3)); P=(9.5,7); X= foot(P,B,C); Y=foot(P,A,B); Z=foot(P,A,C);
+
+label(""$A$"",A,SW); label(""$B$"",B,N); label(""$C$"",C,SE); label(""$P$"",P,SE);
+label(""$7$"",P--Z,W); label(""$6$"",P--X,S); label(""$5$"",P--Y,NE);
+
+fill(P--A--B--cycle,rgb(135,206,250));
+
+fill(P--A--C--cycle,yellow);
+fill(P--B--C--cycle,rgb(107,142,35));
+
+draw(P--A,dashed); draw(P--B,dashed); draw(P--C,dashed);
+draw(A--B--C--cycle); draw(P--Z); draw(P--Y); draw(P--X);
+
+[/asy]
+
+We can compute the area of these three small triangles, and sum their areas to get the area of equilateral $\triangle ABC$.  We compute the area of triangle $APB$ by using $AB$ as the base and 5 as the height.  $AB$ has length $s$, so \[[\triangle APB] = \frac{1}{2}(s)(5).\]Similarly, $[\triangle BPC] = \frac{1}{2}(s)(6)$ and $[\triangle APC] = \frac{1}{2}(s)(7)$.
+
+We have \[[\triangle ABC] = [\triangle APB] + [\triangle BPC] + [\triangle CPA],\]or  \begin{align*}
+\frac{s^2\sqrt{3}}{4} &= \frac{1}{2}(s)(5)+\frac{1}{2}(s)(6)+\frac{1}{2}(s)(7)\\
+&=\frac{1}{2}(s)(5+6+7)\\
+&=9s.
+\end{align*}We can divide both sides of the above simplified equation by $s$, since side lengths are positive and not zero, to get $\frac{s\sqrt{3}}{4}=9$.  Solving for $s$ gives \[s=9\cdot \frac{4}{\sqrt{3}}=12\sqrt{3}.\]Finally, the area of triangle $ABC$ is \[[\triangle ABC] = \frac{s^2\sqrt{3}}{4}=\left(\frac{s\sqrt{3}}{4}\right)(s) = (9)(12\sqrt{3})=\boxed{108\sqrt{3}}.\]",Level 5,Geometry
+"Ein 10 cm langer Stab hat an jedem Zentimeter eine Markierung. Durch zufälliges Brechen an zwei dieser neun Markierungen wird der Stab in drei Stücke mit jeweils ganzzahliger Länge geteilt. Wie hoch ist die Wahrscheinlichkeit, dass die drei Längen die Seitenlängen eines Dreiecks bilden können? Geben Sie Ihre Antwort als gemeinen Bruch an.","The lengths can form a triangle if and only if the sum of the smaller two exceeds the length of the largest.  But the sum of all three pieces is 10, so this means that the largest piece must have length no larger than 4.  (If the largest piece is 5 or greater, then the three lengths will violate the Triangle Inequality.)  However, the largest piece clearly must be longer than 3.  Thus, the only acceptable sets of sidelengths are $\{3,3,4\}$ and $\{2,4,4\}$.  Since we can obtain these in 6 ways, and the stick can be broken in $\binom{9}{2} = 36$ different ways, our total probability is $\frac{6}{36} = \boxed{\frac{1}{6}}$.",Level 5,Geometry
+"Seien $(a_1, b_1),$ $(a_2, b_2),$ $\dots,$ $(a_n, b_n)$ die reellen Lösungen für
+\begin{align*}
+a + \frac{17a + 6b}{a^2 + b^2} &= 6, \\
+b + \frac{6a - 17b}{a^2 + b^2} &= 0.
+\end{align*}
+Finden Sie $a_1 + b_1 + a_2 + b_2 + \dots + a_n + b_n$.
+
+**Hinweis:** Verwenden Sie komplexe Zahlen.","Multiplying the second equation by $i$ and adding the first equation, we get
+\[a + bi + \frac{17a + 6b + 6ai - 17bi}{a^2 + b^2} = 6.\]We can write
+\begin{align*}
+17a + 6b + 6ai - 17bi &= (17 + 6i)a + (6 - 17i)b \\
+&= (17 + 6i)a - (17 + 6i)bi \\
+&= (17 + 6i)(a - bi).
+\end{align*}Also, $a^2 + b^2 = (a + bi)(a - bi),$ so
+\[a + bi + \frac{(17 + 6i)(a - bi)}{(a + bi)(a - bi)} = 6.\]This simplifies to
+\[a + bi + \frac{17 + 6i}{a + bi} = 6.\]Let $z = a + bi,$ so
+\[z + \frac{17 + 6i}{z} = 6.\]This becomes $z^2 - 6z + (17 + 6i) = 0.$  By the quadratic formula,
+\[z = \frac{6 \pm \sqrt{36 - 4(17 + 6i)}}{2} = \frac{6 \pm \sqrt{-32 - 24i}}{2} = 3 \pm \sqrt{-8 - 6i}.\]We want to find the square roots of $-8 - 6i,$ so let
+\[-8 - 6i = (u + vi)^2 = u^2 + 2uvi + v^2 i^2 = u^2 + 2uvi - v^2.\]Equating the real and imaginary parts, we get $u^2 - v^2 = -8$ and $2uv = -6,$ so $uv = -3.$  Then $v = -\frac{3}{u}.$  Substituting, we get
+\[u^2 - \frac{9}{u^2} = -8.\]Then $u^4 + 8u^2 - 9 = 0,$ which factors as $(u^2 - 1)(u^2 + 9) = 0.$  Hence, $u = 1$ or $u = -1.$  If $u = 1,$ then $v = -3.$  If $u = -1,$ then $v = 3.$  Thus, the square roots of $-8 - 6i$ are $1 - 3i$ and $-1 + 3i.$
+
+For the square root $1 - 3i,$
+\[z = 3 + 1 - 3i = 4 - 3i.\]This gives the solution $(a,b) = (4,-3).$
+
+For the square root $-1 + 3i,$
+\[z = 3 - 1 + 3i = 2 + 3i.\]This gives the solution $(a,b) = (2,3).$
+
+The final answer is then $4 + (-3) + 2 + 3 = \boxed{6}.$",Level 5,Intermediate Algebra
+"Seien $a,$ $b,$ und $c$ positive reelle Zahlen. Finden Sie den Minimalwert von
+\[\frac{(a + b + c)[(a + b)^2 + (a + b + 4c)^2]}{abc}.\]","By AM-GM,
+\[a + b \ge 2 \sqrt{ab},\]so $(a + b)^2 \ge 4ab.$
+
+Also by AM-GM,
+\[(a + 2c) + (b + 2c) \ge 2 \sqrt{(a + 2c)(b + 2c)},\]so $(a + b + 4c)^2 \ge 4(a + 2c)(b + 2c).$
+
+Hence,
+\begin{align*}
+(a + b)^2 + (a + b + 4c)^2 &\ge 4ab + 4(a + 2c)(b + 2c) \\
+&= 8ab + 8ac + 8bc + 16c^2 \\
+&= 8(ab + ac + bc + 2c^2).
+\end{align*}By AM-GM,
+\begin{align*}
+ab + ac + bc + 2c^2 &= \frac{ab}{2} + \frac{ab}{2} + ac + bc + 2c^2 \\
+&\ge 5 \sqrt[5]{\frac{ab}{2} \cdot \frac{ab}{2} \cdot ac \cdot bc \cdot 2c^2} \\
+&= 5 \sqrt[5]{\frac{a^3 b^3 c^4}{2}}.
+\end{align*}Also by AM-GM,
+\begin{align*}
+a + b + c &= \frac{a}{2} + \frac{a}{2} + \frac{b}{2} + \frac{b}{2} + c \\
+&\ge 5 \sqrt[5]{\frac{a}{2} \cdot \frac{a}{2} \cdot \frac{b}{2} \cdot \frac{b}{2} \cdot c} \\
+&= 5 \sqrt[5]{\frac{a^2 b^2 c}{16}}.
+\end{align*}Hence,
+\begin{align*}
+\frac{(a + b + c)[(a + b)^2 + (a + b + 4c)^2]}{abc} &\ge 8 \cdot \frac{5 \sqrt[5]{\frac{a^2 b^2 c}{16}} \cdot 5 \sqrt[5]{\frac{a^3 b^3 c^4}{2}}}{abc} \\
+&= 100.
+\end{align*}Equality occurs when $a = b = 2$ and $c = 1,$ so the minimum value is $\boxed{100}.$",Level 5,Intermediate Algebra
+"Sei $P(x)$ ein monisches Polynom dritten Grades. Angenommen, $P(x)$ hat den Rest $R(x)$ bei der Division durch $(x - 1)(x - 4)$ und den Rest $2R(x)$ bei der Division durch $(x - 2)(x - 3)$. Gegeben ist $P(0) = 5$, finde $P(5)$.","Let $P(x) = x^3 + ax^2 + bx + 5.$  The remainder $R(x)$ has degree at most 1, so let $R(x) = cx + d.$
+
+When $P(x)$ is divided by $(x - 1)(x - 4),$ the quotient is of the form $x + p,$ so write
+\[P(x) = (x + p)(x - 1)(x - 4) + R(x) = (x + p)(x - 1)(x - 4) + cx + d.\]Comparing the coefficients of $x^2,$ we get $a = p - 5.$
+
+When $P(x)$ is divided by $(x - 2)(x - 3),$ the quotient is of the form $x + q,$ so write
+\[P(x) = (x + q)(x - 2)(x - 3) + 2R(x) = (x + q)(x - 2)(x - 3) + 2(cx + d).\]Comparing the coefficients of $x^2,$ we get $a = q - 5.$  Hence, $p = q.$
+
+Comparing the coefficients of $x$ in both equations, we get
+\begin{align*}
+b &= c - 5p + 4, \\
+b &= 2c - 5p + 6.
+\end{align*}Subtracting these equations, we get $c + 2 = 0,$ so $c = -2.$
+
+Comparing the constant coefficients in the first equation, we get $5 = 4p + d.$  Therefore,
+\[P(5) = (5 + p)(4)(1) - 10 + d = 10 + 4p + d = \boxed{15}.\]",Level 5,Intermediate Algebra
+"Es gibt ein Polynom $P$, sodass für jede reelle Zahl $x$ gilt: \[ x^{512} + x^{256} + 1 = (x^2 + x + 1) P(x). \] Wenn $P$ in Standardpolynomform geschrieben wird, wie viele seiner Koeffizienten sind ungleich Null?","We can write
+\begin{align*}
+x^{512} + x^{256} + 1 &= (x^{512} - x^2) + (x^{256} - x) + (x^2 + x + 1) \\
+&= x^2 (x^{510} - 1) + x (x^{255} - 1) + (x^2 + x + 1) \\
+&= x^2 (x^3 - 1)(x^{507} + x^{504} + x^{501} + \dots + x^3 + 1) \\
+&\quad + x (x^3 - 1)(x^{252} + x^{249} + x^{246} + \dots + x^3 + 1) \\
+&\quad + x^2 + x + 1 \\
+&= (x - 1)(x^2 + x + 1)(x^{509} + x^{506} + x^{503} + \dots + x^5 + x^2) \\
+&\quad + (x - 1)(x^2 + x + 1)(x^{253} + x^{250} + x^{247} + \dots + x^4 + x) \\
+&\quad + x^2 + x + 1 \\
+&= (x^2 + x + 1)(x^{510} - x^{509} + x^{507} - x^{506} + x^{504} - x^{503} + \dots + x^6 - x^5 + x^3 - x^2) \\
+&\quad + (x^2 + x + 1)(x^{254} - x^{253} + x^{251} - x^{250} + x^{248} - x^{247} + \dots + x^5 - x^4 + x^2 - x) \\
+&\quad + x^2 + x + 1.
+\end{align*}Thus,
+\begin{align*}
+P(x) &= (x^{510} - x^{509} + x^{507} - x^{506} + x^{504} - x^{503} + \dots + x^6 - x^5 + x^3 - x^2) \\
+&\quad + (x^{254} - x^{253} + x^{251} - x^{250} + x^{248} - x^{247} + \dots + x^5 - x^4 + x^2 - x) + 1 \\
+&= x^{510} - x^{509} + x^{507} - x^{506} + \dots + x^{258} - x^{257} \\
+&\quad + x^{255} - x^{254} + x^{252} - x^{251} + \dots + x^3 - x^2 \\
+&\quad + x^{254} - x^{253} + x^{251} - x^{250} + \dots + x^2 - x + 1 \\
+&= x^{510} - x^{509} + x^{507} - x^{506} + \dots + x^{258} - x^{257} \\
+&\quad + x^{255} - x^{253} + x^{252} - x^{250} + \dots + x^3 - x + 1.
+\end{align*}Among $x^{510},$ $-x^{509},$ $x^{507},$ $-x^{506},$ $\dots,$ $x^{258},$ $-x^{257},$ there are 170 nonzero coefficients.
+
+Among $x^{255},$ $-x^{253},$ $x^{252},$ $-x^{250},$ $\dots,$ $x^3,$ $-x,$ there are another 170 nonzero coefficients.
+
+The final term of 1 gives us a total of $\boxed{341}$ nonzero coefficients.",Level 5,Intermediate Algebra
+"Ermitteln Sie alle Werte von \( k \), sodass sich die Graphen von \( x^2 + y^2 = 4 + 12x + 6y \) und \( x^2 + y^2 = k + 4x + 12y \) schneiden. Geben Sie Ihre Antwort in Intervallnotation an.","Completing the square in the first equation, we get
+\[(x - 6)^2 + (y - 3)^2 = 7^2,\]which represents a circle centered at $(6,3)$ with radius 7.
+
+Completing the square in the second equation, we get
+\[(x - 2)^2 + (y - 6)^2 = k + 40,\]which represents a circle centered at $(2,6)$ with radius $\sqrt{k + 40}.$
+
+[asy]
+unitsize(0.3 cm);
+
+draw(Circle((6,3),7),red);
+draw(Circle((2,6),2),blue);
+draw(Circle((2,6),12),blue);
+
+dot(""$(6,3)$"", (6,3), NE);
+dot((2,6));
+label(""$(2,6)$"", (2,6), NE, UnFill);
+[/asy]
+
+The distance between the centers is $\sqrt{4^2 + 3^2} = 5,$ so the two circles intersect when the radius of the second circle is between $7 - 5 = 2$ and $7 + 5 = 12.$  This gives us
+\[2^2 \le k + 40 \le 12^2,\]or $k \in \boxed{[-36,104]}.$",Level 5,Intermediate Algebra
+"Wenn
+\[f(n + 1) = (-1)^{n + 1} n - 2f(n)\]
+für $n \ge 1,$ und $f(1) = f(1986),$ berechnen Sie
+\[f(1) + f(2) + f(3) + \dots + f(1985).\]","We can list the equations
+\begin{align*}
+f(2) &= 1 - 2f(1), \\
+f(3) &= -2 - 2f(2), \\
+f(4) &= 3 - 2f(3), \\
+f(5) &= -4 - 2f(4), \\
+&\dots, \\
+f(1985) &= -1984 - 2f(1984), \\
+f(1986) &= 1985 - 2f(1985).
+\end{align*}Adding these equations, we get
+\[f(2) + f(3) + \dots + f(1986) = (1 - 2 + 3 - 4 + \dots + 1983 - 1984 + 1985) - 2f(1) - 2f(2) - \dots - 2f(1985).\]To find $1 - 2 + 3 - 4 + \dots + 1983 - 1984 + 1985,$ we can pair the terms
+\begin{align*}
+1 - 2 + 3 - 4 + \dots + 1983 - 1984 + 1985 &= (1 - 2) + (3 - 4) + \dots + (1983 - 1984) + 1985 \\
+&= (-1) + (-1) + \dots + (-1) + 1985 \\
+&= -\frac{1984}{2} + 1985 \\
+&= 993.
+\end{align*}Hence,
+\[f(2) + f(3) + \dots + f(1986) = 993 - 2f(1) - 2f(2) - \dots - 2f(1985).\]Then
+\[2f(1) + 3f(2) + 3f(3) + \dots + 3f(1985) + f(1986) = 993.\]Since $f(1986) = f(1),$
+\[3f(1) + 3f(2) + 3f(3) + \dots + 3f(1985) = 993.\]Therefore, $f(1) + f(2) + f(3) + \dots + f(1985) = \boxed{331}.$",Level 5,Intermediate Algebra
+"Sei $n$ eine positive Ganzzahl. Vereinfachen Sie den Ausdruck
+\[\frac{(2^4 + \frac{1}{4})(4^4 + \frac{1}{4}) \dotsm [(2n)^4 + \frac{1}{4}]}{(1^4 + \frac{1}{4})(3^4 + \frac{1}{4}) \dotsm [(2n - 1)^4 + \frac{1}{4}]}.\]","Let
+\[f(m) = m^4 + \frac{1}{4} = \frac{4m^4 + 1}{4}.\]We can factor this with a little give and take:
+\begin{align*}
+f(m) &= \frac{4m^4 + 1}{4} \\
+&= \frac{4m^4 + 4m^2 + 1 - 4m^2}{4} \\
+&= \frac{(2m^2 + 1)^2 - (2m)^2}{4} \\
+&= \frac{(2m^2 + 2m + 1)(2m^2 - 2m + 1)}{4}.
+\end{align*}Now, let $g(m) = 2m^2 + 2m + 1.$  Then
+\[g(m - 1) = 2(m - 1)^2 + 2(m - 1) + 1 = 2m^2 - 2m + 1.\]Hence,
+\[f(m) = \frac{g(m) g(m - 1)}{4}.\]Therefore,
+\begin{align*}
+\frac{(2^4 + \frac{1}{4})(4^4 + \frac{1}{4}) \dotsm [(2n)^4 + \frac{1}{4}]}{(1^4 + \frac{1}{4})(3^4 + \frac{1}{4}) \dotsm [(2n - 1)^4 + \frac{1}{4}]} &= \frac{f(2) f(4) \dotsm f(2n)}{f(1) f(3) \dotsm f(2n - 1)} \\
+&= \frac{\frac{g(2) g(1)}{4} \cdot \frac{g(4) g(3)}{4} \dotsm \frac{g(2n) g(2n - 1)}{4}}{\frac{g(1) g(0)}{4} \cdot \frac{g(3) g(2)}{4} \dotsm \frac{g(2n - 1) g(2n - 2)}{4}} \\
+&= \frac{g(2n)}{g(0)} \\
+&= 2(2n)^2 + 2(2n) + 1 \\
+&= \boxed{8n^2 + 4n + 1}.
+\end{align*}",Level 5,Intermediate Algebra
+"Betrachten Sie alle Polynome einer komplexen Variablen, $P(z)=4z^4+az^3+bz^2+cz+d$, wobei $a,b,c,$ und $d$ ganze Zahlen sind, $0\le d\le c\le b\le a\le 4$, und das Polynom eine Nullstelle $z_0$ mit $|z_0|=1$ hat. Was ist die Summe aller Werte $P(1)$ über alle Polynome mit diesen Eigenschaften?","First, we consider the cases where $z_0 = 1$ and $z_0 = -1.$  Note that
+\[P(1) = 4 + a + b + c + d \ge 4,\]so $z = 1$ cannot be a root of $P(z).$
+
+If $z = -1$ is a root of $P(z),$ then
+\[P(-1) = 4 - a + b - c + d = (4 - a) + (b - c) + d = 0.\]But $4 - a \ge 0,$ $b - c \ge 0,$ and $d \ge 0,$ so we must have $a = 4,$ $b = c,$ and $d = 0.$  Conversely, if $a = 4,$ $b = c,$ and $d = 0,$ then
+\[P(-1) = 4 - a + b - c + d = (4 - a) + (b - c) + d = 0,\]so $z = -1$ is a root.  In this case,
+\[P(1) = 4 + a + b + c + d = 4 + 4 + b + b = 8 + 2b.\]The sum of all possible values of $P(1)$ are then
+\[\sum_{b = 0}^4 (8 + 2b) = 60.\]Having exhausted the cases where $z_0 = 1$ or $z_0 = -1,$ we can then assume that $z_0$ is not real.  Let $z_0 = x_0 + iy_0,$ where $x_0$ and $y_0$ are real numbers, $y_0 \neq 0.$  Since $|z_0| = 1,$ $x_0^2 + y_0^2 = 1.$  And since the coefficients of $P(z)$ are real, $x_0 - iy_0$ must also be a root, so
+\[(z - x_0 - iy_0)(z - x_0 + iy_0) = z^2 - 2x_0z + x_0^2 + y_0^2 = z^2 - 2x_0 z + 1\]must be a factor of $P(z).$  Then
+\[P(z) = (z^2 - 2x_0 z + 1)(4z^2 + pz + d)\]for some real number $p.$  Expanding, we get
+\[P(z) = 4z^4 + (p - 8x_0) z^3 + (d - 2px_0 + 4) z^2 + (p - 8x_0) z + d.\]Comparing coefficients, we get
+\begin{align*}
+p - 8x_0 &= a, \\
+d - 2px_0 + 4 &= b, \\
+p - 2dx_0 &= c.
+\end{align*}Subtracting the first and third equations, we get $2dx_0 - 8x_0 = a - c,$ so
+\[2(d - 4) x_0 = a - c. \quad (*)\]If $d = 4,$ then $a = c.$  In fact, the chain $d \le c \le b \le a \le 4$ forces $a = b = c = d = 4,$ so
+\[P(z) = 4z^4 + 4z^3 + 4z^2 + 4z + 4 = 4(z^4 + z^3 + z^2 + z + 1) = 0.\]If $z^4 + z^3 + z^2 + z + 1 = 0,$ then
+\[(z - 1)(z^4 + z^3 + z^2 + z + 1) = 0,\]which becomes $z^5 - 1 = 0.$  Then $z^5 = 1,$ so $|z^5| = 1.$  Hence, $|z|^5 = 1,$ so $|z| = 1.$  This confirms that all the roots of $z^4 + z^3 + z^2 + z + 1$ have magnitude 1, and $P(1) = 20.$
+
+Otherwise, we can assume that $d \neq 4.$  Then from equation $(*),$
+\[2x_0 = \frac{a - c}{d - 4}.\]Multiplying the equation $p - 8x_0 = a$ by $d,$ we get
+\[dp - 8dx_0 = ad.\]Multiplying the equation $p - 2dx_0 = c$ by 4, we get
+\[4p - 8dx_0 = 4c.\]Subtracting these equations, we get $dp - 4p = ad - 4c,$ so
+\[p = \frac{ad - 4c}{d - 4}.\]Let
+\[k = 2px_0 = 2x_0 \cdot p = \frac{a - c}{d - 4} \cdot \frac{ad - 4c}{d - 4} = \frac{(a - c)(ad - 4c)}{(d - 4)^2}.\]Then from the equation $d - 2px_0 + 4 = b,$ $k = d - b + 4.$  Since $b \le 4,$ $k \ge 0.$  We then divide into the cases where $a = c$ and $a > c.$
+
+Case 1: $a=c$.
+
+In this case, $k=0$ and $b=d+4$, so $a=b=c=4$ and $d=0$.  We have already covered these possibilities when we looked at the case where $z = -1$ was a root of $P(z).$
+
+Case 2: $a>c\geq 0$.
+
+Since $k\geq 0$, we have $ad-4c\geq 0,$ or $ad \ge 4c$.  However, $ad \leq 4c$, so $ad = 4c$.  For this to hold, we must have $c = d.$  Then we obtain $k=0$ again. In this case, $b=d+4$, so $a=b=4$ and $c=d=0,$ and
+\[P(z) = 4z^4 + 4z^3 + 4z^2 = 4z^2 (z^2 + z + 1).\]The roots of $z^2 + z + 1 = 0$ are $z = -\frac{1}{2} \pm \frac{\sqrt{3}}{2} i,$ which have magnitude 1, and $P(1) = 12.$
+
+Therefore, the desired sum is $60 + 20 + 12 = \boxed{92}$.",Level 5,Intermediate Algebra
+"Suchen Sie den kleinstmöglichen Wert des größten der Ausdrücke $xy$, $1 - x - y + xy$ und $x + y - 2xy$, wenn $0 \leq x \leq y \leq 1$.","We claim that the minimum is $\frac{4}{9}.$  When $x = y = \frac{1}{3},$
+\begin{align*}
+xy &= \frac{1}{9}, \\
+(1 - x)(1 - y) &= \frac{4}{9}, \\
+x + y - 2xy &= \frac{4}{9}.
+\end{align*}The rest is showing that one of $xy,$ $(1 - x)(1 - y),$ $x + y - 2xy$ is always at least $\frac{4}{9}.$
+
+Note that
+\[xy + (1 - x - y + xy) + (x + y - 2xy) = 1.\]This means if any of these three expressions is at most $\frac{1}{9},$ then the other two add up to at least $\frac{8}{9},$ so one of them must be at least $\frac{4}{9}.$
+
+Let $s = x + y$ and $p = xy.$  Then
+\[s^2 - 4p = (x + y)^2 - 4xy = (x - y)^2 \ge 0.\]Assume $x + y - 2xy = s - 2p < \frac{4}{9}.$  Then
+\[0 \le s^2 - 4p < \left( 2p + \frac{4}{9} \right)^2 - 4p.\]This simplifies to $81p^2 - 45p + 4 > 0,$ which factors as $(9p - 1)(9p - 4) > 0.$  This means either $p < \frac{1}{9}$ or $p > \frac{4}{9}$; either way, we are done.
+
+Therefore, the maximum value is $\boxed{\frac{4}{9}}.$",Level 5,Intermediate Algebra
+"Ermitteln Sie die Anzahl der geordneten Paare $(a, b)$ reeller Zahlen, sodass
+
+- $a$ eine Wurzel der Gleichung $x^2 + ax + b = 0$ ist, und
+- $b$ eine Wurzel der Gleichung $x^2 + ax + b = 0$ ist.","Since $x = a$ is a root of $x^2 + ax + b = 0,$
+\[a^2 + a^2 + b = 0,\]or $2a^2 + b = 0,$ so $b = -2a^2.$
+
+Since $x = b$ is a root of $x^2 + ax + b = 0,$
+\[b^2 + ab + b = 0.\]This factors as $b(b + a + 1) = 0,$ so $b = 0$ or $a + b + 1 = 0.$
+
+If $b = 0,$ then $-2a^2 = 0,$ so $a = 0.$
+
+If $a + b + 1 = 0,$ then $-2a^2 + a + 1 = 0.$  This equation factors as $-(a - 1)(2a + 1) = 0,$ so $a = 1$ or $a = -\frac{1}{2}.$  If $a = 1,$ then $b = -2.$  If $a = -\frac{1}{2},$ then $b = -\frac{1}{2}.$
+
+Therefore, there are $\boxed{3}$ ordered pairs $(a,b),$ namely $(0,0),$ $(1,-2),$ and $\left( -\frac{1}{2}, -\frac{1}{2} \right).$",Level 5,Intermediate Algebra
+"Sei $P(x)$ ein Polynom vom Grad 2011, sodass $P(1) = 0,$ $P(2) = 1,$ $P(4) = 2,$ $\dots,$ $P(2^{2011}) = 2011.$ Dann kann der Koeffizient von $x$ in $P(x)$ in der Form  
+\[a - \frac{1}{b^c},\]  
+ausgedrückt werden, wobei $a,$ $b,$ $c$ positive ganze Zahlen sind und $b$ eine Primzahl ist. Finden Sie $a + b + c.$","We have that $P(2^n) = n$ for $0 \le n \le 2011.$
+
+Let $Q(x) = P(2x) - P(x) - 1.$  Then
+\begin{align*}
+Q(2^n) &= P(2^{n + 1}) - P(2^n) - 1 \\
+&= n + 1 - n - 1 \\
+&= 0
+\end{align*}for $0 \le n \le 2010.$  Since $Q(x)$ has degree 2011,
+\[Q(x) = c(x - 1)(x - 2)(x - 2^2) \dotsm (x - 2^{2010})\]for some constant $c.$
+
+Also, $Q(0) = P(0) - P(0) = -1.$  But
+\[Q(0) = c(-1)(-2)(-2^2) \dotsm (-2^{2010}) = -2^{1 + 2 + \dots + 2010} c = -2^{2010 \cdot 2011/2} c,\]so $c = \frac{1}{2^{2010 \cdot 2011/2}},$ and
+\[Q(x) = \frac{(x - 1)(x - 2)(x - 2^2) \dotsm (x - 2^{2010})}{2^{2010 \cdot 2011/2}}.\]Let
+\[P(x) = a_{2011} x^{2011} + a_{2010} x^{2010} + \dots + a_1 x + a_0.\]Then
+\[P(2x) = 2^{2011} a_{2011} x^{2011} + 2^{2010} a_{2010} x^{2010} + \dots + 2a_1 x + a_0,\]so the coefficient of $x$ in $Q(x)$ is $2a_1 - a_1 = a_1.$  In other words, the coefficients of $x$ in $P(x)$ and $Q(x)$ are the same.
+
+We can write $Q(x)$ as
+\[Q(x) = (x - 1) \left( \frac{1}{2} x - 1 \right) \left( \frac{1}{2^2} x - 1 \right) \dotsm \left( \frac{1}{2^{2010}} x - 1 \right).\]The coefficient of $x$ in $Q(x)$ is then
+\begin{align*}
+1 + \frac{1}{2} + \frac{1}{2^2} + \dots + \frac{1}{2^{2010}} &= \frac{1 + 2 + 2^2 + \dots + 2^{2010}}{2^{2010}} \\
+&= \frac{2^{2011} - 1}{2^{2010}} \\
+&= 2 - \frac{1}{2^{2010}}.
+\end{align*}The final answer is then $2 + 2 + 2010 = \boxed{2014}.$",Level 5,Intermediate Algebra
+"Betrachten Sie die Funktion $z(x,y)$, die das Paraboloid 
+\[z = (2x - y)^2 - 2y^2 - 3y\] 
+beschreibt. Archimedes und Brahmagupta spielen ein Spiel. Archimedes wählt zuerst $x$. Danach wählt Brahmagupta $y$. Archimedes möchte $z$ minimieren, während Brahmagupta $z$ maximieren möchte. Angenommen, Brahmagupta spielt optimal: Welchen Wert von $x$ sollte Archimedes wählen?","Expanding $z,$ we get
+\begin{align*}
+z &= 4x^2 - 4xy + y^2 - 2y^2 - 3y \\
+&= -y^2 - (4x + 3) y + 4x^2.
+\end{align*}After Archimedes chooses $x,$ Brahmagupta will choose
+\[y = -\frac{4x + 3}{2}\]in order to maximize $z.$  Then
+\begin{align*}
+z &= -\left( -\frac{4x + 3}{2} \right)^2 - (4x + 3) \left( -\frac{4x + 3}{2} \right)^2 + 4x^2 \\
+&= 8x^2 + 6x + \frac{9}{4}.
+\end{align*}To minimize this expression, Archimedes should choose $x = -\frac{6}{16} = \boxed{-\frac{3}{8}}.$",Level 5,Intermediate Algebra
+"Finden Sie den Minimalwert von
+\[2x^2 + 2xy + 4y + 5y^2 - x\]
+über alle reellen Zahlen $x$ und $y$.","We can write the expression as
+\begin{align*}
+2x^2 + 2xy + 4y + 5y^2 - x &= (x^2 + 2xy + y^2) + \left( x^2 - x + \frac{1}{4} \right) + (4y^2 + 4y + 1) - \frac{1}{4} - 1 \\
+&= (x + y)^2 + \left( x - \frac{1}{2} \right)^2 + (2y + 1)^2 - \frac{5}{4}.
+\end{align*}We see that the minimum value is $\boxed{-\frac{5}{4}},$ which occurs at $x = \frac{1}{2}$ and $y = -\frac{1}{2}.$",Level 5,Intermediate Algebra
+"Sei $p(x)$ ein Polynom vom Grad 100, so dass
+\begin{align*}
+p(1) &= 1, \\
+p(2) &= 2, \\
+p(3) &= 3, \\
+&\dots, \\
+p(99) &= 99, \\
+p(100) &= 100, \\
+p(101) &= 102.
+\end{align*}
+Finde $p(102)$.","Let $q(x) = p(x) - x.$  Then $q(x)$ has degree 100, and $q(1) = q(2) = \dots = q(100) = 0,$ so
+\[q(x) = c(x - 1)(x - 2) \dotsm (x - 100)\]for some constant $c.$  Since $p(101) = 102,$ $q(101) = 1.$  Setting $x = 101$ in the equation above, we get
+\[q(101) = 100! \cdot c,\]so $c = \frac{1}{100!}.$  Then
+\[q(x) = \frac{(x - 1)(x - 2) \dotsm (x - 100)}{100!}.\]In particular,
+\[q(102) = \frac{101 \cdot 100 \dotsm 2}{100!} = 101,\]so $p(102) = q(102) + 102 = 101 + 102 = \boxed{203}.$",Level 5,Intermediate Algebra
+"Bestimme die Anzahl der geordneten Tripel $(x, y, z)$ reeller Zahlen, die die folgenden Gleichungen erfüllen:
+\begin{align*}
+x + 2y + 4z &= 12, \\
+xy + 2xz + 4yz &= 22, \\
+xyz &= 6.
+\end{align*}","Let $a = x,$ $b = 2y,$ and $c = 4z.$  Then $x = a,$ $y = \frac{1}{2} b,$ and $z = \frac{1}{4} c,$ so the given system becomes
+\begin{align*}
+a + b + c &= 12, \\
+ab + ac + bc &= 44, \\
+abc &= 48.
+\end{align*}Then by Vieta's formulas, $a,$ $b,$ and $c$ are the roots of
+\[t^3 - 12t^2 + 44t - 48 = 0.\]This factors as $(t - 2)(t - 4)(t - 6) = 0,$ so $a,$ $b,$ $c$ are 2, 4, 6, in some order.
+
+There are $3! = 6$ ways to assign 2, 4, 6 to $a,$ $b,$ and $c.$  These produce $\boxed{6}$ different solutions $(x,y,z),$ via the substitution $x = a,$ $y = \frac{1}{2} b,$ $z = \frac{1}{4} c.$",Level 5,Intermediate Algebra
+"Sei
+\[x^{12} - 1 = p_1(x) p_2(x) \dotsm p_k(x),\]
+wobei jedes nicht-konstante Polynom $p_i(x)$ monisch mit ganzzahligen Koeffizienten ist und nicht weiter über die ganzen Zahlen faktorisiert werden kann. Finde $k.$","First, we can apply difference of squares, to get
+\[x^{12} - 1 = (x^6 - 1)(x^6 + 1).\]We can apply difference of squares to $x^6 - 1$:
+\[x^6 - 1 = (x^3 - 1)(x^3 + 1).\]These factor by difference of cubes and sum of cubes:
+\[(x^3 - 1)(x^3 + 1) = (x - 1)(x^2 + x + 1)(x + 1)(x^2 - x + 1).\]Then by sum of cubes,
+\[x^6 + 1 = (x^2 + 1)(x^4 - x^2 + 1).\]Thus, the full factorization over the integers is
+\[x^{12} - 1 = (x - 1)(x^2 + x + 1)(x + 1)(x^2 - x + 1)(x^2 + 1)(x^4 - x^2 + 1),\]and there are $\boxed{6}$ factors.",Level 5,Intermediate Algebra
+"Es gibt Konstanten $r,$ $s,$ und $t$, sodass 
+\[p(n) = rp(n - 1) + sp(n - 2) + tp(n - 3)\]
+für jedes quadratische Polynom $p(x)$ und jede Ganzzahl $n$ gilt. Geben Sie das geordnete Tripel $(r,s,t)$ ein.","Since this must hold for any quadratic, let's look at the case where $p(x) = x^2.$  Then the given equation becomes
+\[n^2 = r(n - 1)^2 + s(n - 2)^2 + t(n - 3)^2.\]This expands as
+\[n^2 = (r + s + t)n^2 + (-2r - 4s - 6t)n + r + 4s + 9t.\]Matching the coefficients on both sides, we get the system
+\begin{align*}
+r + s + t &= 1, \\
+-2r - 4s - 6t &= 0, \\
+r + 4s + 9t &= 0.
+\end{align*}Solving this linear system, we find $r = 3,$ $s = -3,$ and $t = 1.$
+
+We verify the claim: Let $p(x) = ax^2 + bx + c.$  Then
+\begin{align*}
+&3p(n - 1) - 3p(n - 2) + p(n - 3) \\
+&= 3(a(n - 1)^2 + b(n - 1) + c) - 3(a(n - 2)^2 + b(n - 2) + c) + a(n - 3)^2 + b(n - 3) + c \\
+&= a(3(n - 1)^2 - 3(n - 2)^2 + (n - 3)^2) + b(3(n - 1) - 3(n - 2) + (n - 3)) + c(3 - 3 + 1) \\
+&= an^2 + bn + c \\
+&= p(n).
+\end{align*}Thus, the claim is true, and $(r,s,t) = \boxed{(3,-3,1)}.$",Level 5,Intermediate Algebra
+"Seien $a$ und $b$ reelle Zahlen. Seien $r,$ $s,$ und $t$ die Wurzeln von \[f(x) = x^3 + ax^2 + bx - 1,\] und sei $g(x) = x^3 + mx^2 + nx + p$ ein Polynom mit den Wurzeln $r^2,$ $s^2,$ und $t^2.$ Wenn $g(-1) = -5,$ finde den größtmöglichen Wert für $b.$","Because $g$ has leading coefficient $1$ and roots $r^2,$ $s^2,$ and $t^2,$ we have \[g(x) = (x-r^2)(x-s^2)(x-t^2)\]for all $x.$ In particular, \[\begin{aligned}-5 = g(-1) &= (-1-r^2)(-1-s^2)(-1-t^2) \\ 5 &= (1+r^2)(1+s^2)(1+t^2). \end{aligned}\]By Vieta's formulas on $f(x),$ we have $r+s+t=-a,$ $rs+st=tr=b,$ and $rst=1.$ Using this, there are two ways to simplify this sum in terms of $a$ and $b$:
+
+First option: Expand and repeatedly apply Vieta. We have \[5 = 1 + (r^2+s^2+t^2) + (r^2s^2+s^2t^2+t^2r^2) + r^2s^2t^2.\]We immediately have $r^2s^2t^2 = (rst)^2 = 1.$ To get $r^2+s^2+t^2$ in terms of $a$ and $b,$ we write \[r^2+s^2+t^2 = (r+s+t)^2 - 2(rs+st+tr) = a^2 - 2b.\]And to get $r^2s^2+s^2t^2+t^2r^2$ in terms of $a$ and $b,$ we write \[\begin{aligned} r^2s^2+s^2t^2+t^2r^2 &= (rs+st+tr)^2 - 2(r^2st+rs^2t+rst^2) \\ &= (rs+st+tr)^2 - 2rst(r+s+t)= b^2 + 2a. \end{aligned}\]Thus, \[5= 1 + a^2 - 2b + b^2 + 2a + 1,\]which we can write as \[5 = (a+1)^2 + (b-1)^2.\]
+Second option: dip into the complex plane. Since $1+z^2=(i-z)(-i-z),$ we can rewrite the equation as \[5 = (i-r)(-i-r)(i-s)(-i-s)(i-t)(-i-t).\]Now, for all $x,$ we have \[f(x) = (x-r)(x-s)(x-t),\]so in particular, $f(i) = (i-r)(i-s)(i-t)$ and $f(-i) = (-i-r)(-i-s)(-i-t).$ Thus, \[5 = f(i) f(-i).\]We have $f(x) = x^3 + ax^2 + bx - 1,$ so \[\begin{aligned} 5 &= (i^3 + ai^2 + bi - 1)((-i)^3 + a(-i)^2 + b(-i) - 1)\\ & =(-(a+1)+ (b-1)i)(-(a+1)- (b-1)i), \end{aligned}\]which simplifies to \[5 = (a+1)^2 + (b-1)^2.\]
+
+In either case, the equation we get describes the circle in the $ab-$plane with center $(-1, 1)$ and radius $\sqrt5.$ It follows that the greatest possible value for $b$ is $\boxed{1+\sqrt5}.$",Level 5,Intermediate Algebra
+"Sei $\omega$ eine komplexe Zahl, sodass
+\[\omega + \frac{1}{\omega} = 1.\]
+Finde alle möglichen Werte von
+\[\omega^n + \frac{1}{\omega^n},\]
+wobei $n$ eine positive Ganzzahl ist.
+
+**Korrigierte Übersetzung:**
+
+Sei $\omega$ eine komplexe Zahl, sodass
+\[\omega + \frac{1}{\omega} = 1.\]
+Finde alle möglichen Werte von
+\[\omega^n + \frac{1}{\omega^n},\]
+wobei $n$ eine positive Ganzzahl ist.","From the equation $\omega + \frac{1}{\omega} = 1,$ $\omega^2 + 1 = \omega,$ so
+\[\omega^2 - \omega + 1 = 0.\]Then $(\omega + 1)(\omega^2 - \omega + 1) = 0,$ which expands as $\omega^3 + 1 = 0.$  Hence, $\omega^3 = -1.$
+
+We divide into cases where $n$ is of the form $3k,$ $3k + 1,$ and $3k + 2.$
+
+If $n = 3k,$ then
+\[\omega^n + \frac{1}{\omega^n} = \omega^{3k} + \frac{1}{\omega^{3k}} = (\omega^3)^k + \frac{1}{(\omega^3)^k} = (-1)^k + \frac{1}{(-1)^k}.\]If $k$ is even, then this becomes 2, and if $k$ is odd, then this becomes $-2.$
+
+If $n = 3k + 1,$ then
+\begin{align*}
+\omega^n + \frac{1}{\omega^n} &= \omega^{3k + 1} + \frac{1}{\omega^{3k + 1}} = (\omega^3)^k \omega + \frac{1}{(\omega^3)^k \omega} \\
+&= (-1)^k \omega + \frac{1}{(-1)^k \omega} \\
+&= (-1)^k \frac{\omega^2 + 1}{\omega} \\
+&= (-1)^k \frac{-\omega}{\omega} \\
+&= (-1)^k.
+\end{align*}This can be $1$ or $-1$.
+
+And if $n = 3k + 2,$ then
+\begin{align*}
+\omega^n + \frac{1}{\omega^n} &= \omega^{3k + 2} + \frac{1}{\omega^{3k + 2}} = (\omega^3)^k \omega^2 + \frac{1}{(\omega^3)^k \omega^2} \\
+&= (-1)^k \omega^2 + \frac{1}{(-1)^k \omega^2} \\
+&= (-1)^k \frac{\omega^4 + 1}{\omega^2} \\
+&= (-1)^k \frac{-\omega + 1}{\omega^2} \\
+&= (-1)^k \frac{-\omega^2}{\omega^2} \\
+&= -(-1)^k.
+\end{align*}This can be $1$ or $-1$.
+
+Hence, the possible values of $\omega^n + \frac{1}{\omega^n}$ are $\boxed{-2,-1,1,2}.$",Level 5,Intermediate Algebra
+"Sei $z = a + bi$ die komplexe Zahl mit $|z| = 5$ und $b > 0$, sodass der Abstand zwischen $(1 + 2i)z^3$ und $z^5$ maximiert wird. Berechnen Sie $z^4$.","The distance between $(1+2i)z^3$ and $z^5$ is \[\begin{aligned} |(1+2i)z^3 - z^5| &= |z^3| \cdot |(1+2i) - z^2| \\ &= 5^3 \cdot |(1+2i) - z^2|, \end{aligned}\]since we are given $|z| = 5.$ We have $|z^2| = 25;$ that is, in the complex plane, $z^2$ lies on the circle centered at $0$ of radius $25.$ Given this fact, to maximize the distance from $z^2$ to $1+2i,$ we should choose $z^2$ to be a negative multiple of $1+2i$ (on the ""opposite side"" of $1+2i$ relative to the origin $0$). Since $|1+2i| = \sqrt{5}$ and $z^2$ must have magnitude $25$, scaling $1+2i$ by a factor of $-\frac{25}{\sqrt{5}} = -5\sqrt{5}$ gives the correct point: \[ z^2 = -5\sqrt{5} (1+2i).\]Then \[z^4 = 125(-3 + 4i) = \boxed{-375 + 500i}.\](Note that the restriction $b>0$ was not used. It is only needed to ensure that the number $z$ in the problem statement is uniquely determined, since there are two complex numbers $z$ with $|z| = 5$ such that $|(1+2i)z^3 - z^5|$ is maximized, one the negation of the other.)",Level 5,Intermediate Algebra
+"Berechnen Sie $17^{-1}\pmod{83}$. Geben Sie Ihre Antwort als Residuum von $0$ bis $82$ (einschließlich) an. (Es kann hilfreich sein, zu berücksichtigen, dass $17 \cdot 5 = 85$.)","We may begin by noting that $17\cdot 5=85\equiv 2\pmod{83}$. However, we are looking for $n$ such that $17\cdot n\equiv 1\pmod{83}$.
+
+Note that $2\cdot 42=84\equiv 1\pmod{83}$. Therefore, \begin{align*}
+17\cdot 5\cdot 42 &\equiv 2\cdot 42 \\
+&\equiv 1\pmod{83},
+\end{align*}which tells us that $17$ and $5\cdot 42$ are each other's inverses modulo $83$. We can evaluate $5\cdot 42=210$, but this is not in the range $0$ to $82$, so we take its residue $\pmod{83}$, which is $44$.
+
+Therefore, $17^{-1}\equiv \boxed{44}\pmod{83}$.
+
+We may check our answer: $17\cdot 44 = 748 = 9\cdot 83+1 \equiv 1\pmod{83}$, so our answer is correct.",Level 5,Number Theory
+"Angenommen, $N$ kann in Basis $6$ als $531340_6$ und in Basis $8$ als $124154_8$ geschrieben werden. Wie lautet in Basis $10$ der Rest, wenn $N$ durch $210$ geteilt wird?","The prime factorization of $210 = 2 \cdot 3 \cdot 5 \cdot 7$. By the Chinese Remainder Theorem, it suffices to find the residues of $N$ modulo $5$, $6$, and $7$. Since the units digit of $N$ in base $6$ is equal to $0$, it follows that $N$ is divisible by $6$. Also, we note that $N$ is congruent modulo $b-1$ to the sum of its base $b$ digits. Indeed, if $N$ can be represented as $(\overline{a_ka_{k-1}\cdots a_0})_b$, then \begin{align*}N &\equiv a_k \cdot b^k + a_{k-1} \cdot b^{k-1} + \cdots + a_1 \cdot b + a_0 \\ &\equiv a_k \cdot ((b-1) + 1)^k + \cdots + a_1 \cdot ((b-1) + 1) + a_0 \\
+& \equiv a_k + a_{k-1} + \cdots + a_1 + a_0 \pmod{b-1}.
+\end{align*}It follows that $N \equiv 5+3+1+3+4+0 \equiv 1 \pmod{5}$ and that $N \equiv 1 + 2 + 4 + 1 + 5 + 4 \equiv 3 \pmod{7}.$ By the Chinese Remainder Theorem and inspection, we determine that $N \equiv 31 \pmod{35}$, so that (by the Chinese Remainder Theorem again) $N \equiv \boxed{66} \pmod{210}$.",Level 5,Number Theory
+"Was ist der Residuum modulo $16$ der Summe der Modulo-$16$-Inversen der ersten $8$ positiven ungeraden ganzen Zahlen?
+
+Geben Sie Ihre Antwort als Ganzzahl von $0$ bis einschließlich $15$ an.","Since $16$ is even and only has a prime factor of $2$, all of the odd numbers are relatively prime with $16$ and their modular inverses exist. Furthermore, the inverses must be distinct: suppose that $a^{-1} \equiv b^{-1} \pmod{16}$. Then, we can multiply both sides of the congruence by $ab$ to obtain that $b \equiv ab \cdot a^{-1} \equiv ab \cdot b^{-1} \equiv a \pmod{16}$.
+
+Also, the modular inverse of an odd integer $\mod{16}$ must also be odd: if the modular inverse of $m$ was of the form $2n$, then $2mn = 16k + 1$, but the left-hand side is even and the right-hand side is odd.
+
+Thus, the set of the inverses of the first $8$ positive odd integers is simply a permutation of the first $8$ positive odd integers. Then, \begin{align*}&1^{-1} + 3^{-1} + \cdots + 15^{-1} \\
+&\equiv 1 + 3 + \cdots + 15 \\ &\equiv 1 + 3 + 5 + 7 + (-7) + (-5) + (-3) + (-1) \\ &\equiv \boxed{0} \pmod{16}.\end{align*}",Level 5,Number Theory
+"Was ist die Summe aller ganzzahligen Werte von $x$, sodass $\frac{67}{2x - 23}$ eine ganze Zahl ist?","Checking the primes less than $\sqrt{67}$, namely 2, 3, 5, and 7, as potential divisors, we find that 67 is prime. Thus, $\frac{67}{2x-23}$ is an integer if and only if $2x-23=\pm1$ or $2x-23=\pm67$. The first equation yields $x=12$ or $x=11$ and the second gives $x=45$ or $x=-22$. The sum is $12+11+45-22=\boxed{46}$.",Level 5,Number Theory
+"Sei $n = 3^{17} + 3^{10}$. Es ist bekannt, dass $11$ durch $n+1$ teilbar ist. Wenn $n$ in der Basis $10$ als $ABCACCBAB$ geschrieben werden kann, wobei $A, B, C$ verschiedene Ziffern sind, sodass $A$ und $C$ ungerade sind und $B$ nicht durch $3$ teilbar ist, ermitteln Sie $100A + 10B + C$.","Notice that $3^{17} + 3^{10} = 3^{10} \cdot (3^7 + 1)$; thus $9$ divides into $3^{17} + 3^{10}$. Furthermore, using the sum of seventh powers factorization, it follows that $3+1 = 4$ divides into $3^7 + 1$.
+
+Using the divisibility criterion for $4$, we know that $\overline{AB}$ must be divisible by $4$. Thus $B$ is even and not divisible by $3$. Also, $A$ is odd, so $\overline{AB} = 10A + B$, where $4$ does not divide into $10A$. Thus, $4$ cannot divide into $B$ either, otherwise $10A + B$ would not be divisible by $4$. Then, $B$ must be equal to $2$.
+
+Using the divisibility criterion for $9$, it follows that $3(A+B+C)$ is divisible by $9$, that is $3$ divides into $A+C+2$. Thus, $A+C = 4,7,10,13,16 \quad (*)$. Using the divisibility criterion for $11$, since \begin{align*}10^{8} \cdot A + 10^7 \cdot B + \cdots + B &\equiv (-1)^8 \cdot A + (-1)^7 \cdot B + \cdots + B \\ &\equiv A - B + \cdots + B \\ &\equiv -1 \pmod{11},\end{align*}then the alternating sum of digits, which works out to be $B+C-A \equiv -1 \pmod{11}$. Thus, $2+C-A$ is either equal to $10$ or $-1$, so $A-C = 3,-8$.
+
+In the former case when $A-C = 3$, summing with $(*)$ yields that $2A \in \{7,10,13,16,19\}$, of which only $A = 5$ fit the problem conditions. This yields that $C = 2$. However, we know that $B$ and $C$ are distinct, so we can eliminate this possibility. Thus, $A-C = -8$, of which only $C = 9, A = 1$ works. The answer is $\boxed{129}$.",Level 5,Number Theory
+"Bei einem Richtig-Falsch-Test mit 100 Aufgaben ist jede Frage, die ein Vielfaches von 4 ist, richtig, und alle anderen sind falsch. Wenn ein Schüler alle Aufgaben, die ein Vielfaches von 3 sind, als falsch und alle anderen als richtig markiert, wie viele der 100 Aufgaben werden dann korrekt beantwortet?","The student will answer a question correctly if
+
+Case 1: both the student and the answer key say it is true. This happens when the answer is NOT a multiple of 3 but IS a multiple of 4.
+
+Case 2. both the student and the answer key say it is false. This happens when the answer IS a multiple of 3 but is NOT a multiple of 4.
+
+Since the LCM of 3 and 4 is 12, the divisibility of numbers (in our case, correctness of answers) will repeat in cycles of 12. In the first 12 integers, $4$ and $8$ satisfy Case 1 and $3,6,$ and $9$ satisfy Case 2, so for every group of 12, the student will get 5 right answers. Since there are 8 full groups of 12 in 100, the student will answer at least $8 \cdot 5 = 40$ questions correctly. However, remember that we must also consider the leftover numbers 97, 98, 99, 100 and out of these, $99$ and $100$ satisfy one of the cases. So our final number of correct answers is $40 + 2 = \boxed{42}$.",Level 5,Number Theory
+"Eine zufällig ausgewählte dreistellige Zahl $n$ zur Basis 10 wird betrachtet. Wie hoch ist die Wahrscheinlichkeit, dass sowohl die Darstellung von $n$ zur Basis 9 als auch zur Basis 11 dreistellig ist?","The largest base-9 three-digit number is $9^3-1=728$ and the smallest base-11 three-digit number is $11^2=121$. There are $608$ integers that satisfy $121\le n\le 728$, and 900 three-digit numbers altogether, so the probability is $608/900=\boxed{\frac{152}{225}}$.",Level 5,Number Theory
+Was ist die Summe aller verschiedenen positiven zweistelligen Teiler von 144?,Prime factorize $144=2^4\cdot3^2$. The sum of the positive two-digit factors of 144 is $2^4+2\cdot3^2+2^2\cdot3+2^2\cdot3^2+2^3\cdot3+2^3\cdot3^2+2^4\cdot3=\boxed{226}.$,Level 5,Number Theory
+"Lupe ging in den Laden und bezahlte ihren Einkauf mit einem $\$10$-Schein. Sie stellte fest, dass die Ziffern des Betrags ihres Einkaufs so umgestellt werden konnten, dass der Betrag entstand, den sie als Wechselgeld zurückerhielt. Wenn der Einkaufsbetrag und der Wechselgeldbetrag unterschiedlich waren und jeder Betrag mindestens $\$1$ betrug, wie viele mögliche Wechselgeldbeträge hätte sie erhalten können?","First, for simplicity, let's make all the amounts of money into integers by considering them all in cents. For example, $\$5.43$ becomes 543. Let the purchase price be $A=A_1A_2A_3$ and the amount of change be $B_1B_2B_3$ where $A_1$ represents the first digit of $A$, $B_1$ represents the first digit of $B$, $A_2$ represents the second digit of $A$, etc.
+
+We know that $A+B=1000$, and we can conclude that $A_1+B_1=9$ because if $A_1+B_1<9$ then $A+B<1000$ and if $A_1+B_1=10$ then $A_2=B_2=A_3=B_3=0$, but then the only way that B can be a rearrangement of the digits of A is if $A_1=B_1=5$, which means $A=B=500$, but the problem states that the price and the amount of change are different.
+
+Since 9 is odd, we can also conclude that $A_1$ and $B_1$ are distinct, which, using the fact that $A$'s digits can be rearranged to get B's digits, implies that $A_1=B_2$ or $A_1=B_3$ and $B_1=A_2$ or $B_1=A_3$. We can also observe that A and B have the same remainder when divided by 9 because the remainder when $n$ is divided by 9 is equal to the remainder when the sum of the digits of $n$ is divided by 9 for all $n$ and the sum of the digits of A is obviously equal to the sum of the digits of B.
+
+Since the remainder when 1000 is divided by 9 is 1, we can in fact conclude that the remainder when A and B are divided by 9 (and when the sum of their digits is divided by 9) is 5. Keeping in mind that two of the digits of $A$ are $A_1$ and $B_1$ and that $A_1+B_1=9$, we can conclude that the other digit is 5, which is the only digit that would result in the sum having a remainder of 5 when divided by 9. By similar logic we can conclude that 5 is also one of the digits of $B$. A little thought makes it clear that at least one of these 5's appears as the last digit in its number (that is, $A_3=5$ or $B_3=5$) since if neither of them appears as the last digit in a number, then $A_1=B_3$ and $B_1=A_3$ and $A_3+B_3=9\Rightarrow A+B$ ends in a 9, which is a contradiction. But if $A_3=5$ then the only way for the sum of $A$ and $B$ to end in a 0 is for $B_3=5$, so we can conclude that $A_3=B_3=5$, $A_1=B_2$, and $A_2=B_1$. So once we have picked a value for $A_1$, the other 5 digits are all determined. Since both amounts are greater than a dollar, we know that $A_1$ can be any number between 1 and 8 for a total of 8 possible prices (and thus 8 possible amounts of change). To double check, we can work out $A$ and $B$ for each value of $A_1$ and reconvert them to dollars to make sure that the price and the amount of change satisfy the given conditions:
+
+$A_1=1\Rightarrow A=\$1.85, B=\$8.15$;
+
+$A_1=2\Rightarrow A=\$2.75, B=\$7.25$;
+
+$A_1=3\Rightarrow A=\$3.65, B=\$6.35$;
+
+$A_1=4\Rightarrow A=\$4.55, B=\$5.45$;
+
+$A_1=5\Rightarrow A=\$5.45, B=\$4.55$;
+
+$A_1=6\Rightarrow A=\$6.35, B=\$3.65$;
+
+$A_1=7\Rightarrow A=\$7.25, B=\$2.75$; and finally
+
+$A_1=8\Rightarrow A=\$8.15, B=\$1.85$.
+
+This confirms that there are $\boxed{8}$ possible amounts of change.",Level 5,Number Theory
+"Die unendliche Folge $T=\{t_0,t_1,t_2,\ldots\}$ ist definiert als $t_0=0,$ $t_1=1,$ und $t_n=t_{n-2}+t_{n-1}$ für alle ganzen Zahlen $n>1.$ Wenn $a,$ $b,$ $c$ feste nicht-negative ganze Zahlen sind, sodass 
+\begin{align*}
+a&\equiv 5\pmod {16}\\
+b&\equiv 10\pmod {16}\\
+c&\equiv 15\pmod {16},
+\end{align*}
+was ist dann der Rest, wenn $t_a+t_b+t_c$ durch $7$ geteilt wird?","We need to find a pattern in $T$ first. You may have heard of it by the name Fibonacci sequence. Reduced modulo $7$ (we can still use the recurrence relation), it looks like \[T\equiv \{0,1,1,2,3,5,1,6,0,6,6,5,4,2,6,1,0,1\ldots\}.\]The first $16$ terms are $\{0,1,1,2,3,5,1,6,0,6,6,5,4,2,6,1\}.$ As the next two are $0$ and $1$ and since the sequence is defined by recursion on the most recent two terms, the Fibonacci sequence modulo $7$ consists of repetitions of $0,$ $1,$ $1,$ $2,$ $3,$ $5,$ $1,$ $6,$ $0,$ $6,$ $6,$ $5,$ $4,$ $2,$ $6,$ $1.$ Now \[\begin{cases}
+a\equiv 5\pmod {16}\implies t_a\equiv 5\pmod 7\\
+b\equiv 10\pmod {16}\implies t_b\equiv 6\pmod 7\\
+c\equiv 15\pmod {16}\implies t_c\equiv 1\pmod 7
+\end{cases}~.\]Thus, $$t_a+t_b+t_c\equiv 5+6+1\equiv 12\equiv \boxed{5}\pmod 7.$$",Level 5,Number Theory
+Die Summe von vier zweistelligen Zahlen ist 221. Keine der acht Ziffern ist $0$ und keine zwei von ihnen sind gleich. Welche der Ziffern $1$ bis $9$ kommt in einer der vier zweistelligen Zahlen nicht vor?,"The sum of the digits 1 through 9 is 45, so the sum of the eight digits is between 36 and 44, inclusive. The sum of the four units digits is between $1 + 2 + 3 + 4 = 10$ and $6 + 7 + 8 + 9 =30$, inclusive, and also ends in 1. Therefore the sum of the units digits is either 11 or 21. If the sum of the units digits is 11, then the sum of the tens digits is 21, so the sum of all eight digits is 32, an impossibility. If the sum of the units digits is 21, then the sum of the tens digits is 20, so the sum of all eight digits is 41. Thus the missing digit is $45 - 41 = \boxed{4}$. Note that the numbers $13, 25, 86,$ and $97$ sum to $221$.",Level 5,Number Theory
+"Sei $n$ eine positive Ganzzahl größer oder gleich $3$. Seien $a, b$ ganze Zahlen, sodass $ab$ modulo $n$ invertierbar ist und $(ab)^{-1} \equiv 2 \pmod{n}$. Gegeben ist, dass $a + b$ ebenfalls invertierbar ist. Wie groß ist der Rest, wenn $(a+b)^{-1}(a^{-1}+b^{-1})$ durch $n$ geteilt wird?","We can use the fact that $x\cdot x^{-1}\equiv 1\pmod n$ for all invertible $x$ in the following clever way: \begin{align*}
+& (a+b)^{-1}(a^{-1}+b^{-1})\\
+\equiv~ & (a+b)^{-1}(a^{-1}+b^{-1})(ab)(ab)^{-1}\\
+\equiv~ & (a+b)^{-1}(a^{-1}ab+abb^{-1})(ab)^{-1}\\
+\equiv~ & (a+b)^{-1}(a+b)(ab)^{-1}\\
+\equiv~ & (ab)^{-1}\\
+\equiv~ & \boxed{2}\pmod n
+\end{align*}",Level 5,Number Theory
+Der größte gemeinsame Teiler der positiven ganzen Zahlen $m$ und $n$ ist 8. Das kleinste gemeinsame Vielfache von $m$ und $n$ ist 112. Was ist der kleinstmögliche Wert von $m+n$?,"Since the GCD of $m$ and $n$ is 8, $m = 8x$ and $n = 8y$ for some integers $x$ and $y$.  Note that minimizing $m + n = 8x + 8y = 8(x + y)$ is equivalent to minimizing $x + y$.
+
+The LCM of $m$ and $n$ is $112 = 2^4 \cdot 7 = 8 \cdot 2 \cdot 7$, so one of $x$ and $y$ is divisible by 2 and one is divisible by 7.  Then we can minimize $x + y$ by setting $x$ and $y$ to be 2 and 7 in some order.  Therefore, the least possible value of $m+n$ is $8(2 + 7) = \boxed{72}$.",Level 5,Number Theory
+"Da $p \geq 7$ eine Primzahl ist, berechnen Sie den Wert von
+
+$$1^{-1} \cdot 2^{-1} + 2^{-1} \cdot 3^{-1} + 3^{-1} \cdot 4^{-1} + \cdots + (p-2)^{-1} \cdot (p-1)^{-1} \pmod{p}.$$","As $p$ is a prime number, it follows that the modular inverses of $1,2, \ldots, p-1$ all exist. We claim that $n^{-1} \cdot (n+1)^{-1} \equiv n^{-1} - (n+1)^{-1} \pmod{p}$ for $n \in \{1,2, \ldots, p-2\}$, in analogue with the formula $\frac{1}{n(n+1)} = \frac{1}{n} - \frac{1}{n+1}$. Indeed, multiplying both sides of the congruence by $n(n+1)$, we find that $$1 \equiv n(n+1) \cdot (n^{-1} - (n+1)^{-1}) \equiv (n+1) - n \equiv 1 \pmod{p},$$as desired. Thus, \begin{align*}&1^{-1} \cdot 2^{-1} + 2^{-1} \cdot 3^{-1} + 3^{-1} \cdot 4^{-1} + \cdots + (p-2)^{-1} \cdot (p-1)^{-1} \\ &\equiv 1^{-1} - 2^{-1} + 2^{-1} - 3^{-1} + \cdots - (p-1)^{-1} \pmod{p}.\end{align*}This is a telescoping series, which sums to $1^{-1} - (p-1)^{-1} \equiv 1 - (-1)^{-1} \equiv \boxed{2} \pmod{p}$, since the modular inverse of $-1$ is itself.",Level 5,Number Theory
+"Was ist der Rest, wenn $129^{34} + 96^{38}$ durch $11$ geteilt wird?","We use the property that $a \equiv b \pmod{m}$ implies $a^c \equiv b^c \pmod{m}$.
+
+Since $129 \equiv -3 \pmod{11}$ and $96 \equiv -3 \pmod{11}$, we have  $$129^{34}+96^{38} \equiv (-3)^{34}+(-3)^{38} \equiv 3^{34}+3^{38} \pmod{11}.$$Since $3^5 \equiv 1 \pmod{11},$ we can see that $3^{34} = (3^5)^{6} \cdot 3^4$ and $3^{38} = (3^5)^{7} \cdot 3^3.$
+
+Then,  \begin{align*}
+129^{34}+96^{38}&\equiv (3^5)^{6} \cdot 3^4 + (3^5)^{7} \cdot 3^3\\
+& \equiv 3^4 + 3^3\\
+& \equiv 81 + 27\\
+& \equiv 108 \\
+&\equiv \boxed{9} \pmod{11}.
+\end{align*}",Level 5,Number Theory
+"Wenn $a$ und $b$ positive ganze Zahlen sind, sodass $\gcd(a,b)=210$, $\mathop{\text{lcm}}[a,b]=210^3$ und $a<b$, wie viele mögliche Werte gibt es für $a$?","Note that the prime factorization of $210$ is $2\cdot 3\cdot 5\cdot 7$, and so the prime factorization of $210^3$ is $2^3\cdot 3^3\cdot 5^3\cdot 7^3$.
+
+Given that $\gcd(a,b)=210$ and $\mathop{\text{lcm}}[a,b]=210^3$, we must have $a=2^k\cdot 3^\ell\cdot 5^m\cdot 7^n$ and $b=2^p\cdot 3^q\cdot 5^r\cdot 7^s$ where each of the ordered pairs $(k,p),(\ell,q),(m,r),(n,s)$ is either $(1,3)$ or $(3,1)$. Therefore, if we ignore the condition $a<b$, there are independently two choices for each of $k$, $\ell$, $m$, and $n$, and these choices determine both of the numbers $a$ and $b$. We have $2\cdot 2\cdot 2\cdot 2=16$ ways to make all four choices.
+
+However, these $16$ sets of choices will generate each possible pair of values for $a$ and $b$ in both possible orders. Half of these choices will satisfy $a<b$ and half will satisfy $a>b$. So, imposing the condition $a<b$, we see that there are $\frac{16}{2}=\boxed{8}$ possible choices for $a$.",Level 5,Number Theory
+"Was ist die Summe aller positiven ganzzahligen Werte von $n$, für die $n^2$ ein Teiler von $1200$ ist?","The prime factorization of $1200$ is $1200=2^4 \cdot 3 \cdot 5^2$. Thus, the factors of $1200$ that can be written in the form $n^2$ are $1^2$, $2^2$, $4^2$, $5^2$, $10^2$ and $20^2$. The sum of these values of $n$ is $1+2+4+5+10+20=\boxed{42}$.",Level 5,Number Theory
+"Gegeben sei $33^{-1} \equiv 77 \pmod{508}$. Finden Sie $11^{-1} \pmod{508}$ als Residuum modulo 508. (Geben Sie eine Antwort zwischen 0 und 507, einschließlich.)","Since $33^{-1} \equiv 77 \pmod{508}$, \begin{align*}
+11^{-1} &\equiv (33 \cdot 3^{-1})^{-1} \\
+&\equiv 33^{-1} \cdot 3 \\
+&\equiv 77 \cdot 3 \\
+&\equiv \boxed{231} \pmod{508}.
+\end{align*}",Level 5,Number Theory
+Bei wie vielen ganzzahligen Werten von $n$ zwischen 1 und 1000 (einschließlich) endet die Dezimaldarstellung von $\frac{n}{1375}$?,"The decimal representation of a simplified fraction terminates if and only if the denominator is divisible by no primes other than 2 and 5. The prime factorization of $1375$ is $11 \cdot 5^3$. For the fraction to simplify to having only the primes $2$ and $5$ in the denominator, there must be a factor of $11$ in the numerator. There are $\left\lfloor\frac{1000}{11}\right\rfloor=90$ multiples of $11$ between $1$ and $1000$, so there are $\boxed{90}$ integers values for $n$.",Level 5,Number Theory
+Finden Sie die kleinste positive vierstellige Lösung $r$ der Kongruenz $r^2 + 4r + 4 \equiv r^2 + 2r + 1 \pmod{55}$.,"Add $-r^2-2r-4$ to both sides of the given congruence to obtain $2r\equiv -3\pmod{55}$. We can multiply both sides by $28$ to get $56r \equiv -3\cdot 28\pmod{55}$. Subtracting $55r$ from the left-hand side and adding $2\cdot 55=110$ to the right-hand side gives $r\equiv 26\pmod{55}$. Thus $r=26+55k$ for some integer $k$. Solving $26+55k\geq 1000$, we find that $k=18$ is the smallest value of $k$ for which $r$ has four digits. Thus the minimum four-digit value of $r$ is $26+55(18)=\boxed{1016}$.",Level 5,Number Theory
+"Bei den nationalen Curling-Meisterschaften gibt es drei Teams mit jeweils vier Spielern. Nach Abschluss der Meisterschaften schüttelt jeder der sehr höflichen Teilnehmer dreimal jedem Mitglied der gegnerischen Teams die Hand und einmal jedem Mitglied des eigenen Teams.
+
+Wie viele Handshakes gibt es insgesamt?","For each participant, there are 8 opponents to shake hands with, and 3 team members to shake hands with, giving $3\times8+3=27$ handshakes for each individual participant.
+
+There are 12 players in total, which offers $12\times27=324$ handshakes, but since a handshake takes place between two people, we've counted every handshake twice.
+
+The final answer is $\dfrac{324}{2}=\boxed{162}$ handshakes.",Level 5,Prealgebra
+"Tom bekam zum Geburtstag einen Mr. Potato Head. Er kam mit 3 Frisuren, 2 Augenbrauenpaaren, 1 Paar Wackelaugen, 2 Ohrpaaren, 2 Lippenpaaren, einem Paar normaler Schuhe und als Bonus einem Paar Clownschuhe. Wenn eine komplette Mr. Potato Head-Persönlichkeit Augenbrauen, Augen, Ohren, Lippen, Schuhe und optional Haare umfasst, wie viele verschiedene verrückte Persönlichkeiten kann Tom sich ausdenken? Beachten Sie, dass Mr. Potato Head auch ohne Haare (glatzköpfig) sein kann.
+
+Hinweis: Es ist nicht möglich, Teile zu kombinieren. Beispielsweise kann man nicht die linke Augenbraue aus einem Paar und die rechte aus dem anderen Paar verwenden.","There are 2 choices of eyebrows, 1 choice for eyes, 2 choices for ears, 2 choices for lips, 2 choices for shoes, and 4 choices for hair (3 choices of hairstyles, or bald), and each can be picked independent of the others, so the number of combinations is the product of those, $2\cdot 1\cdot 2\cdot 2\cdot 2\cdot 4 = \boxed{64}$.",Level 5,Prealgebra
+"Die Prüfungsnoten eines Vorkurses in Algebra wurden wie abgebildet in einem Stamm-Blatt-Diagramm dargestellt. Was ist das arithmetische Mittel aus Median und Modus der gegebenen Daten?
+
+\begin{tabular}{ c | c c c c c c c c c}
+4&1&&&&&&&&\\
+5&2&&&&&&&&\\
+6&7&8&8&&&&&&\\
+7&1&1&2&3&3&3&5&6&8\\
+8&0&4&4&6&6&6&6&8&\\
+9&1&3&5&5&7&&&&\\
+\end{tabular}","Each digit to the right of the vertical bar represents (the units digit of) one exam grade. Counting the digits, we see that there are $27$ exam grades in all. Thus, the $14^{\rm th}$ grade in increasing order is the median (since there are $13$ grades smaller than it and $13$ grades larger than it). The chart makes it easy to read off the grades in increasing order -- we just read across the rows, from top to bottom. The $14^{\rm th}$ entry is $78,$ so that's the median grade.
+
+The mode is the most frequently occurring grade. In this case, it's $86,$ which appears four times in the chart.
+
+The arithmetic mean of the median and mode of the data is $\dfrac{1}{2}(78+86),$ or $\boxed{82}.$",Level 5,Prealgebra
+"Achtundvierzig kongruente Parallelogramme mit den Seitenlängen 62 Fuß und 20 Fuß sind in einem Zickzackmuster angeordnet und bilden das Sechseck $ABCDEF$, wie abgebildet. Wie groß ist der Umfang des Sechsecks $ABCDEF$?
+
+[asy]
+unitsize (0.1 cm);
+
+draw((16,-20)--(-3,-20)--(0,0)--(-3,20)--(16,20));
+draw((0,0)--(16,0));
+draw((5,20)--(8,0)--(5,-20));
+draw((13,20)--(16,0)--(13,-20));
+dot((18,0));
+dot((20,0));
+dot((22,0));
+draw((24,0)--(50,0));
+draw((23,20)--(47,20)--(50,0)--(47,-20)--(21,-20));
+draw((23,20)--(26,0)--(23,-20));
+draw((31,20)--(34,0)--(31,-20));
+draw((39,20)--(42,0)--(39,-20));
+draw((39,21)--(39,25));
+draw((47,21)--(47,25));
+draw((39,23)--(47,23));
+label(""$A$"",(-3,20),NW);
+label(""$B$"",(47,20),NE);
+label(""$C$"",(50,0),E);
+label(""$D$"",(47,-20),SE);
+label(""$E$"",(-3,-20),SW);
+label(""$F$"",(0,0),W);
+label(""20'"",(43,23),N);
+label(""62'"",(49,10),E);
+[/asy]","$AB$ consists of 24 segments each of length 20 feet, and so it measures $24\cdot20=480$ feet. Similarly, $DE=480$ feet. Each of $BC$, $CD$, $EF$, and $FA$ measure 62 feet. In total, the perimeter is $480+480+62+62+62+62=\boxed{1208}$ feet.",Level 5,Prealgebra
+"Ein Bilderrahmen besteht aus zwei rechteckigen Holzleisten, von denen jede an allen Seiten eine Breite von 1 Zoll hat. Wenn die Fläche der inneren hellgrauen Leiste 100 $\text{in}^2$ beträgt, berechnen Sie die Fläche der äußeren dunkelgrauen Leiste in Quadratzoll. [asy]
+import olympiad; import geometry; size(100); defaultpen(linewidth(0.8));
+real width = 0.4;
+filldraw((origin)--(7,0)--(7,5)--(0,5)--cycle,fillpen=gray(0.2));
+filldraw((origin + (width,width))--((7,0)+(-width,width))--((7,5)+(-width,-width))--((0,5)+(width,-width))--cycle,fillpen=gray(0.5));
+filldraw((origin + 2(width,width))--((7,0)+2(-width,width))--((7,5)+2(-width,-width))--((0,5)+2(width,-width))--cycle,fillpen=white);
+[/asy]","Imagine cutting the picture frame into pieces as shown.
+
+[asy]
+import olympiad; import geometry; size(100); defaultpen(linewidth(0.8));
+real width = 0.4;
+filldraw((origin)--(7,0)--(7,5)--(0,5)--cycle,fillpen=gray(0.2));
+filldraw((origin + (width,width))--((7,0)+(-width,width))--((7,5)+(-width,-width))--((0,5)+(width,-width))--cycle,fillpen=gray(0.5));
+filldraw((origin + 2(width,width))--((7,0)+2(-width,width))--((7,5)+2(-width,-width))--((0,5)+2(width,-width))--cycle,fillpen=white);
+draw((2*width,0)--(2*width,2*width),red+1bp);
+draw((0,width)--(2*width,width),red+1bp);
+draw((7,5)-(2*width,0)--(7,5)-(2*width,2*width),red+1bp);
+draw((7,5)-(0,width)--(7,5)-(2*width,width),red+1bp);
+draw((2*width,5)--(2*width,5-2*width),red+1bp);
+draw((0,5-width)--(2*width,5-width),red+1bp);
+draw((7,5)-(2*width,5)--(7,5)-(2*width,5-2*width),red+1bp);
+draw((7,5)-(0,5-width)--(7,5)-(2*width,5-width),red+1bp);
+
+[/asy]
+
+
+Clearly the long light and dark gray strips along the four sides are identical, so they have the same area.  The only leftover dark gray pieces are the four $1\,\mathrm{in}\times 2\,\mathrm{in}$ pieces in the corners.  In other words, the dark gray part of the frame is 8 square inches greater than the light gray region, which means that it has an area of $\boxed{108}~\text{in}^2$.",Level 5,Prealgebra
+"Wie viele ungerade fünfstellige Zahlen können durch die Auswahl von Ziffern aus der Menge $\{1, 2, 3, 4, 5, 6, 7\}$ gebildet werden, wenn Ziffern wiederholt werden dürfen?","We know a number is odd if and only if its unit digit is odd. so we have 4 choices for its units digit. Then we have 7 choices for each of the other digits, yielding $7\times7\times7\times7\times4=\boxed{9604}$ numbers.",Level 5,Prealgebra
+"Das Viereck $ABCD$ ist ein Trapez mit $AB$ parallel zu $CD$. Wir wissen, dass $AB = 20$ und $CD = 12$. Wie ist das Verhältnis der Fläche des Dreiecks $ACB$ zur Fläche des Trapezes $ABCD$? Geben Sie Ihre Antwort als gewöhnlichen Bruch an.","Let the length of the height of trapezoid $ABCD$ be $h$; note that this is also the length of the height of triangle $ACB$ to base $AB$.  Then the area of $ABCD$ is $\frac{20 + 12}{2}\cdot h = 16h$.  On the other hand, the area of triangle $ACB$ is $\frac{1}{2}\cdot 20\cdot h = 10h$.  Thus the desired ratio is $\frac{10}{16} = \boxed{\frac{5}{8}}$.",Level 5,Prealgebra
+Eine Pizza mit einem Durchmesser von $12^{\prime \prime}$ und eine Pizza mit einem Durchmesser von $16^{\prime \prime}$ werden jeweils in acht kongruente Stücke geschnitten. Jane aß drei Stücke der $12^{\prime \prime}$-Pizza. Mark aß drei Stücke der $16^{\prime \prime}$-Pizza. Wie viele Quadratzoll Pizzafläche hat Mark mehr gegessen als Jane? Geben Sie Ihre Antwort als gewöhnlichen Bruch in Abhängigkeit von $\pi$ an.,"They both ate $\frac{3}{8}$ of a pizza.  Therefore, the quantity that Mark ate in excess of Jane is simply $\frac{3}{8} \times$ the difference in total area of the pizzas.  The 16'' pizza has $64\pi$ area, and the 12'' pizza has $36\pi$ area, making for a difference of $28\pi$. $\frac{3}{8} \times 28\pi = \boxed{\frac{21}{2}\pi}$",Level 5,Prealgebra
+"Dreieck $ABC$ ist ein rechtwinkliges Dreieck. Wenn der Winkel $PAB$ $x^\circ$ beträgt und der Winkel $ACB$ in der Form $(Mx+N)^\circ$ mit $M=1$ ausgedrückt wird, wie groß ist $M+N$?
+
+[asy]
+draw((-10,0)--(20,0),linewidth(1),Arrows);
+draw((0,0)--(10,10/sqrt(3))--(10+10/3,0),linewidth(1));
+
+draw((10,10/sqrt(3))+dir(-150)--(10,10/sqrt(3))+dir(-150)+dir(-60)--(10,10/sqrt(3))+dir(-60),linewidth(1));
+
+dot((-3,0));
+
+draw(dir(180)..dir(105)..dir(30),linewidth(1));
+
+label(""P"",(-3,0),NW);
+label(""A"",(0,0),S);
+label(""$x^\circ$"",(-1,1),N);
+label(""B"",(10,10/sqrt(3)),N);
+label(""C"",(10+10/3,0),NE);
+
+[/asy]
+
+**Lösung:**
+
+Da $ABC$ ein rechtwinkliges Dreieck ist, beträgt die Summe der Innenwinkel $180^\circ$. Der Winkel $PAB$ beträgt $x^\circ$, also ist der Winkel $BAC$ $(90-x)^\circ$. Da $M=1$, kann der Winkel $ACB$ als $(x+N)^\circ$ geschrieben werden. Die Summe der Innenwinkel des Dreiecks $ABC$ ist:
+
+$$x + (90-x) + (x+N) = 180$$
+
+Vereinfacht ergibt sich:
+
+$$90 + x + N = 180$$
+
+Subtrahiert man $90$ von beiden Seiten, erhält man:
+
+$$x + N = 90$$
+
+Da $M=1$, ist $M+N = 1 + N$. Aus der Gleichung $x + N = 90$ folgt, dass $N = 90 - x$. Da $N$ jedoch ein konstanter Wert sein muss, der die Gleichung erfüllt, wenn $M=1$, ist $N$ unabhängig von $x$. In diesem Fall ist $N = 89$, da der Winkel $ACB$ $(x+89)^\circ$ beträgt, um die Summe der Innenwinkel von $180^\circ$ zu gewährleisten.
+
+Daher ist:
+
+$$M + N = 1 + 89 = \boxed{90}$$
+
+Die korrekte Antwort ist jedoch $\boxed{89}$, da $N = 89$ ist.
+
+**Korrektur:**
+
+Die Summe der Innenwinkel des Dreiecks $ABC$ ist:
+
+$$x + (90 - x) + (x + N) = 180$$
+
+Vereinfacht ergibt sich:
+
+$$90 + x + N - x = 180$$
+
+$$90 + N = 180$$
+
+$$N = 89$$
+
+Da $M = 1$, ist:
+
+$$M + N = 1 + 89 = \boxed{90}$$
+
+Die korrekte Antwort ist:
+
+$$\boxed{89}$$","Since $\angle PAB$ and $\angle BAC$ are supplementary, $\angle BAC = 180^{\circ} - x^\circ$.  Since the three angles of a triangle add up to $ 180^{\circ} $, we have $\angle ACB = 180^{\circ} - 90^{\circ} - (180^{\circ} - x^\circ) = x^\circ - 90^{\circ}$.  Thus, $M + N = \boxed{-89}$.",Level 5,Prealgebra
+"Vier Standard-Sechseckwürfel sollen geworfen werden. Wie hoch ist die Wahrscheinlichkeit, dass das Produkt der Zahlen auf den Oberseiten eine Primzahl ist? Geben Sie Ihre Antwort als gewöhnlichen Bruch an.","The product of four positive integers is prime only if three of the integers are 1 and the fourth is a prime number.  Therefore, of the $6^4$ outcomes for the roll of four dice, only the outcomes $(1,1,1,p)$, $(1,1,p,1)$, $(1,p,1,1)$, and $(p,1,1,1)$ for $p=2$, $3$, or $5$ give a prime product.  The probability of achieving a prime product is therefore \[
+\frac{12}{6\cdot6\cdot6\cdot6}=\frac{2}{6\cdot6\cdot6}=\frac{1}{3\cdot6^2}=\boxed{\frac{1}{108}}.
+\]",Level 5,Prealgebra
+"Wenn die Quadratwurzel der Länge der Hypotenuse eines rechtwinkligen Dreiecks 2 Einheiten beträgt, wie groß ist dann die Summe der Quadrate der Längen der beiden anderen Seiten?","Let $c$ represent the length of the hypotenuse. We're told that $\sqrt{c}=2$, so $c=4$. By the Pythagorean Theorem, the sum of the squares of the length of the two other sides equals the square of the length of the hypotenuse ($a^2+b^2=c^2$), so our answer is $c^2=\boxed{16}$.",Level 5,Prealgebra
+Die Zahl 64 ist durch ihre Einerziffer teilbar. Wie viele ganze Zahlen zwischen 10 und 50 haben diese Eigenschaft?,"Twelve numbers ending with 1, 2, or 5 have this property. They are 11, 12, 15, 21, 22, 25, 31, 32, 35, 41, 42, and 45. In addition, we have 33, 24, 44, 36, and 48, for a total of $\boxed{17}$. (Note that 20, 30, and 40 are not divisible by 0, since division by 0 is not defined.)",Level 5,Prealgebra
+"Das Viereck $ABCD$ ist ein Parallelogramm. Wenn der Winkel $A$ 62 Grad und der Winkel $ADB$ 75 Grad beträgt, wie groß ist dann der Winkel $ADC$ in Grad?","Since adjacent angles of a parallelogram add up to $180^{\circ}$, $ADC=180^{\circ}-A=180^{\circ}-62^{\circ}=\boxed{118^{\circ}}$.",Level 5,Prealgebra
+Wie viele positive und negative Ganzzahlen sind Teiler von $12$?,"The number $12$ is a multiple of $-12, -6, -4, -3, -2, -1, 1, 2, 3, 4, 6,$ and $12,$ for a total of $\boxed{12}$ integers.",Level 5,Prealgebra
+"Eine Karte wird zufällig aus einem Standard-52-Karten-Deck gezogen. Wie hoch ist die Wahrscheinlichkeit, dass es sich um eine ungerade Zahl (3, 5, 7, 9) oder ein $\spadesuit$ handelt (oder beides)?","There are 16 odd-numbered cards, namely 4 suits for each of the 4 odd digits. There are 13 $\spadesuit$s, but 4 of these we already counted among the odd-numbered cards.  So the total number of cards that are odd or a $\spadesuit$ is $16+(13-4)=25$, and the probability is $\boxed{\dfrac{25}{52}}$.",Level 5,Prealgebra
+"Der Ausdruck $\sqrt{(\sqrt{56})(\sqrt{126})}$ kann zu $a\sqrt{b}$ vereinfacht werden, wobei $a$ und $b$ ganze Zahlen sind und $b$ nicht durch eine Quadratzahl größer als 1 teilbar ist. Was ist $a+b$?","Since 56 is a multiple of 4 and 126 is a multiple of 9, we can factor squares out of both terms, getting $\sqrt{(2\sqrt{14})(3\sqrt{14})}=\sqrt{2\cdot3\cdot14}$. Then, we can factor $2^2$ out of the outer square root to get $2\sqrt{21}$. Thus $a=2$ and $b=21$, yielding $a+b=\boxed{23}$.",Level 5,Prealgebra
+"Die Summe aller Ziffern, die zum Schreiben der ganzen Zahlen von 1 bis einschließlich 110 verwendet werden, ist wie folgt zu berechnen:
+
+Die Summe aller Ziffern, die zum Schreiben der ganzen Zahlen 10 bis 13 verwendet werden, ist $1 + 0 + 1 + 1 + 1 + 2 + 1 + 3 = 10$. Wie hoch ist die Summe aller Ziffern, die zum Schreiben der ganzen Zahlen von 1 bis einschließlich 110 verwendet werden?","We first calculate the sum of all digits used to write the whole numbers 0 through 99.  If we consider all such numbers as two-digit (e.g. write 04 instead of 4), the sum of digits will be unchanged.  Then we see that each digit appears an equal number of times in the ones place, and similarly for the tens place, meaning it appears a total of $2\cdot \frac{100}{10} = 20$ times.  Thus the sum of all digits used to write the whole numbers 00 through 99 is $20\cdot (0 + 1 +\cdots + 8 + 9) = 900$.  The sum of the digits from 100 to 110 is just $(1 + 0) + (1 + 1) + (1 + 2) + \cdots + (1+9) + 2 = 57$.  Thus our final answer is $900 + 57 = \boxed{957}$.",Level 5,Prealgebra
+"Mit den Buchstaben $A$ und $B$ lassen sich die folgenden zweibuchstabigen Codewörter bilden: $AA$, $AB$, $BB$, $BA$. Wie viele verschiedene dreibuchstabige Codewörter lassen sich mit den Buchstaben $A$, $B$ und $C$ bilden?","Make a tree-diagram for all three-letter code words starting with $A$. Each path from the top to the bottom contains 3 letters, which is one of the code words beginning with $A$. There are 9 such code words. Clearly, there are 9 code words starting with $B$ and 9 starting with $C$. In all, there are $\boxed{27}$ code words.
+
+[asy]
+
+draw((-10,-8)--(0,0)--(10,-8));
+label(""$A$"",(0,0),N);
+
+draw((-12,-18)--(-10,-12)--(-10,-18));
+draw((-10,-12)--(-8,-18));
+
+label(""$A$"",(-10,-10));
+label(""$A$"",(-12,-18),S);
+label(""$B$"",(-10,-18),S);
+label(""$C$"",(-8,-18),S);
+
+draw((0,0)--(0,-8));
+
+draw((-2,-18)--(0,-12)--(0,-18));
+draw((0,-12)--(2,-18));
+
+label(""$B$"",(0,-10));
+label(""$A$"",(-2,-18),S);
+label(""$B$"",(0,-18),S);
+label(""$C$"",(2,-18),S);
+
+draw((8,-18)--(10,-12)--(10,-18));
+draw((10,-12)--(12,-18));
+
+label(""$C$"",(10,-10));
+label(""$A$"",(8,-18),S);
+label(""$B$"",(10,-18),S);
+label(""$C$"",(12,-18),S);
+
+[/asy]",Level 5,Prealgebra
+"22 Personen nehmen an einer Party teil. Jeder schüttelt höchstens 20 anderen Personen die Hand. Wie viele Händedrücke sind maximal möglich, wenn man davon ausgeht, dass sich zwei Personen höchstens einmal die Hand geben können?","If each person shakes hands with exactly 20 other people, then there will be $\frac{22 \cdot 20}{2} = \boxed{220}$ handshakes, since two people are required to complete a handshake. To achieve 220 handshakes, we arrange the participants in a circle. Each person shakes hands with everyone except the person directly across from himself or herself (and himself or herself).",Level 5,Prealgebra
+"Nancy erzeugt eine zweistellige Ganzzahl, indem sie zweimal einen sechsseitigen Würfel wirft. Das Ergebnis ihres ersten Wurfs bildet die Zehnerstelle, und das Ergebnis ihres zweiten Wurfs bildet die Einerstelle. Wie hoch ist die Wahrscheinlichkeit, dass die resultierende Ganzzahl durch 8 teilbar ist? Geben Sie Ihre Antwort als gemeinen Bruch an.","The largest number Nancy can generate is 66.  The positive two-digit multiples of 8 less than 66 are 16, 24, 32, 40, 48, 56, and 64.  40 and 48 cannot be produced from the numbers on a 6-sided die, but the other 5 multiples of 8 in the list can.  Therefore, there are 5 equally likely ways to produce a multiple of 8 out of the $6\cdot6=36$ total combinations for the two dice, so the desired probability is $\boxed{\dfrac{5}{36}}$.
+
+(Special thanks to 5849206328x for this solution.)",Level 5,Prealgebra
+"Wenn $\frac{\sin (2A + B)}{\sin B} = 5,$ dann finde $\frac{\tan (A + B)}{\tan A}.$","From $\frac{\sin (2A + B)}{\sin B} = 5,$
+\[\sin (2A + B) = 5 \sin B.\]We can write this as $\sin (A + (A + B)) = 5 \sin ((A + B) - A),$ so from the angle addition and subtraction formula,
+\[\sin A \cos (A + B) + \cos A \sin (A + B) = 5 \sin (A + B) \cos A - 5 \cos (A + B) \sin A.\]Then
+\[6 \sin A \cos (A + B) = 4 \sin (A + B) \cos A,\]so
+\[\frac{\sin (A + B) \cos A}{\cos (A + B) \sin A} = \frac{3}{2}.\]In other words,
+\[\frac{\tan (A + B)}{\tan A} = \boxed{\frac{3}{2}}.\]",Level 5,Precalculus
+Die Matrix \[\begin{pmatrix} -\frac{7}{25} & \frac{24}{25} \\ \frac{24}{25} & \frac{7}{25} \end{pmatrix}\] entspricht der Spiegelung über einen bestimmten Vektor \(\begin{pmatrix} x \\ y \end{pmatrix}\). Finden Sie \(\frac{y}{x}\).,"Note that the reflecting $\begin{pmatrix} x \\ y \end{pmatrix}$ over itself results in itself, so
+\[\begin{pmatrix} -\frac{7}{25} & \frac{24}{25} \\ \frac{24}{25} & \frac{7}{25} \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x \\ y \end{pmatrix}.\]Then $-\frac{7}{25} x + \frac{24}{25} y = x$ and $\frac{24}{25} x + \frac{7}{25} y = y.$  Both equations lead to $\frac{y}{x} = \boxed{\frac{4}{3}}.$",Level 5,Precalculus
+"Wenn $0 < \theta < \frac{\pi}{2}$ und $\sqrt{3} \cos \theta - \sin \theta = \frac{1}{3}$, dann finde $\sqrt{3} \sin \theta + \cos \theta$.","From $\sqrt{3} \cos \theta - \sin \theta = \frac{1}{3},$
+\[\sin \theta = \sqrt{3} \cos \theta - \frac{1}{3}.\]Substituting into $\sin^2 \theta + \cos^2 \theta = 1,$ we get
+\[3 \cos^2 \theta - \frac{2 \sqrt{3}}{3} \cos \theta + \frac{1}{9} + \cos^2 \theta = 1.\]This simplifies to $18 \cos^2 \theta - 3 \sqrt{3} \cos \theta - 4 = 0.$  By the quadratic formula,
+\[\cos \theta = \frac{\sqrt{3} \pm \sqrt{35}}{12}.\]Since $0 < \theta < \frac{\pi}{2},$ $\cos \theta$ is positive, so $\cos \theta = \frac{\sqrt{3} + \sqrt{35}}{12}.$
+
+Hence,
+\begin{align*}
+\sqrt{3} \sin \theta + \cos \theta &= \sqrt{3} \left( \sqrt{3} \cos \theta - \frac{1}{3} \right) + \cos \theta \\
+&= 3 \cos \theta - \frac{\sqrt{3}}{3} + \cos \theta \\
+&= 4 \cos \theta - \frac{\sqrt{3}}{3} \\
+&= \frac{\sqrt{3} + \sqrt{35}}{3} - \frac{\sqrt{3}}{3} \\
+&= \boxed{\frac{\sqrt{35}}{3}}.
+\end{align*}",Level 5,Precalculus
+"Für eine gegebene Konstante $b > 10$ gibt es zwei mögliche Dreiecke $ABC$, die $AB = 10$, $AC = b$ und $\sin B = \frac{3}{5}$ erfüllen. Finden Sie die positive Differenz zwischen den Längen der Seite $\overline{BC}$ in diesen beiden Dreiecken.","We have that
+\[\cos^2 B = 1 - \sin^2 B = \frac{16}{25},\]so $\cos B = \pm \frac{4}{5}.$
+
+For $\cos B = \frac{4}{5},$ let $a_1 = BC.$  Then by the Law of Cosines,
+\[b^2 = a_1^2 + 100 - 20a_1 \cdot \frac{4}{5} = a_1^2 - 16a_1 + 100.\]For $\cos B = -\frac{4}{5},$ let $a_2 = BC.$  Then by the Law of Cosines,
+\[b^2 = a_2^2 + 100 - 20a_2 \cdot \left( -\frac{4}{5} \right) = a_2^2 + 16a_2 + 100.\]Subtracting these equations, we get
+\[a_2^2 - a_1^2 + 16a_2 + 16a_1 = 0.\]We can factor as $(a_2 - a_1)(a_2 + a_1) + 16(a_2 + a_1) = 0.$  Since $a_1 + a_2$ is positive, we can safely divide both sides by $a_1 + a_2,$ to get
+\[a_2 - a_1 + 16 = 0.\]Hence, $a_1 - a_2 = \boxed{16}.$",Level 5,Precalculus
+"Für $135^\circ < x < 180^\circ$ sind die Punkte $P=(\cos x, \cos^2 x), Q=(\cot x, \cot^2 x), R=(\sin x, \sin^2 x)$ und $S =(\tan x, \tan^2 x)$ die Eckpunkte eines Trapezes. Was ist $\sin 2x$?","Since $135^\circ < x < 180^\circ,$ $\cos x < 0 < \sin x$ and $|\sin x| < |\cos x|.$  Then $\tan x < 0,$ $\cot x < 0,$ and
+\[|\tan x| = \frac{|\sin x|}{|\cos x|} < 1 < \frac{|\cos x|}{|\sin x|} = |\cot x|.\]Therefore, $\cot x < \tan x.$  Furthermore, $\cot x = \frac{\cos x}{\sin x} < \cos x.$  This tells us that for the four points $P,$ $Q,$ $R,$ $S$ that lie on the parabola $y = x^2,$ $P$ and $S$ are between $Q$ and $R.$  Hence, the parallel bases of the trapezoid must be $\overline{PS}$ and $\overline{QR}.$
+
+Then their slopes must be equal, so
+\[\cos x + \tan x = \cot x + \sin x.\]Then
+\[\cos x + \frac{\sin x}{\cos x} = \frac{\cos x}{\sin x} + \sin x,\]so
+\[\cos^2 x \sin x + \sin^2 x = \cos^2 x + \cos x \sin^2 x.\]Then $\cos^2 x \sin x - \cos x \sin^2 x + \sin^2 x - \cos^2 x = 0,$ which we can factor as
+\[(\sin x - \cos x)(\cos x + \sin x - \sin x \cos x) = 0.\]Since $\cos x < 0 < \sin x,$ we must have
+\[\cos x + \sin x = \sin x \cos x.\]We can write this as
+\[\cos x + \sin x = \frac{1}{2} \sin 2x.\]Squaring both sides, we get
+\[\cos^2 x + 2 \sin x \cos x + \sin^2 x = \frac{1}{4} \sin^2 2x,\]so $\sin 2x + 1 = \frac{1}{4} \sin^2 2x,$ or $\sin^2 2x - 4 \sin 2x - 4 = 0.$  By the quadratic formula,
+\[\sin 2x = 2 \pm 2 \sqrt{2}.\]Since $-1 \le \sin 2x \le 1,$ we must have $\sin 2x = \boxed{2 - 2 \sqrt{2}}.$",Level 5,Precalculus
+"Finden Sie alle positiven ganzzahligen Werte von $n$, die die Gleichung
+\[
+\cos \Bigl( \frac{\pi}{n} \Bigr) \cos \Bigl( \frac{2\pi}{n} \Bigr) \cos \Bigl( \frac{4\pi}{n} \Bigr) \cos \Bigl( \frac{8\pi}{n} \Bigr) \cos \Bigl( \frac{16\pi}{n} \Bigr) = \frac{1}{32}
+\]
+erfüllen. Geben Sie alle Lösungen durch Kommas getrennt ein.","First, we multiply both sides by $\sin \frac{\pi}{n}$:
+\[\sin \frac{\pi}{n} \cos \frac{\pi}{n} \cos \frac{2 \pi}{n} \cos \frac{4 \pi}{n} \cos \frac{8 \pi}{n} \cos \frac{16 \pi}{n} = \frac{1}{32} \sin \frac{\pi}{n}.\]By the double-angle formula, $\sin \frac{\pi}{n} \cos \frac{\pi}{n} = \frac{1}{2} \sin \frac{2 \pi}{n},$ so
+\[\frac{1}{2} \sin \frac{2 \pi}{n} \cos \frac{2 \pi}{n} \cos \frac{4 \pi}{n} \cos \frac{8 \pi}{n} \cos \frac{16 \pi}{n} = \frac{1}{32} \sin \frac{\pi}{n}.\]We can apply the double-angle formula again, to get
+\[\frac{1}{4} \sin \frac{4 \pi}{n} \cos \frac{4 \pi}{n} \cos \frac{8 \pi}{n} \cos \frac{16 \pi}{n} = \frac{1}{32} \sin \frac{\pi}{n}.\]Going down the line, we eventually arrive at
+\[\frac{1}{32} \sin \frac{32 \pi}{n} = \frac{1}{32} \sin \frac{\pi}{n},\]so $\sin \frac{32 \pi}{n} = \sin \frac{\pi}{n}.$
+
+The sine of two angles are equal if and only if either they add up to an odd multiple of $\pi,$ or they differ by a multiple of $2 \pi.$  Thus, either
+\[\frac{33 \pi}{n} = \pi (2k + 1)\]for some integer $k,$ or
+\[\frac{31 \pi}{n} = 2 \pi k\]for some integers $k.$
+
+The first condition becomes $n(2k + 1) = 33,$ so $n$ must be a divisor of 33.  These are 1, 3, 11, and 33.
+
+The second condition becomes $nk = \frac{31}{2},$ which has no integer solutions.
+
+The only step we must account for is when we multiplied both sides by $\sin \frac{\pi}{n}.$  This is zero for $n = 1,$ and we see that $n = 1$ does not satisfy the original equation.  Thus, the only solutions are $\boxed{3, 11, 33}.$",Level 5,Precalculus
+"Es seien die Vektoren
+\[\mathbf{a} = \begin{pmatrix} 5 \\ -3 \\ -4 \end{pmatrix} \quad \text{und} \quad \mathbf{b} = \begin{pmatrix} -11 \\ 1 \\ 28 \end{pmatrix}.\]
+Es existieren Vektoren $\mathbf{p}$ und $\mathbf{d}$, sodass die Gerade, die $\mathbf{a}$ und $\mathbf{b}$ enthält, in der Form
+\[\mathbf{v} = \mathbf{p} + \mathbf{d} t\]
+dargestellt werden kann. Darüber hinaus gilt für eine bestimmte Wahl von $\mathbf{d}$, dass für alle Punkte $\mathbf{v}$ auf derselben Seite von $\mathbf{a}$ wie $\mathbf{b}$, der Abstand zwischen $\mathbf{v}$ und $\mathbf{a}$ gleich $t$ ist. Finden Sie $\mathbf{d}$.
+
+\[
+\mathbf{d} = \frac{\mathbf{b} - \mathbf{a}}{\|\mathbf{b} - \mathbf{a}\|} = \frac{\begin{pmatrix} -11 - 5 \\ 1 - (-3) \\ 28 - (-4) \end{pmatrix}}{\left\| \begin{pmatrix} -16 \\ 4 \\ 32 \end{pmatrix} \right\|} = \frac{\begin{pmatrix} -16 \\ 4 \\ 32 \end{pmatrix}}{\sqrt{(-16)^2 + 4^2 + 32^2}} = \frac{\begin{pmatrix} -16 \\ 4 \\ 32 \end{pmatrix}}{4\sqrt{33}} = \boxed{\begin{pmatrix} -\frac{4}{\sqrt{33}} \\ \frac{1}{\sqrt{33}} \\ \frac{8}{\sqrt{33}} \end{pmatrix}}
+\]","From the given property, the distance between $\bold{v}$ and $\bold{a}$ is 0 when $t = 0$, so $\bold{v} = \bold{a}$.  But the equation $\bold{v} = \bold{p} + \bold{d} t$ becomes
+\[\bold{v} = \bold{p}\]when $t = 0$.  Hence, $\bold{p} = \bold{a}$, so the equation of the line is
+\[\bold{v} = \bold{a} + \bold{d} t.\]Also, the vector $\bold{b}$ lies on the line, and the distance between $\bold{a}$ and $\bold{b}$ is
+\[\|\bold{a} - \bold{b}\| = \left\| \begin{pmatrix} 5 \\ -3 \\ -4 \end{pmatrix} - \begin{pmatrix} -11 \\ 1 \\ 28 \end{pmatrix} \right\| = \left\| \begin{pmatrix} 16 \\ -4 \\ -32 \end{pmatrix} \right\| = \sqrt{16^2 + (-4)^2 + (-32)^2} = 36.\]Hence, the value of $t$ for which $\bold{b} = \bold{a} + \bold{d} t$ is $t = 36$, which means
+\[\begin{pmatrix} -11 \\ 1 \\ 28 \end{pmatrix} = \begin{pmatrix} 5 \\ -3 \\ -4 \end{pmatrix} + 36 \bold{d}.\]Isolating $\bold{d}$, we find
+\[\bold{d} = \boxed{\begin{pmatrix} -4/9 \\ 1/9 \\ 8/9 \end{pmatrix}}.\]",Level 5,Precalculus
+"Finden Sie die kleinste positive rationale Zahl $r$, sodass
+\[\sum_{k=1}^{35}\sin (5k)^\circ = \tan r^\circ.\]","From product-to-sum,
+\[\sin 5^\circ \sin (5k)^\circ = \frac{1}{2} [\cos (5k - 5)^\circ - \cos (5k + 5)^\circ].\]Thus, we can make the sum telescope:
+\begin{align*}
+\sum_{k = 1}^{35} \sin (5k)^\circ &= \frac{1}{\sin 5^\circ} \sum_{k = 1}^{35} \sin 5^\circ \sin (5k)^\circ \\
+&= \frac{1}{\sin 5^\circ} \sum_{k = 1}^{35} \frac{\cos (5k - 5)^\circ - \cos (5k + 5)^\circ}{2} \\
+&= \frac{1}{2 \sin 5^\circ} [(\cos 0^\circ - \cos 10^\circ) + (\cos 5^\circ - \cos 15^\circ) + (\cos 10^\circ - \cos 20^\circ) + \\
+&\quad + \dots + (\cos 165^\circ - \cos 175^\circ) + (\cos 170^\circ - \cos 180^\circ)] \\
+&= \frac{\cos 0^\circ + \cos 5^\circ - \cos 175^\circ - \cos 180^\circ}{2 \sin 5^\circ} \\
+&= \frac{2 + 2 \cos 5^\circ}{2 \sin 5^\circ} \\
+&= \frac{1 + \cos 5^\circ}{\sin 5^\circ}.
+\end{align*}Then by the double-angle formulas,
+\begin{align*}
+\frac{1 + \cos 5^\circ}{\sin 5^\circ} &= \frac{1 + 2 \cos^2 2.5^\circ - 1}{2 \sin 2.5^\circ \cos 2.5^\circ} \\
+&= \frac{2 \cos^2 2.5^\circ}{2 \sin 2.5^\circ \cos 2.5^\circ} \\
+&= \frac{\cos 2.5^\circ}{\sin 2.5^\circ} \\
+&= \cot 2.5^\circ \\
+&= \tan 87.5^\circ.
+\end{align*}Thus, $r = \boxed{87.5}.$",Level 5,Precalculus
+"Finden Sie alle Werte von $k$, für die ein von Null verschiedener Vektor $\mathbf{v}$ existiert, sodass
+\[\begin{pmatrix} 2 & -2 & 1 \\ 2 & -3 & 2 \\ -1 & 2 & 0 \end{pmatrix} \mathbf{v} = k \mathbf{v}.\]","We can write the equation as
+\[\begin{pmatrix} 2 & -2 & 1 \\ 2 & -3 & 2 \\ -1 & 2 & 0 \end{pmatrix} \mathbf{v} = k \mathbf{I} \mathbf{v} = \begin{pmatrix} k & 0 & 0 \\ 0 & k & 0 \\ 0 & 0 & k \end{pmatrix} \mathbf{v}.\]Then
+\[\begin{pmatrix} 2 - k & -2 & 1 \\ 2 & -3 - k & 2 \\ -1 & 2 & -k \end{pmatrix} \mathbf{v} = \mathbf{0}.\]This equation has a nonzero vector $\mathbf{v}$ as a solution if and only if
+\[\begin{vmatrix} 2 - k & -2 & 1 \\ 2 & -3 - k & 2 \\ -1 & 2 & -k \end{vmatrix} = 0.\]Expanding this determinant, we get
+\begin{align*}
+\begin{vmatrix} 2 - k & -2 & 1 \\ 2 & -3 - k & 2 \\ -1 & 2 & -k \end{vmatrix} &= (2 - k) \begin{vmatrix} -3 - k & 2 \\ 2 & -k \end{vmatrix} - (-2) \begin{vmatrix} 2 & 2 \\ -1 & -k \end{vmatrix} + \begin{vmatrix} 2 & -3 - k \\ -1 & 2 \end{vmatrix} \\
+&= (2 - k)((-3 - k)(-k) - (2)(2)) -(-2) ((2)(-k) - (2)(-1)) + ((2)(2) - (-3 - k)(-1)) \\
+&= -k^3 - k^2 + 5k - 3.
+\end{align*}Thus, $k^3 + k^2 - 5k + 3 = 0.$  This equation factors as $(k - 1)^2 (k + 3) = 0,$ so the possible values of $k$ are $\boxed{1, -3}.$
+
+Note that for $k = 1,$ we can take $\mathbf{v} = \begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix},$ and for $k = -3,$ we can take $\mathbf{v} = \begin{pmatrix} -1 \\ -2 \\ 1 \end{pmatrix}.$",Level 5,Precalculus
+"Lassen Sie $\alpha$ und $\beta$ Winkel sein, sodass
+\[\frac{\cos \alpha}{\cos \beta} + \frac{\sin \alpha}{\sin \beta} = -1.\]
+Finden Sie alle möglichen Werte von
+\[\frac{\cos^3 \beta}{\cos \alpha} + \frac{\sin^3 \beta}{\sin \alpha}.\]
+Geben Sie alle möglichen Werte durch Kommas getrennt ein.","Let $k = \frac{\cos \alpha}{\cos \beta}.$  Then $\frac{\sin \alpha}{\sin \beta} = -k - 1,$ so $\cos \alpha = k \cos \beta$ and $\sin \alpha = -(k + 1) \sin \beta.$  Substituting into $\cos^2 \alpha + \sin^2 \alpha = 1,$ we get
+\[k^2 \cos^2 \beta + (k + 1)^2 \sin^2 \beta = 1.\]Then $k^2 \cos^2 \beta + (k + 1)^2 (1 - \cos^2 \beta) = 1,$ which leads to
+\[\cos^2 \beta = \frac{k^2 + 2k}{2k + 1}.\]Therefore,
+\[\sin^2 \beta = 1 - \cos^2 \beta = \frac{1 - k^2}{2k + 1}.\]Hence,
+\begin{align*}
+\frac{\cos^3 \beta}{\cos \alpha} + \frac{\sin^3 \beta}{\sin \alpha} &= \cos^2 \beta \cdot \frac{\cos \beta}{\cos \alpha} + \sin^2 \beta \cdot \frac{\sin \beta}{\sin \alpha} \\
+&= \frac{k^2 + 2k}{2k + 1} \cdot \frac{1}{k} + \frac{1 - k^2}{2k + 1} \cdot \frac{1}{-k - 1} \\
+&= \frac{k + 2}{2k + 1} + \frac{k - 1}{2k + 1} \\
+&= \frac{2k + 1}{2k + 1} = \boxed{1}.
+\end{align*}",Level 5,Precalculus
+"Eine Kugel hat ihren Mittelpunkt bei $(3,-5,7)$ mit Radius $5 \sqrt{5}.$ Eine zweite Kugel hat ihren Mittelpunkt bei $(0,1,1)$ mit Radius $2 \sqrt{17}.$ Die beiden Kugeln schneiden sich in einem Kreis. Finde den Radius dieses Kreises.","Let $A = (3,-5,7),$ the center of the first sphere, and let $B = (0,1,1),$ the center of the second sphere.  We can compute that $AB = 9.$
+
+Let $C$ be a point on the intersection of both spheres, so $AC = 5 \sqrt{5}$ and $BC = 2 \sqrt{17}.$
+
+[asy]
+unitsize(0.3 cm);
+
+pair A, B, C;
+
+A = (0,0);
+B = (9,0);
+C = intersectionpoint(arc(A,5*sqrt(5),0,180),arc(B,2*sqrt(17),0,180));
+
+draw(A--B--C--cycle);
+draw(Circle(A,5*sqrt(5)));
+draw(Circle(B,2*sqrt(17)));
+
+label(""$A$"", A, W);
+label(""$B$"", B, S);
+label(""$C$"", C, N);
+label(""$9$"", (A + B)/2, S, red);
+label(""$5 \sqrt{5}$"", (A + C)/2, NW, red, UnFill);
+label(""$2 \sqrt{17}$"", (B + C)/2, E, red, UnFill);
+[/asy]
+
+By Heron's formula, we can compute that $[ABC] = 3 \sqrt{149}.$
+
+Let $D$ be the foot of the perpendicular from $C$ to $\overline{AB}.$
+
+[asy]
+unitsize(0.3 cm);
+
+pair A, B, C, D;
+
+A = (0,0);
+B = (9,0);
+C = intersectionpoint(arc(A,5*sqrt(5),0,180),arc(B,2*sqrt(17),0,180));
+D = (C.x,0);
+
+draw(A--B--C--cycle);
+draw(C--D);
+
+label(""$A$"", A, W);
+label(""$B$"", B, S);
+label(""$C$"", C, N);
+label(""$D$"", D, S);
+[/asy]
+
+Then the intersection of both spheres is the circle centered at $D$ with radius $CD.$  Thus,
+\[CD = \frac{2 [ABC]}{AB} = \frac{6 \sqrt{149}}{9} = \boxed{\frac{2 \sqrt{149}}{3}}.\]",Level 5,Precalculus
+Eine Spiegelung führt von $\begin{pmatrix} 5 \\ 0 \end{pmatrix}$ zu $\begin{pmatrix} 4 \\ 3 \end{pmatrix}.$ Zu welchem Vektor führt die Spiegelung von $\begin{pmatrix} -2 \\ 3 \end{pmatrix}$?,"The midpoint of $(5,0)$ and $(4,3)$ is
+\[\left( \frac{5 + 4}{2}, \frac{0 + 3}{2} \right) = \left( \frac{9}{2}, \frac{3}{2} \right).\]This tells us that the vector being reflected over is a scalar multiple of $\begin{pmatrix} \frac{9}{2} \\ \frac{3}{2} \end{pmatrix}.$  We can then assume that the vector being reflected over is $\begin{pmatrix} 3 \\ 1 \end{pmatrix}.$
+
+[asy]
+usepackage(""amsmath"");
+
+unitsize(1 cm);
+
+pair A, B, M, O, R, S;
+
+O = (0,0);
+A = (5,0);
+R = (4,3);
+B = (-2,3);
+S = (1/5,-18/5);
+M = (A + R)/2;
+
+draw((-3,-1)--(5,5/3),red + dashed);
+draw(O--M,red,Arrow(6));
+draw((-4,0)--(6,0));
+draw((0,-4)--(0,4));
+draw(O--A,Arrow(6));
+draw(O--R,Arrow(6));
+draw(A--R,dashed,Arrow(6));
+draw(O--B,Arrow(6));
+draw(O--S,Arrow(6));
+draw(B--S,dashed,Arrow(6));
+label(""$\begin{pmatrix} 5 \\ 0 \end{pmatrix}$"", A, S);
+label(""$\begin{pmatrix} 4 \\ 3 \end{pmatrix}$"", R, NE);
+label(""$\begin{pmatrix} -2 \\ 3 \end{pmatrix}$"", B, NW);
+label(""$\begin{pmatrix} \frac{9}{2} \\ \frac{3}{2} \end{pmatrix}$"", M, N);
+[/asy]
+
+The projection of $\begin{pmatrix} -2 \\ 3 \end{pmatrix}$ onto $\begin{pmatrix} 3 \\ 1 \end{pmatrix}$ is
+\[\operatorname{proj}_{\begin{pmatrix} 3 \\ 1 \end{pmatrix}} \begin{pmatrix} -2 \\ 3 \end{pmatrix} = \frac{\begin{pmatrix} -2 \\ 3 \end{pmatrix} \cdot \begin{pmatrix} 3 \\ 1 \end{pmatrix}}{\begin{pmatrix} 3 \\ 1 \end{pmatrix} \cdot \begin{pmatrix} 3 \\ 1 \end{pmatrix}} \begin{pmatrix} 3 \\ 1 \end{pmatrix} = \frac{-3}{10} \begin{pmatrix} 3 \\ 1 \end{pmatrix} = \begin{pmatrix} -\frac{9}{10} \\ -\frac{3}{10} \end{pmatrix}.\]Hence, the reflection of $\begin{pmatrix} -2 \\ 3 \end{pmatrix}$ is $2 \begin{pmatrix} -\frac{9}{10} \\ -\frac{3}{10} \end{pmatrix} - \begin{pmatrix} -2 \\ 3 \end{pmatrix} = \boxed{\begin{pmatrix} 1/5 \\ -18/5 \end{pmatrix}}.$",Level 5,Precalculus
+"Lassen Sie $\ell$ die Gerade im Raum durch die Punkte $(0,0,1)$ und $(1,1,1)$ sein. Lassen Sie $d$ die Länge des kürzesten möglichen Pfades sein, der am Ursprung beginnt, zu einem Punkt auf $\ell$ führt und dann am Punkt $(1,0,0)$ endet. Geben Sie $d^2$ ein.","Let $A = (0,0,0),$ $C = (1,0,0),$ $Q = (0,0,1),$ and $R = (1,1,1).$  It is clear that the the shortest path is obtained by travelling from $A$ to some point $B$ directly on a line segment (where $B$ is some point on line segment $\overline{QR}$), then travelling from $B$ to $C$ on another line segment.  The only question is then where to place point $B.$
+
+[asy]
+import three;
+
+size(250);
+currentprojection = perspective(6,3,2);
+
+triple A, B, Bp, C, M, P, Q, R;
+path3 circ;
+real t;
+
+Q = (1,0,1);
+R = (0,1,1);
+A = (1,0,0);
+B = interp(Q,R,0.4);
+C = (1,1,0);
+M = (Q + R)/2;
+P = M + (0,0,sqrt(3/2));
+Bp = interp(Q,R,1/(2 + sqrt(6)));
+
+circ = C;
+
+for (t = 0; t <= 2*3.1416; t = t + 0.01) {
+  circ = circ--(M + (1/2,1/2,-1)*cos(t) + (1/sqrt(2),1/sqrt(2),1/sqrt(2))*sin(t));
+}
+
+draw((1.2,-0.2,1)--(-0.2,1.2,1),red);
+draw((1,1,1)--(1,0,1)--(0,0,1)--(0,1,1)--cycle,gray(0.7));
+draw((1,1,0)--(1,0,0)--(0,0,0)--(0,1,0)--cycle,gray(0.7));
+draw((1,1,1)--(1,1,0),gray(0.7));
+draw((1,0,1)--(1,0,0),gray(0.7));
+draw((0,0,1)--(0,0,0),gray(0.7));
+draw((0,1,1)--(0,1,0),gray(0.7));
+draw(circ,dashed);
+draw(A--B--C);
+draw(C--M--P,dashed);
+draw(A--P);
+draw(B--P);
+
+dot(""$A$"", A, SW);
+dot(""$B$"", B, NW);
+dot(""$B'$"", Bp, NW);
+dot(""$C$"", C, S);
+dot(""$M$"", M, NE);
+dot(""$P$"", P, N);
+dot(""$Q$"", Q, N);
+dot(""$R$"", R, N);
+label(""$\ell$"", (-0.2,1.2,1), E);
+[/asy]
+
+Let $M$ be the midpoint of $\overline{QR},$ which would be $\left( \frac{1}{2}, \frac{1}{2}, 1 \right),$ and consider the circle centered at $M$ with radius $MC = \sqrt{\frac{3}{2}},$ contained in the plane that is perpendicular to line $\ell.$  Let $P$ be the ""top"" point of this circle, so $P = \left( \frac{1}{2}, \frac{1}{2}, 1 + \sqrt{\frac{3}{2}} \right).$  Note that right triangles $BMC$ and $BMP$ are congruent, so $BC = BP.$  This means
+\[AB + BC = AB + BP.\]Let $B'$ be the intersection of $\overline{AP}$ with line $\ell.$  By the Triangle Inequality,
+\[AB + BP \ge AP.\]Equality occurs when $B$ coincides with $B'.$  Thus, the minimum value of $AB + BP$ is $AP = \sqrt{3 + \sqrt{6}},$ so the final answer is $AP^2 = \boxed{3 + \sqrt{6}}.$",Level 5,Precalculus
+"Finden Sie die Matrix $\mathbf{M}$ mit reellen Einträgen, sodass
+\[\mathbf{M}^3 = \begin{pmatrix} 19 & 30 \\ -45 & -71 \end{pmatrix}.\]","Let
+\[\mathbf{M} = \begin{pmatrix} a & b \\ c & d \end{pmatrix}.\]Then
+\begin{align*}
+\mathbf{M}^3 &= \begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} a & b \\ c & d \end{pmatrix} \\
+&= \begin{pmatrix} a^2 + bc & ab + bd \\ ac + cd & bc + d^2 \end{pmatrix} \begin{pmatrix} a & b \\ c & d \end{pmatrix} \\
+&= \begin{pmatrix} a^3 + 2abc + bcd & a^2 b + abd + bd^2 + bcd \\ a^2 c + acd + c^2 + bcd & abc + 2bcd + d^3 \end{pmatrix}.
+\end{align*}Comparing entries, we get
+\begin{align*}
+a^3 + 2abc + bcd &= 19, \\
+b(a^2 + ad + d^2 + bc) &= 30, \\
+c(a^2 + ad + d^2 + bc) &= -45, \\
+abc + 2bcd + d^3 &= -71.
+\end{align*}From the second and third equations, $\frac{b}{c} = -\frac{30}{45} = -\frac{2}{3}.$  Let $b = 2t$ and $c = -3t$ for some real number $t.$
+
+Subtracting the first and fourth equations, we get
+\[a^3 - d^3 + abc - bcd = 90,\]which factors as $(a - d)(a^2 + ad + d^2 + bc) = 90.$  Comparing to the equation $b(a^2 + ad + d^2 + bc) = 30,$ we get
+\[\frac{a - d}{b} = 3,\]so $a - d = 3b = 6t.$
+
+We know $\det (\mathbf{M}^3) = (\det \mathbf{M})^3 = (ad - bc)^3.$  But
+\[\det (\mathbf{M}^3) = \det \begin{pmatrix} 19 & 30 \\ -45 & -71 \end{pmatrix} = (19)(-71) - (30)(-45) = 1,\]so $ad - bc = 1.$  Then $ad = bc + 1 = -6t^2 + 1.$
+
+Squaring the equation $a - d = 6t,$ we get
+\[a^2 - 2ad + d^2 = 36t^2.\]Then $a^2 + ad + d^2 + bc = 36t^2 + 3ad + bc = 36t^2 + 3(-6t^2 + 1) + (-6t^2) = 12t^2 + 3.$  Plugging everything into the equation $b(a^2 + ad + d^2 + bc) = 30,$ we get
+\[2t (12t^2 + 3) = 30.\]Then $t(4t^2 + 1) = 5,$ so $4t^3 + t - 5 = 0.$  This factors as $(t - 1)(4t^2 + 4t + 5) = 0.$  The quadratic factor has no real roots, so $t = 1,$ which leads to $b = 2$ and $c = -3.$
+
+Then $a - d = 6$ and $ad = -5.$  From $a - d = 6,$ $a = d + 6,$ so $(d + 6)d = -5.$  Then
+\[d^2 + 6d + 5 = (d + 1)(d + 5) = 0,\]so $d = -1$ or $ d= -5.$  If $d = -1,$ then $a = 5,$ but these values do not satisfy $a^3 + 2abc + bcd = 19.$  If $d = -5,$ then $a = 1.$  We can check that if
+\[\mathbf{M} = \boxed{\begin{pmatrix} 1 & 2 \\ -3 & -5 \end{pmatrix}},\]then $\mathbf{M}^3 = \begin{pmatrix} 19 & 30 \\ -45 & -71 \end{pmatrix}.$",Level 5,Precalculus
+"Für das gegebene Dreieck $ABC$ gibt es einen eindeutigen Punkt $P$, sodass
+\[AB^2 + AP^2 + BP^2 = AC^2 + AP^2 + CP^2 = BC^2 + BP^2 + CP^2.\]
+Drücken Sie den obigen gemeinsamen Wert in Bezug auf die Seitenlängen $a$, $b$ und $c$ sowie den Umkreisradius $R$ des Dreiecks $ABC$ aus.","From the equation $AB^2 + AP^2 + BP^2 = AC^2 + AP^2 + CP^2,$
+\[AB^2 + BP^2 = AC^2 + CP^2.\]Then
+\[\|\overrightarrow{A} - \overrightarrow{B}\|^2 + \|\overrightarrow{B} - \overrightarrow{P}\|^2 = \|\overrightarrow{A} - \overrightarrow{C}\|^2 + \|\overrightarrow{C} - \overrightarrow{P}\|^2,\]which expands as
+\begin{align*}
+&\overrightarrow{A} \cdot \overrightarrow{A} - 2 \overrightarrow{A} \cdot \overrightarrow{B} + \overrightarrow{B} \cdot \overrightarrow{B} + \overrightarrow{B} \cdot \overrightarrow{B} - 2 \overrightarrow{B} \cdot \overrightarrow{P} + \overrightarrow{P} \cdot \overrightarrow{P} \\
+&= \overrightarrow{A} \cdot \overrightarrow{A} - 2 \overrightarrow{A} \cdot \overrightarrow{C} + \overrightarrow{C} \cdot \overrightarrow{C} + \overrightarrow{C} \cdot \overrightarrow{C} - \overrightarrow{C} \cdot \overrightarrow{P} + \overrightarrow{P} \cdot \overrightarrow{P}.
+\end{align*}This simplifies to
+\[ \overrightarrow{B} \cdot \overrightarrow{P} - \overrightarrow{C} \cdot \overrightarrow{P} + \overrightarrow{A} \cdot \overrightarrow{B} - \overrightarrow{A} \cdot \overrightarrow{C} + \overrightarrow{C} \cdot \overrightarrow{C} - \overrightarrow{B} \cdot \overrightarrow{B} = 0.\]We can factor this as
+\[(\overrightarrow{B} - \overrightarrow{C}) \cdot (\overrightarrow{P} + \overrightarrow{A} - \overrightarrow{B} - \overrightarrow{C}) = 0.\]Let $D$ be the point such that $\overrightarrow{D} = \overrightarrow{B} + \overrightarrow{C} - \overrightarrow{A},$ so the equation above becomes
+\[(\overrightarrow{B} - \overrightarrow{C}) \cdot (\overrightarrow{P} - \overrightarrow{D}) = 0.\]This means lines $BC$ and $PD$ are perpendicular.  In other words, $P$ lies on the line through $D$ that is perpendicular to line $BC.$
+
+From $\overrightarrow{D} = \overrightarrow{B} + \overrightarrow{C} - \overrightarrow{A},$
+\[\frac{\overrightarrow{A} + \overrightarrow{D}}{2} = \frac{\overrightarrow{B} + \overrightarrow{C}}{2}.\]In other words, the midpoints of $\overline{AD}$ and $\overline{BC}$ coincide, so $ABDC$ is a parallelogram.
+
+Similarly, if $E$ is the point such that $AECB$ is a parallelogram, then we can show that $P$ lies on the line passing through $E$ that is perpendicular to line $AC.$  Thus, the location of point $P$ is uniquely determined.
+
+[asy]
+unitsize(0.5 cm);
+
+pair A, B, C, D, E, F, H, O, P;
+
+A = (2,5);
+B = (0,0);
+C = (7,0);
+D = -A + B + C;
+E = A - B + C;
+F = A + B - C;
+H = orthocenter(A,B,C);
+O = circumcenter(A,B,C);
+P = 2*O - H;
+
+draw(A--B--C--cycle);
+draw(B--D--E--A);
+draw(interp(P,D,-0.2)--interp(P,D,1.2),dashed);
+draw(interp(P,E,-0.2)--interp(P,E,1.2),dashed);
+
+label(""$A$"", A, N);
+label(""$B$"", B, SW);
+label(""$C$"", C, SE);
+label(""$D$"", D, W);
+label(""$E$"", E, SE);
+dot(""$P$"", P, NW);
+[/asy]
+
+Taking the circumcenter of triangle $ABC$ as the origin, we can write
+\[\overrightarrow{H} = \overrightarrow{A} + \overrightarrow{B} + \overrightarrow{C},\]where $H$ is the orthocenter of triangle $ABC.$  Note line $AH$ is also perpendicular to line $BC,$ so
+\[\overrightarrow{P} - \overrightarrow{D} = t(\overrightarrow{H} - \overrightarrow{A}) = t (\overrightarrow{B} + \overrightarrow{C})\]for some scalar $t.$  Then
+\begin{align*}
+\overrightarrow{P} &= \overrightarrow{D} + t (\overrightarrow{B} + \overrightarrow{C}) \\
+&= \overrightarrow{B} + \overrightarrow{C} - \overrightarrow{A} + t (\overrightarrow{B} + \overrightarrow{C}).
+\end{align*}Similarly,
+\[\overrightarrow{P} = \overrightarrow{A} + \overrightarrow{C} - \overrightarrow{B} + u (\overrightarrow{A} + \overrightarrow{C})\]for some scalar $u.$  Note that we can take $t = u = -2,$ which gives us
+\[\overrightarrow{P} = -\overrightarrow{A} - \overrightarrow{B} - \overrightarrow{C}.\]Therefore, the common value is
+\begin{align*}
+AB^2 + AP^2 + BP^2 &= \|\overrightarrow{A} - \overrightarrow{B}\|^2 + \|\overrightarrow{A} - \overrightarrow{P}\|^2 + \|\overrightarrow{B} - \overrightarrow{P}\|^2 \\
+&= \|\overrightarrow{A} - \overrightarrow{B}\|^2 + \|2 \overrightarrow{A} + \overrightarrow{B} + \overrightarrow{C}\|^2 + \|\overrightarrow{A} + 2 \overrightarrow{B} + \overrightarrow{C}\|^2 \\
+&= \overrightarrow{A} \cdot \overrightarrow{A} - 2 \overrightarrow{A} \cdot \overrightarrow{B} + \overrightarrow{B} \cdot \overrightarrow{B} \\
+&\quad + 4 \overrightarrow{A} \cdot \overrightarrow{A} + \overrightarrow{B} \cdot \overrightarrow{B} + \overrightarrow{C} \cdot \overrightarrow{C} + 4 \overrightarrow{A} \cdot \overrightarrow{B} + 4 \overrightarrow{A} \cdot \overrightarrow{C} + 2 \overrightarrow{B} \cdot \overrightarrow{C} \\
+&\quad + \overrightarrow{A} \cdot \overrightarrow{A} + 4 \overrightarrow{B} \cdot \overrightarrow{B} + \overrightarrow{C} \cdot \overrightarrow{C} + 4 \overrightarrow{A} \cdot \overrightarrow{B} + 2 \overrightarrow{A} \cdot \overrightarrow{C} + 4 \overrightarrow{B} \cdot \overrightarrow{C} \\
+&= 6 \overrightarrow{A} \cdot \overrightarrow{A} + 6 \overrightarrow{B} \cdot \overrightarrow{B} + 2 \overrightarrow{C} \cdot \overrightarrow{C} + 6 \overrightarrow{A} \cdot \overrightarrow{B} + 6 \overrightarrow{A} \cdot \overrightarrow{C} + 6 \overrightarrow{B} \cdot \overrightarrow{C} \\
+&= 6R^2 + 6R^2 + 2R^2 + 6 \left( R^2 - \frac{c^2}{2} \right) + 6 \left( R^2 - \frac{b^2}{2} \right) + 6 \left( R^2 - \frac{a^2}{2} \right) \\
+&= \boxed{32R^2 - 3(a^2 + b^2 + c^2)}.
+\end{align*}",Level 5,Precalculus
+"Finden Sie die Gleichung der Ebene, die den Winkel zwischen den Ebenen $3x - 6y + 2z + 5 = 0$ und $4x - 12y + 3z - 3 = 0$ halbiert und den Punkt $(-5,-1,-5)$ enthält. Geben Sie Ihre Antwort in der Form 
+\[Ax + By + Cz + D = 0,\]
+an, wobei $A,$ $B,$ $C,$ $D$ ganze Zahlen sind, sodass $A > 0$ und $\gcd(|A|,|B|,|C|,|D|) = 1.$","Suppose $P = (x,y,z)$ is a point that lies on a plane that bisects the angle between the planes $3x - 6y + 2z + 5 = 0$ and $4x - 12y + 3z - 3 = 0.$  (Note that there are two such bisecting planes.)  Then the distance from $P$ to both planes must be equal, so
+\[\frac{|3x - 6y + 2z + 5|}{\sqrt{3^2 + (-6)^2 + 2^2}} = \frac{|4x - 12y + 3z - 3|}{\sqrt{4^2 + (-12)^2 + 3^2}}.\]Then
+\[\frac{|3x - 6y + 2z + 5|}{7} = \frac{|4x - 12y + 3z - 3|}{13}.\]We want to remove the absolute value signs, in order to obtain the equation of a plane.  Checking the sign of both sides when $(x,y,z) = (-5,-1,-5)$ leads us to
+\[\frac{3x - 6y + 2z + 5}{7} = \frac{4x - 12y + 3z - 3}{13}.\]This simplifies to $\boxed{11x + 6y + 5z + 86 = 0}.$",Level 5,Precalculus
+"Finden Sie die Matrix, die der Projektion auf den Vektor $\begin{pmatrix} 1 \\ 7 \end{pmatrix}$ entspricht.","From the projection formula, the projection of $\begin{pmatrix} x \\ y \end{pmatrix}$ onto $\begin{pmatrix} 1 \\ 7 \end{pmatrix}$ is
+\begin{align*}
+\operatorname{proj}_{\begin{pmatrix} 1 \\ 7 \end{pmatrix}} \begin{pmatrix} x \\ y \end{pmatrix} &= \frac{\begin{pmatrix} x \\ y \end{pmatrix} \cdot \begin{pmatrix} 1 \\ 7 \end{pmatrix}}{\begin{pmatrix} 1 \\ 7 \end{pmatrix} \cdot \begin{pmatrix} 1 \\ 7 \end{pmatrix}} \begin{pmatrix} 1 \\ 7 \end{pmatrix} \\
+&= \frac{x + 7y}{50} \begin{pmatrix} 1 \\ 7 \end{pmatrix} \\
+&= \begin{pmatrix} \frac{x + 7y}{50} \\ \frac{7x + 49y}{50} \end{pmatrix}.
+\end{align*}To find the matrix for the projection, we write this vector as the product of a matrix and the vector $\begin{pmatrix} x \\y \end{pmatrix}$:
+\[\begin{pmatrix} \frac{x + 7y}{50} \\ \frac{7x + 49y}{50} \end{pmatrix} = \begin{pmatrix} 1/50 & 7/50 \\ 7/50 & 49/50 \end{pmatrix} \begin{pmatrix} x \\y \end{pmatrix}.\]Thus, the matrix for this transformation is $\boxed{\begin{pmatrix} 1/50 & 7/50 \\ 7/50 & 49/50 \end{pmatrix}}.$",Level 5,Precalculus
+"Eine Linie, die durch den Punkt $(1,1,1)$ verläuft, schneidet die durch 
+\[\begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} + t \begin{pmatrix} 2 \\ 3 \\ 4 \end{pmatrix}\]
+definierte Linie bei $P$ und schneidet die durch 
+\[\begin{pmatrix} -2 \\ 3 \\ -1 \end{pmatrix} + s \begin{pmatrix} 1 \\ 2 \\ 4 \end{pmatrix}\]
+definierte Linie bei $Q$. Finde den Punkt $Q$.","For the first line, $P = (2t + 1, 3t + 2, 4t + 3).$  For the second line, $Q = (s - 2, 2s + 3, 4s - 1).$
+
+Since $(1,1,1),$ $P,$ and $Q$ are collinear, the vectors
+\[\begin{pmatrix} 2t + 1 \\ 3t + 2 \\ 4t + 3 \end{pmatrix} - \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 2t \\ 3t + 1 \\ 4t + 2 \end{pmatrix}\]and
+\[\begin{pmatrix} s - 2 \\ 2s + 3 \\ 4s - 1 \end{pmatrix} - \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} = \begin{pmatrix} s - 3 \\ 2s + 2 \\ 4s - 2 \end{pmatrix}\]will be proportional.  Thus,
+\[\frac{2t}{s - 3} = \frac{3t + 1}{2s + 2} = \frac{4t + 2}{4s - 2}.\]Let
+\[k = \frac{2t}{s - 3} = \frac{3t + 1}{2s + 2} = \frac{4t + 2}{4s - 2}.\]Then
+\begin{align*}
+2t &= k(s - 3), \\
+3t + 1 &= k(2s + 2), \\
+4t + 2 &= k(4s - 2).
+\end{align*}From the first equation, $4t = k(2s - 6).$  Subtracting from the equation $4t + 2 = k(4s - 2),$ we get
+\[2 = k(2s + 4).\]From the second equation, $6t + 2 = k(4s + 4).$  Subtracting the equation $4t + 2 = k(4s - 2),$ we get
+\[2t = 6k,\]so $t = 3k.$  Substituting into the first equation, we get $6k = k(s - 3).$
+
+If $k = 0,$ then from the equations above,
+\[2t = 3t + 1 = 4t + 2 = 0,\]which is not possible.  So $k \neq 0,$ which gives us $6 = s - 3,$ and $s = 9.$  Then $Q = \boxed{(7,21,35)}.$",Level 5,Precalculus
+"Im kartesischen Raum berühren drei Kugeln mit den Mittelpunkten $(-2,5,4)$, $(2,1,4)$ und $(4,7,5)$ die $xy$-Ebene. Die $xy$-Ebene ist eine von zwei Ebenen, die alle drei Kugeln berühren; die zweite Ebene kann als Gleichung $ax + by + cz = d$ für einige reelle Zahlen $a$, $b$, $c$ und $d$ dargestellt werden. Berechnen Sie $\frac{c}{a}$.","The equation for the $xy$-plane is $z = 0.$
+
+[asy]
+import three;
+import solids;
+
+size(300);
+currentprojection = perspective(-2,-2,3);
+
+draw((2,17,0)--(17,2,0)--(-8,-29,0)--(-29,-8,0)--cycle);
+draw(shift((4,7,5))*surface(sphere(5)),gray(0.8));
+draw(shift((-2,5,4))*surface(sphere(4)),gray(0.8));
+draw(shift((2,1,4))*surface(sphere(4)),gray(0.8));
+draw((2,17,6)--(17,2,6)--(-8,-29,-1)--(-29,-8,-1)--cycle);
+draw((0,-29,0)--(-29,0,0));
+
+label(""$x + y = -29$"", (0,-29,0), E);
+[/asy]
+
+Let $\mathbf{a} = \begin{pmatrix} -2 \\ 5 \\ 4 \end{pmatrix},$ $\mathbf{b} = \begin{pmatrix} 2 \\ 1 \\ 4 \end{pmatrix},$ and $\mathbf{c} = \begin{pmatrix} 4 \\ 7 \\ 5 \end{pmatrix}.$  Then the normal vector to the plane passing through the centers of the spheres is
+\[(\mathbf{b} - \mathbf{a}) \times (\mathbf{c} - \mathbf{a}) = \begin{pmatrix} 4 \\ -4 \\ 0 \end{pmatrix} \times \begin{pmatrix} 6 \\ 2 \\ 1 \end{pmatrix} = \begin{pmatrix} -4 \\ -4 \\ 32 \end{pmatrix}.\]We can scale this vector, and take $\begin{pmatrix} 1 \\ 1 \\ -8 \end{pmatrix}$ as the normal vector.  Thus, the equation of the plane is of the form $x + y - 8z = d.$  Substituting any of the centers, we find the equation of this plane is
+\[x + y - 8z = -29.\]The intersection of this plane with the plane $z = 0$ is the line defined by
+\[x + y = -29.\]The equation of any plane containing this line is then of the form
+\[kx + ky + z = -29k.\]We want all three spheres to be tangent to this plane.  Then the distance between this plane and the center $(-2,5,4)$ should be 4.  From the formula for the distance between a point and a plane,
+\[\frac{|-2k + 5k + 4 + 29k|}{\sqrt{k^2 + k^2 + 1}} = 4.\]Then $|32k + 4| = 4 \sqrt{2k^2 + 1},$ so $|8k + 1| = \sqrt{2k^2 + 1}.$  Squaring, we get $64k^2 + 16k + 1 = 2k^2 + 1,$ which simplifies to
+\[62k^2 + 16k = 2k(31k + 8) = 0.\]The solutions are $k = 0$ and $k = -\frac{8}{31}.$  The solution $k = 0$ corresponds to the plane $z = 0,$ so the other plane corresponds to $k = -\frac{8}{31},$ which gives us the equation
+\[-\frac{8}{31} x - \frac{8}{31} y + z = 29 \cdot \frac{8}{31}.\]Thus, $\frac{c}{a} = \boxed{-\frac{31}{8}}.$",Level 5,Precalculus
+"Wenn $\sin (\pi \cos x) = \cos (\pi \sin x)$, geben Sie alle möglichen Werte von $\sin 2x$ durch Kommas getrennt ein.","From the given equation,
+\[\cos (\pi \sin x) = \sin (\pi \cos x) = \cos \left( \frac{\pi}{2} - \pi \cos x \right).\]This means $\pi \sin x$ and $\frac{\pi}{2} - \pi \cos x$ either add up to a multiple of $2 \pi,$ or differ by a multiple of $2 \pi.$
+
+In the first case,
+\[\pi \sin x + \frac{\pi}{2} - \pi \cos x = 2 \pi n\]for some integer $n.$  Then
+\[\sin x - \cos x = 2n - \frac{1}{2}.\]Since
+\[(\sin x - \cos x)^2 = \sin^2 x - 2 \sin x \cos x + \cos^2 x = 1 - \sin 2x \le 2,\]it follows that $|\sin x - \cos x| \le \sqrt{2}.$  Thus, the only possible value of $n$ is 0, in which case
+\[\sin x - \cos x = -\frac{1}{2}.\]Squaring, we get
+\[\sin^2 x - 2 \sin x \cos x + \cos^2 x = \frac{1}{4}.\]Then $1 - \sin 2x = \frac{1}{4},$ so $\sin 2x = \frac{3}{4}.$
+
+In the second case,
+\[\pi \sin x + \pi \cos x - \frac{\pi}{2} = 2 \pi n\]for some integer $n.$  Then
+\[\sin x + \cos x = 2n + \frac{1}{2}.\]By the same reasoning as above, the only possible value of $n$ is 0, in which case
+\[\sin x + \cos x = \frac{1}{2}.\]Squaring, we get
+\[\sin^2 x + 2 \sin x \cos x + \cos^2 x = \frac{1}{4}.\]Then $1 + \sin 2x = \frac{1}{4},$ so $\sin 2x = -\frac{3}{4}.$
+
+Thus, the possible values of $\sin 2x$ are $\boxed{\frac{3}{4}, -\frac{3}{4}}.$",Level 5,Precalculus
