@@ -316,8 +316,36 @@ def run_maps_block():
             print(f"[maps/{subset}/{lang}] {n} tasks x {len(MODELS)} models x {MAPS_N_REPEATS} repeats logged")
 
 
+def remaining_deficit() -> int:
+    """Total (successes-short-of-target) across every cell for the
+    currently active MODELS. Used to decide whether another round is
+    needed -- reads the CSV fresh each call rather than trusting the
+    in-memory _completed set alone, so it reflects what's actually on
+    disk."""
+    if not RESULTS_PATH.exists():
+        return sum(len(MGSM_LANGS) * MGSM_N_PROBLEMS + len(MAPS_SUBSETS) * len(MAPS_LANGS) * MAPS_N_TASKS * MAPS_N_REPEATS for _ in MODELS)
+
+    df = pd.read_csv(RESULTS_PATH)
+    df = df[df["model"].isin({m["name"] for m in MODELS})]
+    ok = df[df["error"].isna()]
+
+    deficit = 0
+    for m in MODELS:
+        for lang in MGSM_LANGS:
+            n = len(ok[(ok["model"] == m["name"]) & (ok["dataset"] == "MGSM") & (ok["language"] == lang)])
+            deficit += max(0, MGSM_N_PROBLEMS - n)
+        for subset in MAPS_SUBSETS:
+            for lang in MAPS_LANGS:
+                lang_code = MAPS_LANG_CODE[lang]
+                n = len(ok[(ok["model"] == m["name"]) & (ok["dataset"] == "MAPS")
+                           & (ok["subset"] == subset) & (ok["language"] == lang_code)])
+                deficit += max(0, MAPS_N_TASKS * MAPS_N_REPEATS - n)
+    return deficit
+
+
 if __name__ == "__main__":
     import argparse
+    import sys
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -327,6 +355,21 @@ if __name__ == "__main__":
              "unavailable -- the resumable design means the rest can be "
              "filled in later without redoing this pass.",
     )
+    parser.add_argument(
+        "--retry-until-filled", action="store_true",
+        help="After the normal pass, keep re-looping over MGSM+MAPS -- which "
+             "only ever re-attempt not-yet-successful (model,dataset,subset,"
+             "language,task_id,repeat_index) keys, never fresh samples -- "
+             "until every cell hits its target count, or a cap below is hit. "
+             "For a model with a low per-attempt success rate (e.g. "
+             "deepseek-flash on MAPS/GAIA during a degraded period), one pass "
+             "leaves most missing cells partially filled since each pass "
+             "gives every outstanding key exactly one more attempt; this "
+             "keeps going so a single invocation can close the gap instead "
+             "of it being re-launched manually round after round.",
+    )
+    parser.add_argument("--max-rounds", type=int, default=15, help="Cap on retry rounds with --retry-until-filled.")
+    parser.add_argument("--max-minutes", type=float, default=180.0, help="Wall-clock cap with --retry-until-filled.")
     args = parser.parse_args()
     if args.models:
         wanted = {m.strip() for m in args.models.split(",")}
@@ -336,6 +379,29 @@ if __name__ == "__main__":
         MODELS[:] = [m for m in MODELS if m["name"] in wanted]
         print(f"Running with models restricted to: {[m['name'] for m in MODELS]}")
 
-    run_mgsm_block()
-    run_maps_block()
-    print(f"\nDone. Results -> {RESULTS_PATH}")
+    if not args.retry_until_filled:
+        run_mgsm_block()
+        run_maps_block()
+        print(f"\nDone. Results -> {RESULTS_PATH}")
+    else:
+        start = time.monotonic()
+        round_num = 0
+        while True:
+            round_num += 1
+            elapsed_min = (time.monotonic() - start) / 60
+            print(f"\n########## Round {round_num} (elapsed {elapsed_min:.1f} min) ##########")
+            run_mgsm_block()
+            run_maps_block()
+
+            deficit = remaining_deficit()
+            print(f"\n[round {round_num}] remaining deficit across all cells: {deficit}")
+            if deficit == 0:
+                print("All cells at target. Done.")
+                break
+            if round_num >= args.max_rounds:
+                print(f"Hit --max-rounds ({args.max_rounds}) with deficit={deficit} still remaining. Stopping.", file=sys.stderr)
+                break
+            if elapsed_min >= args.max_minutes:
+                print(f"Hit --max-minutes ({args.max_minutes}) with deficit={deficit} still remaining. Stopping.", file=sys.stderr)
+                break
+        print(f"\nDone ({round_num} round(s)). Results -> {RESULTS_PATH}")

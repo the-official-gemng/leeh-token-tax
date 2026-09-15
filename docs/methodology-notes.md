@@ -63,3 +63,31 @@ and MAPS/Math (en/es/ar) collection for `deepseek-flash` specifically --
 from this window. The resumable run design re-attempts these same task
 instances once the outage cleared; the CSV retains the failed attempt rows
 too (not deleted), so the full retry history is auditable.
+
+## 2026-09-14 -- deepseek-flash/MAPS/GAIA: final N short of target (account balance)
+
+**What happened:** after the outage (above) and the timeout-ceiling fix,
+closing the remaining `deepseek-flash`/GAIA gap needed several resume
+passes -- GAIA's per-attempt success rate for this model stayed low
+(roughly 35-40%) even outside the outage window, for reasons not fully
+diagnosed (plausibly this model needing more attempts to produce a
+well-formed long-form GAIA answer within the timeout, independent of the
+earlier outage). An automated retry loop (`--retry-until-filled` in
+run_phase1.py) was added to close this without manual re-launching. Partway
+through, the DeepSeek account ran out of balance (`APIStatusError: Error
+code: 402 - Insufficient Balance`, first occurrence 2026-09-14T20:01:48).
+Every attempt after that point failed instantly and unrecoverably --
+distinguishable in the data from the earlier outage/timeout failures by
+being a fast, explicit billing rejection rather than a slow timeout.
+
+**Impact:** `deepseek-flash`/MAPS/GAIA finished this data-collection phase
+below the pre-registered 10 tasks x 2 repeats = 20 target for all three
+languages: ar 18/20, en 17/20, es 15/20 (vs. 20/20 for every other
+model x dataset x language x subset cell, including gpt-5.6-luna/GAIA and
+deepseek-flash/Math). This is a real reduction in statistical power
+specifically for `deepseek-flash` GAIA comparisons -- smaller matched-pair
+sample for the Wilcoxon signed-rank test on that cell -- not a sampling or
+pairing issue (task_id alignment with the successfully-collected instances
+is unaffected; see the entry above). Resolvable by adding funds and running
+`python scripts/run_phase1.py --models deepseek-flash --retry-until-filled`
+again, which will pick up exactly these remaining task instances.
