@@ -1,0 +1,7 @@
+model,language,n_pairs,median_ratio,ci_low,ci_high,wilcoxon_p,coverage,p_holm,significant_holm
+gpt-5.6-luna,es,70,1.0602602795436544,1.0115705623588158,1.0837141888374715,0.05381751987257034,"['MAPS/GAIA: n_pairs=10, es success 20/27 (74%)', 'MAPS/Math: n_pairs=10, es success 20/20 (100%)', 'MGSM/nan: n_pairs=50, es success 50/50 (100%)']",0.16145255961771102,False
+gpt-5.6-luna,zh,50,1.075938104165983,1.0334302325588904,1.1677704194260485,0.0018503612977608574,"['MGSM/nan: n_pairs=50, zh success 50/50 (100%)']",0.00740144519104343,True
+gpt-5.6-luna,ar,20,1.032207697435978,0.8809351223065424,1.141400490579577,0.5958194732666016,"['MAPS/GAIA: n_pairs=10, ar success 20/27 (74%)', 'MAPS/Math: n_pairs=10, ar success 20/22 (91%)']",1.0,False
+deepseek-flash,es,70,1.359729172799529,1.2650539808658348,1.4532154105324837,4.101309875485371e-08,"['MAPS/GAIA: n_pairs=10, es success 19/170 (11%)', 'MAPS/Math: n_pairs=10, es success 20/43 (47%)', 'MGSM/nan: n_pairs=50, es success 50/50 (100%)']",2.4607859252912223e-07,True
+deepseek-flash,zh,50,1.3013726556129384,1.2095731422339928,1.3778061096945153,1.2531257944866529e-05,"['MGSM/nan: n_pairs=50, zh success 50/72 (69%)']",6.265628972433265e-05,True
+deepseek-flash,ar,20,1.0684670779321643,0.9548272321321967,1.390191300268446,0.5958194732666016,"['MAPS/GAIA: n_pairs=10, ar success 20/94 (21%)', 'MAPS/Math: n_pairs=10, ar success 20/22 (91%)']",1.0,False

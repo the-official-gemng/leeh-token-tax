@@ -91,3 +91,25 @@ pairing issue (task_id alignment with the successfully-collected instances
 is unaffected; see the entry above). Resolvable by adding funds and running
 `python scripts/run_phase1.py --models deepseek-flash --retry-until-filled`
 again, which will pick up exactly these remaining task instances.
+
+**Update 2026-09-15 -- funds added, closed to 19/20 (not 20/20), and why:**
+After funding, three more retry passes closed ar to 20/20 and brought en/es
+to 19/20 each. The single remaining gap in both is the *same* GAIA task
+(`task_id=72c06643-a2fa-4186-aa5c-9ec33ae9b445`, en repeat 2 / es repeat 1)
+-- a physics problem asking for the volume of Freon-12 refrigerant at the
+bottom of the Marianas Trench. It was attempted 50 times per language slot;
+excluding stale pre-funding 402s, every single post-funding attempt (~18-21
+per language) timed out at the full 120s ceiling. This reads as a genuine,
+reproducible property of this task for `deepseek-flash` -- not transient
+flakiness -- so further retries were stopped rather than continuing to burn
+calls on a call that won't complete.
+
+This is arguably a legitimate data point in its own right: pre_registration.md
+Section 1 lists "truncation-failure rate" as a tracked metric, and a task
+`deepseek-flash` cannot complete within a generous 120s budget is exactly
+that. Final N for `deepseek-flash`/MAPS/GAIA: ar 20/20, en 19/20, es 19/20
+(vs. 20/20 everywhere else in the dataset). The paired analysis in
+analyze_phase1.py handles this without special-casing: a task_id is only
+included in a pair when both its English and target-language sides have at
+least one successful repeat, so this one task is naturally underweighted
+(fewer averaged repeats) rather than dropped or corrupting other pairs.
