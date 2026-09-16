@@ -266,3 +266,55 @@ originally-assumed $0.10/$0.40 for 2.5-flash-lite).
   question smoke tests before running (not the misleadingly cheap
   trivial-prompt smoke test, given qwen3.5-flash's reasoning-token
   behavior above).
+
+## 2026-09-16 -- harness/equalizer.py's BASE_MAX_TOKENS was drastically undersized for MAPS (fixed)
+
+**What happened:** `BASE_MAX_TOKENS = 2048` (English's budget, before the
+per-language multiplier) was an unvalidated guess made when building the
+Equalizer, never checked against what these tasks actually need. Phase 1's
+own C0 data (uncapped, no max_tokens set at all) shows MAPS completion_tokens
+averaging 4702 with a max of **28778** -- even after the fertility
+multiplier (up to ~1.87x), the resulting C2 budgets (2048-2735 tokens)
+were a small fraction of that. First full C2 run: **41.7% of MAPS answers
+truncated mid-generation** (vs. 0% in C0). This corrupted the first
+H1/H2/H3 pass -- both the apparent accuracy collapse and the apparent
+cost *increase* under C2 were substantially truncation artifacts, not a
+real reflection of LEEH's design. MGSM was unaffected (truncation ~1%,
+its answers are naturally short).
+
+**Fix:** `harness/conditions.py`'s `run_c2`/`run_c3a`/`run_condition` now
+accept an explicit `base_max_tokens` override, threaded through to
+`execute_equalized()`. `scripts/run_phase3.py` sets it per dataset,
+calibrated from C0's own observed distribution rather than guessed again:
+`MAX_TOKENS_BY_DATASET = {"MGSM": 8192, "MAPS": 32768}` (both comfortably
+above C0's respective observed max: 6879 and 28778).
+`harness/equalizer.py`'s own default also moved from 2048 to 8192 (safe
+for MGSM-scale callers that don't pass an override; MAPS-scale callers
+must pass one explicitly -- 8192 alone is still not enough for MAPS).
+
+**Also found:** `phase3_c1_raw.csv` and `phase3_c2_raw.csv` needed the
+same MAPS/Math boxed-answer scoring fix already applied to
+`phase1_raw.csv` (see the entry earlier in this file) -- they'd been
+generated with the same broken always-0%-on-Math scoring and were never
+patched. Caught before the first H1/H2/H3 report, since C0 (fixed) vs
+C1/C2 (still broken) would have been an apples-to-oranges accuracy
+comparison. Rescored in place, no API calls re-run (same approach as the
+original fix -- extract `\boxed{}` from the reference solution, check it
+against the already-saved model answer).
+
+**Re-run:** removed just the truncated MAPS rows from
+`phase3_c2_raw.csv` (truncated=True isn't an `error`, so resumability
+wouldn't have retried them on its own) and reran C2 with the corrected
+budgets. `gpt-5.6-luna` closed cleanly. `deepseek-flash` hit its now-familiar
+balance depletion again partway through (same account, same recurring
+pattern documented earlier in this file) -- refunded and completed after.
+Final C2: 540/540 successes, 0.56% truncation (down from 19% -- MGSM's
+own ~1% plus a handful of genuine long-tail MAPS answers, not budget-
+constrained).
+
+**Result, now trustworthy:** H1 is not supported for either model (C2's
+cost ratios are *higher* than Phase 1's own baseline ratios in most
+cells, not lower -- seemingly a real effect of the "reason in English,
+then answer" structure adding overhead, not a truncation artifact this
+time). See the chat report / results/decision_rule_h1.csv,
+decision_rule_h2.csv, decision_rule_h3.csv for the full H1/H2/H3 numbers.
