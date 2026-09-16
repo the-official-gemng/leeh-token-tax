@@ -56,6 +56,16 @@ FIELDNAMES = [
     "latency_s", "correct", "truncated", "error",
 ]
 
+# Per-dataset base_max_tokens for the Equalizer (C2/C3a only -- C1 doesn't
+# use it). harness/equalizer.py's own default (8192) was calibrated for
+# MGSM-scale answers; MAPS needs far more headroom. Values below are
+# comfortably above C0's own observed max completion_tokens per dataset
+# (results/phase1_raw.csv: MGSM max=6879, MAPS max=28778) -- calibrated
+# from that distribution, not guessed, after the original flat 2048
+# default caused 41.7% truncation on MAPS in C2 (see
+# docs/methodology-notes.md).
+MAX_TOKENS_BY_DATASET = {"MGSM": 8192, "MAPS": 32768}
+
 
 def results_path(condition: str) -> Path:
     return RESULTS_DIR / f"phase3_{condition}_raw.csv"
@@ -109,7 +119,10 @@ def run_one(condition: str, model: dict, dataset: str, subset, language: str,
         "cost_usd": None, "latency_s": None, "correct": None, "truncated": None, "error": None,
     }
     try:
-        kwargs = {"language": language} if condition == "c1" else {"task_type_hint": task_type_hint}
+        if condition == "c1":
+            kwargs = {"language": language}
+        else:
+            kwargs = {"task_type_hint": task_type_hint, "base_max_tokens": MAX_TOKENS_BY_DATASET.get(dataset)}
         result = run_condition(condition, model["name"], model["provider"], question, **kwargs)
         row["model_answer"] = result.final_answer
         row["detected_language"] = result.detected_language

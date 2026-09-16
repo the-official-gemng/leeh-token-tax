@@ -111,7 +111,8 @@ def run_c1(model_name: str, provider: str, prompt: str, language: str) -> Condit
 
 
 def _run_c2_family(model_name: str, provider: str, prompt: str,
-                    task_type_hint: Optional[str], disable_equalizer: bool, condition_name: str) -> ConditionResult:
+                    task_type_hint: Optional[str], disable_equalizer: bool, condition_name: str,
+                    base_max_tokens: Optional[int] = None) -> ConditionResult:
     result = ConditionResult(condition=condition_name)
     try:
         detection = detect(prompt, task_type_hint=task_type_hint)
@@ -130,9 +131,12 @@ def _run_c2_family(model_name: str, provider: str, prompt: str,
             # prompt-based mode makes no translation call of its own -- nothing
             # to accumulate here, unlike C1's mt mode.
 
+        equalizer_kwargs = {"disable_equalizer": disable_equalizer}
+        if base_max_tokens is not None:
+            equalizer_kwargs["base_max_tokens"] = base_max_tokens
         exec_result = execute_equalized(
             model_name, provider, messages, language=decision.original_language,
-            disable_equalizer=disable_equalizer,
+            **equalizer_kwargs,
         )
         _add(result, exec_result.prompt_tokens, exec_result.completion_tokens,
              exec_result.latency_s, exec_result.cost_usd)
@@ -153,12 +157,16 @@ def _run_c2_family(model_name: str, provider: str, prompt: str,
     return result
 
 
-def run_c2(model_name: str, provider: str, prompt: str, task_type_hint: Optional[str] = None) -> ConditionResult:
-    return _run_c2_family(model_name, provider, prompt, task_type_hint, disable_equalizer=False, condition_name="c2")
+def run_c2(model_name: str, provider: str, prompt: str, task_type_hint: Optional[str] = None,
+           base_max_tokens: Optional[int] = None) -> ConditionResult:
+    return _run_c2_family(model_name, provider, prompt, task_type_hint, disable_equalizer=False,
+                           condition_name="c2", base_max_tokens=base_max_tokens)
 
 
-def run_c3a(model_name: str, provider: str, prompt: str, task_type_hint: Optional[str] = None) -> ConditionResult:
-    return _run_c2_family(model_name, provider, prompt, task_type_hint, disable_equalizer=True, condition_name="c3a")
+def run_c3a(model_name: str, provider: str, prompt: str, task_type_hint: Optional[str] = None,
+            base_max_tokens: Optional[int] = None) -> ConditionResult:
+    return _run_c2_family(model_name, provider, prompt, task_type_hint, disable_equalizer=True,
+                           condition_name="c3a", base_max_tokens=base_max_tokens)
 
 
 def run_condition(condition: str, model_name: str, provider: str, prompt: str, **kwargs) -> ConditionResult:
@@ -171,8 +179,10 @@ def run_condition(condition: str, model_name: str, provider: str, prompt: str, *
             raise ValueError("c1 requires language= (the known/labeled input language -- c1 has no Detector step)")
         return run_c1(model_name, provider, prompt, language)
     elif condition == "c2":
-        return run_c2(model_name, provider, prompt, task_type_hint=kwargs.get("task_type_hint"))
+        return run_c2(model_name, provider, prompt, task_type_hint=kwargs.get("task_type_hint"),
+                       base_max_tokens=kwargs.get("base_max_tokens"))
     elif condition == "c3a":
-        return run_c3a(model_name, provider, prompt, task_type_hint=kwargs.get("task_type_hint"))
+        return run_c3a(model_name, provider, prompt, task_type_hint=kwargs.get("task_type_hint"),
+                        base_max_tokens=kwargs.get("base_max_tokens"))
     else:
         raise ValueError(f"unknown condition: {condition!r} (expected one of c0, c1, c2, c3a)")
