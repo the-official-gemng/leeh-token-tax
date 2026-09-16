@@ -35,7 +35,12 @@ from pathlib import Path
 from typing import Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
-from run_phase1 import call_model, cost_usd  # reuse, don't rewrite -- same rule executor.py follows
+# call_model_with_hard_timeout, not the raw call_model -- discovered during
+# a Phase 3 C1 run that the raw version has no protection against an SDK-
+# level hang (the same class of bug run_phase1.py's own hard timeout was
+# built to fix), and C1 makes 2 of its 3 calls through this module
+# (translate-in here, translate-out in expander.py), so both need it.
+from run_phase1 import call_model_with_hard_timeout as call_model, cost_usd  # reuse, don't rewrite
 
 
 @dataclass

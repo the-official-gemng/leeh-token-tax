@@ -148,6 +148,80 @@ def analyze(metric: str, label: str):
     return res_df
 
 
+def analyze_accuracy():
+    """Exact-match accuracy, English vs. each non-English language, paired
+    by task_id -- same pairing machinery as analyze() (load_paired), but
+    reported as a DIFFERENCE in accuracy points rather than a ratio. A
+    ratio of two 0/1 correctness values doesn't mean the same thing a cost
+    ratio does (and is degenerate whenever English accuracy is 0 on a
+    matched subset); pre_registration.md's own H2 is framed as a
+    difference too ("non-inferiority margin: <=2 accuracy points"), so
+    this matches the pre-registered framing rather than forcing the
+    cost-analysis's ratio framing onto a metric it doesn't fit."""
+    df = pd.read_csv(RESULTS_PATH)
+    results = []
+
+    for model in MODELS:
+        for lang in NON_ENGLISH_LANGS:
+            en_vals, lang_vals, coverage = load_paired(df, model, lang, "correct")
+            n = len(en_vals)
+            if n < 5:
+                results.append({
+                    "model": model, "language": lang, "n_pairs": n,
+                    "en_accuracy": float("nan"), "lang_accuracy": float("nan"),
+                    "diff_points": float("nan"), "ci_low": float("nan"), "ci_high": float("nan"),
+                    "wilcoxon_p": float("nan"), "coverage": coverage,
+                })
+                continue
+
+            en_acc = float(np.mean(en_vals)) * 100
+            lang_acc = float(np.mean(lang_vals)) * 100
+            diffs = (lang_vals.astype(float) - en_vals.astype(float)) * 100
+            diff_points = float(np.median(diffs))
+            ci_low, ci_high = bca_ci(diffs)
+            try:
+                _stat, p = wilcoxon(lang_vals, en_vals)
+            except ValueError:
+                # raised when every paired difference is exactly zero
+                # (e.g. both languages 100% correct on every matched task)
+                p = float("nan")
+
+            results.append({
+                "model": model, "language": lang, "n_pairs": n,
+                "en_accuracy": en_acc, "lang_accuracy": lang_acc,
+                "diff_points": diff_points, "ci_low": ci_low, "ci_high": ci_high,
+                "wilcoxon_p": p, "coverage": coverage,
+            })
+
+    res_df = pd.DataFrame(results)
+    valid = res_df["wilcoxon_p"].notna()
+    if valid.sum():
+        reject, p_corrected, _, _ = multipletests(res_df.loc[valid, "wilcoxon_p"], alpha=ALPHA, method="holm")
+        res_df.loc[valid, "p_holm"] = p_corrected
+        res_df.loc[valid, "significant_holm"] = reject
+
+    print(f"\n{'='*70}\nExact-match accuracy: English vs. non-English, paired by task_id\n{'='*70}")
+    for _, r in res_df.iterrows():
+        print(f"\n{r['model']} / {r['language']}  (n_pairs={r['n_pairs']})")
+        for c in r["coverage"]:
+            print(f"    {c}")
+        if pd.isna(r["diff_points"]):
+            print("    too few paired observations (n<5) -- skipped")
+            continue
+        sig = r.get("significant_holm", False)
+        print(f"    English accuracy = {r['en_accuracy']:.1f}%   {r['language']} accuracy = {r['lang_accuracy']:.1f}%")
+        print(f"    median paired difference ({r['language']} - en) = {r['diff_points']:+.1f} points   "
+              f"95% BCa CI = [{r['ci_low']:+.1f}, {r['ci_high']:+.1f}]")
+        if pd.isna(r["wilcoxon_p"]):
+            print("    Wilcoxon: not computable (zero variance in paired differences)")
+        else:
+            print(f"    Wilcoxon p = {r['wilcoxon_p']:.4g}   "
+                  f"Holm-corrected p = {r.get('p_holm', float('nan')):.4g}   "
+                  f"significant @ alpha={ALPHA}: {sig}")
+
+    return res_df
+
+
 if __name__ == "__main__":
     print(f"Loading {RESULTS_PATH}")
     cost_results = analyze("cost_usd", "Dollar cost")
@@ -165,6 +239,10 @@ if __name__ == "__main__":
         print(f"{r['model']:16s} {r['language']}: baseline median cost ratio "
               f"{r['median_ratio']:.2f}x [{r['ci_low']:.2f}, {r['ci_high']:.2f}]  -- {note}")
 
+    accuracy_results = analyze_accuracy()
+
     cost_results.to_csv(ROOT / "results" / "phase1_cost_ratios.csv", index=False)
     token_results.to_csv(ROOT / "results" / "phase1_fertility_ratios.csv", index=False)
-    print(f"\nSaved -> results/phase1_cost_ratios.csv, results/phase1_fertility_ratios.csv")
+    accuracy_results.to_csv(ROOT / "results" / "phase1_accuracy_diffs.csv", index=False)
+    print(f"\nSaved -> results/phase1_cost_ratios.csv, results/phase1_fertility_ratios.csv, "
+          f"results/phase1_accuracy_diffs.csv")

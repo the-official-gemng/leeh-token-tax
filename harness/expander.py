@@ -29,7 +29,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
-from run_phase1 import call_model, cost_usd  # reuse, don't rewrite
+from run_phase1 import call_model_with_hard_timeout as call_model, cost_usd  # reuse, don't rewrite -- see packer.py's comment on this same swap
 from harness.detector import detect_language
 
 

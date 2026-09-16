@@ -113,3 +113,97 @@ analyze_phase1.py handles this without special-casing: a task_id is only
 included in a pair when both its English and target-language sides have at
 least one successful repeat, so this one task is naturally underweighted
 (fewer averaged repeats) rather than dropped or corrupting other pairs.
+
+## 2026-09-15 -- deepseek-flash/MAPS/GAIA: survivorship-bias risk applies to all three languages, not just Arabic
+
+**Correction:** an earlier informal summary of this data described the
+survivorship-bias concern below as an Arabic-specific issue. It isn't --
+it applies to `deepseek-flash`'s GAIA results in **all three** languages
+(es, en, ar). Recording it properly here instead of leaving it only in
+conversation.
+
+**What the concern is:** the final successful-attempt ratios for
+`deepseek-flash`/MAPS/GAIA are low enough that the 19-20 tasks that
+*did* survive into the paired sample per language may not be
+representative of the full attempted set -- if failure (timeout at the
+120s ceiling) correlates with task difficulty/length, the surviving
+sample is biased toward easier/shorter tasks, which would make
+`deepseek-flash`'s measured GAIA cost ratio, fertility ratio, and
+accuracy all look *better* than its true performance on the full task
+distribution.
+
+**Evidence (successes / total attempts, i.e. including all retry rounds
+across the outage and balance-shortfall episodes above):**
+
+| language | successes | attempts | completion rate |
+|---|---|---|---|
+| es | 19 | 170 | ~11% |
+| en | 19 | 124 | ~15% |
+| ar | 20 | 94 | ~21% |
+
+All three are low enough to carry this caveat -- es and en are actually
+*worse* than ar's completion rate, not better, so singling out Arabic was
+specifically wrong, not just incomplete.
+
+**Contrast:** `gpt-5.6-luna`'s GAIA completion is 65-74% across all three
+languages (ar 20/27, en 20/31, es 20/27) -- healthy enough that this
+caveat does not apply to it. This is model-specific, not a property of
+GAIA or of any particular language.
+
+**Status:** not fixed -- flagging as a known limitation on the
+`deepseek-flash`/GAIA cell of every Phase 1 metric, rather than a bug
+with a code fix. Closing it for real would mean either a much higher
+timeout ceiling specifically to give `deepseek-flash` a fairer shot at
+GAIA's long-form answers, or accepting the smaller/biased sample as a
+limitation in the eventual write-up.
+
+## 2026-09-15 -- harness/packer.py and harness/expander.py had no hard-timeout protection (Phase 3 bug, now fixed)
+
+**What happened:** both modules call the model directly to do their own
+translation (packer.py's MT-based mode translates the input; expander.py
+translates the output back) via `run_phase1.call_model` -- the *raw*,
+unprotected function. Only `harness/executor.py` used
+`call_model_with_hard_timeout`. Condition C1 makes 3 calls per task
+(translate-in, execute, translate-out), so 2 of its 3 calls had zero
+protection against the exact class of SDK-level hang that
+`call_model_with_hard_timeout` exists to prevent (see the comment above
+that function in run_phase1.py). Surfaced as a ~35-minute stall during a
+Phase 3 C1 `--retry-until-filled` run -- diagnosed by confirming a fresh
+process and raw network reachability both worked fine immediately
+(ruling out an actual outage), which pointed at something specific to
+the long-running process's own call path instead.
+
+**Fix:** both modules now import `call_model_with_hard_timeout` (aliased
+to the name `call_model` so the rest of each module's code didn't need
+to change) instead of the raw function. Verified with a direct smoke
+test post-fix.
+
+**Note:** `harness/conditions.py`'s C2 path already usually avoided this
+exposure in practice -- prompt-based mode means expander.py's translation
+call only fires when the model didn't already answer in the target
+language, which is the common case, not the rare one. C2's actual Phase 3
+run finished 540/540 with zero errors *before* this bug was found, so it
+wasn't re-run -- the exposure existed in the code but didn't happen to
+manifest there.
+
+## 2026-09-15 -- Phase 3 C1: same Freon-12 GAIA task blocks deepseek-flash again, plus balance ran out again
+
+**What happened:** after the hard-timeout fix above, C1's
+`deepseek-flash`/MAPS block converged to 116/120 and then stopped
+improving. The 4 remaining gaps (en repeat 1, es repeat 1, ar repeat 1,
+ar repeat 2) are all the *same task* identified in Phase 1's entry above
+(`task_id=72c06643-a2fa-4186-aa5c-9ec33ae9b445`, the Freon-12/Marianas
+Trench volume problem) -- mostly genuine 120s timeouts (10-12 per slot),
+consistent with Phase 1's finding that this specific task is a
+reproducible truncation-failure for this model, not something more
+retries fix. The DeepSeek account also ran out of balance again partway
+through (a handful of 402s mixed into the same slots). Checked directly
+afterward: balance is currently depleted (`call_model` to `deepseek-flash`
+returns `402 Insufficient Balance` right now).
+
+**Status:** stopped rather than continuing to retry against an empty
+balance and an already-documented task-level limitation. Final C1 state:
+536/540 (99.3%) -- `deepseek-flash`/MAPS at 116/120, everything else
+(gpt-5.6-luna both datasets, deepseek-flash/MGSM) at full target. Mirrors
+Phase 1's own resolution of the identical task (accepted 19/20 rather
+than exhausting funds indefinitely).
