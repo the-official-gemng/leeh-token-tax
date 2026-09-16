@@ -207,3 +207,62 @@ balance and an already-documented task-level limitation. Final C1 state:
 (gpt-5.6-luna both datasets, deepseek-flash/MGSM) at full target. Mirrors
 Phase 1's own resolution of the identical task (accepted 19/20 rather
 than exhausting funds indefinitely).
+
+## Generalization spot-check (exploratory, post-Phase-3)
+
+**This sits outside the frozen pre-registered design.** pre_registration.md
+Section 1 fixes the two models under test (`gpt-5.6-luna`,
+`deepseek-flash`) and the full task set; nothing about that is changing
+here, so there is no pre_registration.md Amendments Log entry for this --
+scope isn't changing, an exploratory side-check is being added alongside
+it.
+
+**What this is:** Phase 1 found a real, statistically significant
+baseline token tax for `deepseek-flash` on Spanish/Chinese (median cost
+ratio 1.30-1.36x) and a near-null tax for `gpt-5.6-luna` (1.03-1.08x,
+mostly not significant) -- see docs/findings_summary.md. An open question
+this raises: is that split a property of the *tokenizer* each model uses
+(which would suggest it generalizes to other models sharing similar
+tokenizer characteristics), or something idiosyncratic to these two
+specific models? scripts/run_generalization_check.py adds two more
+cheap-tier models (`qwen3.5-flash`, `gemini-3.5-flash-lite` -- see below
+for why not gemini-2.5-flash-lite as originally named) and re-runs a
+small MGSM-only (en/es/zh) check to see which pattern, if either, each
+new model's tax tracks.
+
+**By design, this is underpowered and not meant to hit significance.**
+N=30/language/model, one dataset (MGSM), no repeats, vs. Phase 1's
+N=50/language on MGSM alone plus the full MAPS battery. It exists to show
+*directional* consistency (does the new model's ratio land near
+`deepseek-flash`'s territory or `gpt-5.6-luna`'s?), not to produce a
+publishable effect size or a corrected-for-multiple-comparisons
+significance test. Results should be read qualitatively.
+
+**Model substitution:** `gemini-2.5-flash-lite` (as originally specified)
+returned `404 Not Found` -- "no longer available to new users... use
+models/gemini-3.5-flash-lite instead." Substituted per direction, with
+pricing re-verified for the substitute specifically against Google's
+official pricing page rather than assumed to match the retired model's
+rate (they don't: $0.30/$2.50 per 1M in/out for 3.5-flash-lite vs. the
+originally-assumed $0.10/$0.40 for 2.5-flash-lite).
+
+**Other implementation notes:**
+- `qwen3.5-flash`'s DashScope base_url wasn't unambiguous across official
+  documentation pages (one showed a newer workspace-ID-scoped endpoint,
+  another the long-standing simple form) -- resolved with a live
+  smoke-test call rather than trusting either doc page blindly; the
+  simple `dashscope-intl.aliyuncs.com/compatible-mode/v1` form works.
+- `.env` already had the Qwen key under `QWEN_API_KEY`, not
+  `DASHSCOPE_API_KEY` as originally specified -- used the name actually
+  present rather than requesting a rename.
+- `qwen3.5-flash` used surprisingly many completion tokens even on a
+  trivial "Say OK." prompt (137 tokens) and real MGSM questions (800-1100
+  tokens) -- consistent with an internal reasoning/thinking mode running
+  before the visible answer. This inflates its absolute cost regardless
+  of language, but doesn't by itself bias the *ratio* (non-English /
+  English) this check cares about, since the same reasoning behavior
+  applies to English too.
+- Total batch cost: ~$0.08 for all 180 calls, confirmed via real-MGSM-
+  question smoke tests before running (not the misleadingly cheap
+  trivial-prompt smoke test, given qwen3.5-flash's reasoning-token
+  behavior above).
