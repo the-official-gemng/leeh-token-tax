@@ -59,4 +59,5 @@ _(Leave empty until frozen. Any change after freezing goes here — logged as a 
 
 | Date | Change | Reason | PR link | Approved by (both) |
 |---|---|---|---|---|
-| | | | | |
+| 2026-09-14 | Dropped Arabic from MGSM (single-turn dataset runs en/es/zh only) | `juletxara/mgsm` on Hugging Face has no `ar` config (confirmed empirically — available: bn/de/en/es/fr/ja/ru/sw/te/th/zh). Arabic coverage for the study still comes from MAPS/GAIA (Arabic split) and GAIA-v2-LILT (Arabic slice). | (this PR) | pending |
+| 2026-09-14 | Dropped Chinese from MAPS (agentic dataset runs en/es/ar only, across Math and GAIA configs) | `Fujitsu-FRE/MAPS` on Hugging Face has no Chinese split in any config (Math, GAIA, or GAIA-v2-LILT — confirmed empirically). Chinese coverage for the study still comes from MGSM. | (this PR) | pending |
