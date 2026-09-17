@@ -66,9 +66,16 @@ FIELDNAMES = [
 # docs/methodology-notes.md).
 MAX_TOKENS_BY_DATASET = {"MGSM": 8192, "MAPS": 32768}
 
+# Set via --output-suffix. Lets a post-hoc exploratory variant (e.g. the
+# lean-system-prompt v2 re-test, see docs/methodology-notes.md) write to
+# its own file instead of appending to / overwriting a condition's
+# confirmatory results -- default "" preserves the original filename and
+# resume behavior exactly.
+OUTPUT_SUFFIX = ""
+
 
 def results_path(condition: str) -> Path:
-    return RESULTS_DIR / f"phase3_{condition}_raw.csv"
+    return RESULTS_DIR / f"phase3_{condition}_raw{OUTPUT_SUFFIX}.csv"
 
 
 def load_completed_keys(condition: str) -> set:
@@ -187,18 +194,20 @@ def run_maps_block(condition: str, completed_keys: set):
             print(f"[maps/{subset}/{lang}] {n} tasks x {len(MODELS)} models x {MAPS_N_REPEATS} repeats logged")
 
 
-def remaining_deficit(condition: str, completed_keys: set) -> int:
+def remaining_deficit(condition: str, completed_keys: set, datasets: set = frozenset({"MGSM", "MAPS"})) -> int:
     deficit = 0
     for m in MODELS:
-        for lang in MGSM_LANGS:
-            n = sum(1 for k in completed_keys if k[0] == m["name"] and k[1] == "MGSM" and k[3] == lang)
-            deficit += max(0, MGSM_N_PROBLEMS - n)
-        for subset in MAPS_SUBSETS:
-            for lang in MAPS_LANGS:
-                lang_code = MAPS_LANG_CODE[lang]
-                n = sum(1 for k in completed_keys if k[0] == m["name"] and k[1] == "MAPS"
-                        and k[2] == subset and k[3] == lang_code)
-                deficit += max(0, MAPS_N_TASKS * MAPS_N_REPEATS - n)
+        if "MGSM" in datasets:
+            for lang in MGSM_LANGS:
+                n = sum(1 for k in completed_keys if k[0] == m["name"] and k[1] == "MGSM" and k[3] == lang)
+                deficit += max(0, MGSM_N_PROBLEMS - n)
+        if "MAPS" in datasets:
+            for subset in MAPS_SUBSETS:
+                for lang in MAPS_LANGS:
+                    lang_code = MAPS_LANG_CODE[lang]
+                    n = sum(1 for k in completed_keys if k[0] == m["name"] and k[1] == "MAPS"
+                            and k[2] == subset and k[3] == lang_code)
+                    deficit += max(0, MAPS_N_TASKS * MAPS_N_REPEATS - n)
     return deficit
 
 
@@ -213,6 +222,13 @@ if __name__ == "__main__":
                               "until every cell hits target or a cap below is hit.")
     parser.add_argument("--max-rounds", type=int, default=15)
     parser.add_argument("--max-minutes", type=float, default=180.0)
+    parser.add_argument("--datasets", type=str, default="MGSM,MAPS",
+                         help="Comma-separated dataset blocks to run (default: MGSM,MAPS). "
+                              "Use e.g. MGSM to scope a re-test to just the MGSM block.")
+    parser.add_argument("--output-suffix", type=str, default="",
+                         help="Appended to the results filename: phase3_<condition>_raw<suffix>.csv. "
+                              "Use to keep a post-hoc variant run separate from the original "
+                              "confirmatory results file (default: none, writes the original file).")
     args = parser.parse_args()
 
     if args.models:
@@ -223,21 +239,32 @@ if __name__ == "__main__":
         MODELS[:] = [m for m in MODELS if m["name"] in wanted]
         print(f"Running with models restricted to: {[m['name'] for m in MODELS]}")
 
+    wanted_datasets = {d.strip().upper() for d in args.datasets.split(",")}
+    unknown_ds = wanted_datasets - {"MGSM", "MAPS"}
+    if unknown_ds:
+        raise SystemExit(f"--datasets: unknown dataset(s) {unknown_ds}, expected subset of MGSM, MAPS")
+
+    OUTPUT_SUFFIX = args.output_suffix
+
     completed_keys = load_completed_keys(args.condition)
 
+    def run_blocks(condition, keys):
+        if "MGSM" in wanted_datasets:
+            run_mgsm_block(condition, keys)
+        if "MAPS" in wanted_datasets:
+            run_maps_block(condition, keys)
+
     if not args.retry_until_filled:
-        run_mgsm_block(args.condition, completed_keys)
-        run_maps_block(args.condition, completed_keys)
+        run_blocks(args.condition, completed_keys)
     else:
         start = time.monotonic()
         round_num = 0
         while True:
             round_num += 1
             print(f"\n########## Round {round_num} (elapsed {(time.monotonic()-start)/60:.1f} min) ##########")
-            run_mgsm_block(args.condition, completed_keys)
-            run_maps_block(args.condition, completed_keys)
+            run_blocks(args.condition, completed_keys)
 
-            deficit = remaining_deficit(args.condition, completed_keys)
+            deficit = remaining_deficit(args.condition, completed_keys, wanted_datasets)
             print(f"\n[round {round_num}] remaining deficit across all cells: {deficit}")
             if deficit == 0:
                 print("All cells at target. Done.")

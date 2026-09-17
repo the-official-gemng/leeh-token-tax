@@ -41,14 +41,68 @@ def load(path):
     return df
 
 
+# Sentinel for a missing `subset` (MGSM has none; only MAPS's Math/GAIA
+# rows set it). Must never collide with a real subset name.
+_NO_SUBSET = "__NO_SUBSET__"
+
+
 def keyed(df, model, lang, metric):
     """Per-task_id value (averaged over repeats), successful rows only,
-    for one model+language, pooled across every dataset/subset present."""
-    sub = df[(df["model"] == model) & (df["language"] == lang) & df["error"].isna()]
+    for one model+language, pooled across every dataset/subset present.
+
+    Fills missing `subset` with a fixed string sentinel before grouping,
+    rather than grouping on the raw NaN. Found 2026-09-16: two separate
+    keyed() calls can hand back non-identical NaN float objects for an
+    all-missing column, and since NaN != NaN (IEEE 754) unless it's the
+    literal same object, (dataset, nan, task_id) keys from two different
+    calls can fail tuple equality even though they print as identical --
+    this silently returned 0 matched task_ids for an MGSM-only H1 recheck
+    (looked like "not enough data", not "broken pairing"). See
+    docs/methodology-notes.md's 2026-09-16 entries. _selftest_keyed()
+    below guards against this regressing unnoticed again.
+    """
+    sub = df[(df["model"] == model) & (df["language"] == lang) & df["error"].isna()].copy()
+    sub["subset"] = sub["subset"].fillna(_NO_SUBSET)
     out = {}
     for (dataset, subset, task_id), g in sub.groupby(["dataset", "subset", "task_id"], dropna=False):
         out[(dataset, subset, task_id)] = g[metric].mean()
     return out
+
+
+def _selftest_keyed():
+    """Guards against the NaN-key matching bug described in keyed()'s
+    docstring regressing silently. Runs a real match against whatever
+    MGSM data is on disk (MGSM's `subset` column is 100% missing, so it's
+    exactly the case that broke) -- skips quietly if no results files
+    exist yet (e.g. a fresh checkout), but asserts loudly if data exists
+    and the match still comes back empty."""
+    for path in ("phase1_raw.csv", "phase3_c1_raw.csv", "phase3_c2_raw.csv"):
+        fp = ROOT / "results" / path
+        if not fp.exists():
+            continue
+        df = load(path)
+        mgsm = df[(df["dataset"] == "MGSM") & df["error"].isna()]
+        if mgsm.empty:
+            continue
+        model = mgsm["model"].iloc[0]
+        langs = sorted(mgsm.loc[mgsm["model"] == model, "language"].unique())
+        if "en" not in langs or len(langs) < 2:
+            continue
+        other_lang = next(l for l in langs if l != "en")
+        en_map = keyed(df, model, "en", "cost_usd")
+        other_map = keyed(df, model, other_lang, "cost_usd")
+        common = set(en_map) & set(other_map)
+        assert common, (
+            f"keyed() self-test FAILED on results/{path}: {model} en vs {other_lang} "
+            f"on MGSM (all-missing subset) matched 0 task_ids out of "
+            f"en_map={len(en_map)}, {other_lang}_map={len(other_map)} -- the NaN-key "
+            f"matching bug (docs/methodology-notes.md, 2026-09-16) may have regressed."
+        )
+        return  # one successful real check against real data is enough
+    # no results files on disk yet -- nothing to self-test against, not a failure
+
+
+_selftest_keyed()
 
 
 def bootstrap_ci(values, statistic=np.mean):
