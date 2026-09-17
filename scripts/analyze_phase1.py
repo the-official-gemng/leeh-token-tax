@@ -96,6 +96,42 @@ def bca_ci(ratios: np.ndarray):
     return res.confidence_interval.low, res.confidence_interval.high
 
 
+def bootstrap_ci_robust(values: np.ndarray, statistic=np.mean):
+    """Same idea as bca_ci, but (a) defaults to the MEAN, not median, and
+    (b) falls back to a percentile bootstrap when BCa degenerates to NaN.
+
+    Mean, not median: accuracy's paired differences are mostly exactly 0
+    (both languages agree on correct/incorrect for a given task), so the
+    MEDIAN of any bootstrap resample is overwhelmingly likely to also be
+    0 -- producing a degenerate, uninformative [0.0, 0.0] interval that
+    doesn't reflect real uncertainty. H2's decision rule ("non-inferiority
+    margin: <=2 accuracy points") is inherently about the mean/overall
+    percentage-point gap (a paired-proportions comparison), which is what
+    the mean of the paired differences actually estimates -- median is
+    the wrong statistic for this question, not just a NaN-avoidance
+    workaround. Cost/fertility ratios keep using bca_ci's median (still
+    appropriate there: continuous, right-skewed data where median is the
+    standard robust choice, no degeneracy).
+
+    BCa fallback: BCa's acceleration estimate is undefined for degenerate/
+    heavily-tied distributions (scipy raises DegenerateDataWarning
+    accordingly) even with the mean statistic if variance is very low;
+    percentile bootstrap doesn't need that estimate. Section 3 of
+    pre_registration.md specifies BCa for effect-size CIs -- still used
+    for cost/fertility, unchanged; this fallback only fires when BCa
+    itself is inapplicable to the data shape, not a preference swap."""
+    if len(values) < 2:
+        return (float("nan"), float("nan"))
+    res = bootstrap((values,), statistic, confidence_level=1 - ALPHA,
+                     n_resamples=N_RESAMPLES, method="BCa", random_state=42)
+    low, high = res.confidence_interval.low, res.confidence_interval.high
+    if np.isnan(low) or np.isnan(high):
+        res = bootstrap((values,), statistic, confidence_level=1 - ALPHA,
+                         n_resamples=N_RESAMPLES, method="percentile", random_state=42)
+        low, high = res.confidence_interval.low, res.confidence_interval.high
+    return low, high
+
+
 def analyze(metric: str, label: str):
     df = pd.read_csv(RESULTS_PATH)
     results = []
@@ -177,8 +213,8 @@ def analyze_accuracy():
             en_acc = float(np.mean(en_vals)) * 100
             lang_acc = float(np.mean(lang_vals)) * 100
             diffs = (lang_vals.astype(float) - en_vals.astype(float)) * 100
-            diff_points = float(np.median(diffs))
-            ci_low, ci_high = bca_ci(diffs)
+            diff_points = float(np.mean(diffs))
+            ci_low, ci_high = bootstrap_ci_robust(diffs, statistic=np.mean)
             try:
                 _stat, p = wilcoxon(lang_vals, en_vals)
             except ValueError:
@@ -210,8 +246,8 @@ def analyze_accuracy():
             continue
         sig = r.get("significant_holm", False)
         print(f"    English accuracy = {r['en_accuracy']:.1f}%   {r['language']} accuracy = {r['lang_accuracy']:.1f}%")
-        print(f"    median paired difference ({r['language']} - en) = {r['diff_points']:+.1f} points   "
-              f"95% BCa CI = [{r['ci_low']:+.1f}, {r['ci_high']:+.1f}]")
+        print(f"    mean paired difference ({r['language']} - en) = {r['diff_points']:+.1f} points   "
+              f"95% bootstrap CI = [{r['ci_low']:+.1f}, {r['ci_high']:+.1f}]")
         if pd.isna(r["wilcoxon_p"]):
             print("    Wilcoxon: not computable (zero variance in paired differences)")
         else:

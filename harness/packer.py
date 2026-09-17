@@ -62,13 +62,19 @@ class PackedRequest:
     translation_latency_s: float = 0.0
 
 
+# v2 (post-hoc, exploratory -- see docs/methodology-notes.md): the original
+# 76-token template above was found to be a meaningful driver of C2's
+# cost-ratio miss on MGSM in the confirmatory Phase 3 run, since it's added
+# in full to every non-English call regardless of how short the underlying
+# prompt is. Trimmed to 18 tokens (verified via tiktoken o200k_base) while
+# keeping the same two obligations the executor actually depends on:
+# reason in English, answer only in the target language, preserve
+# numbers/formatting. Manually spot-checked on 4 real MGSM zh/es questions
+# across both models before use -- correct language, correct answer, no
+# mixing, formatting intact each time.
 _PROMPT_MODE_SYSTEM_TEMPLATE = (
-    "You are a careful multilingual assistant. The user's question is in "
-    "language code '{lang}'. Reason step by step internally in English -- "
-    "English is more efficient for you to think in -- but your final "
-    "answer to the user MUST be written in '{lang}', matching the language "
-    "of their question. Do not mix languages in your final answer. "
-    "Preserve any numbers, code blocks, and formatting exactly."
+    "Think in English internally. Answer only in '{lang}'. "
+    "Keep numbers/formatting exact."
 )
 
 

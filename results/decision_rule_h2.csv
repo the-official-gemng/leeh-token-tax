@@ -1,0 +1,9 @@
+model,language,n,mean_diff,ci_low,ci_high,h2_supported
+gpt-5.6-luna,en,70,-1.4285714285714286,-6.428571428571429,0.7142857142857143,False
+gpt-5.6-luna,es,70,-0.7142857142857143,-5.714285714285714,2.857142857142857,False
+gpt-5.6-luna,zh,50,0.0,-6.0,6.0,False
+gpt-5.6-luna,ar,20,0.0,-12.5,12.5,False
+deepseek-flash,en,70,-3.5714285714285716,-9.285714285714286,0.0,False
+deepseek-flash,es,70,-0.7142857142857143,-7.142857142857143,5.714285714285714,False
+deepseek-flash,zh,50,-4.0,-13.836771192962637,0.0,False
+deepseek-flash,ar,20,-17.5,-37.5,-7.5,False

@@ -33,7 +33,18 @@ from harness.executor import execute, ExecutionResult
 ROOT = Path(__file__).resolve().parent.parent
 FERTILITY_CSV = ROOT / "results" / "phase1_fertility_ratios.csv"
 
-BASE_MAX_TOKENS = 2048  # English's budget; non-English scales up from here
+# English's budget; non-English scales up from here. 2048 was an
+# unvalidated guess and turned out badly wrong: Phase 1's own C0 data
+# (uncapped) shows MAPS completion_tokens averaging 4702 with a max of
+# 28778 -- even after the fertility multiplier, 2048 caused 41.7% of C2's
+# MAPS answers to truncate mid-generation (vs. 0% in C0), corrupting both
+# the cost and accuracy comparisons. This default is only safe for
+# MGSM-scale tasks (C0 max there: 6879) -- callers handling MAPS-scale
+# tasks (harness/conditions.py, via scripts/run_phase3.py) MUST pass an
+# explicit higher base_max_tokens; see run_phase3.py's per-dataset
+# calibration, derived from C0's own observed distribution rather than
+# guessed. See docs/methodology-notes.md.
+BASE_MAX_TOKENS = 8192
 MIN_MULTIPLIER = 1.0    # never shrink a language's budget below English's
 
 

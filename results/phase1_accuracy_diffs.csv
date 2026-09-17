@@ -1,7 +1,7 @@
 model,language,n_pairs,en_accuracy,lang_accuracy,diff_points,ci_low,ci_high,wilcoxon_p,coverage,p_holm,significant_holm
-gpt-5.6-luna,es,70,67.14285714285714,72.85714285714285,0.0,,,0.11370683827932444,"['MAPS/GAIA: n_pairs=10, es success 20/27 (74%)', 'MAPS/Math: n_pairs=10, es success 20/20 (100%)', 'MGSM/nan: n_pairs=50, es success 50/50 (100%)']",0.6822410296759467,False
-gpt-5.6-luna,zh,50,90.0,92.0,0.0,,,0.5637028616507731,"['MGSM/nan: n_pairs=50, zh success 50/50 (100%)']",1.0,False
-gpt-5.6-luna,ar,20,10.0,10.0,0.0,,,1.0,"['MAPS/GAIA: n_pairs=10, ar success 20/27 (74%)', 'MAPS/Math: n_pairs=10, ar success 20/22 (91%)']",1.0,False
-deepseek-flash,es,70,73.57142857142858,68.57142857142857,0.0,,,0.14861399645521173,"['MAPS/GAIA: n_pairs=10, es success 19/170 (11%)', 'MAPS/Math: n_pairs=10, es success 20/43 (47%)', 'MGSM/nan: n_pairs=50, es success 50/50 (100%)']",0.7430699822760587,False
-deepseek-flash,zh,50,96.0,94.0,0.0,,,0.5637028616507731,"['MGSM/nan: n_pairs=50, zh success 50/72 (69%)']",1.0,False
-deepseek-flash,ar,20,17.5,17.5,0.0,,,1.0,"['MAPS/GAIA: n_pairs=10, ar success 20/94 (21%)', 'MAPS/Math: n_pairs=10, ar success 20/22 (91%)']",1.0,False
+gpt-5.6-luna,es,70,77.14285714285715,80.0,2.857142857142857,-4.285714285714286,10.714285714285714,0.4307911212275325,"['MAPS/GAIA: n_pairs=10, es success 20/27 (74%)', 'MAPS/Math: n_pairs=10, es success 20/20 (100%)', 'MGSM/nan: n_pairs=50, es success 50/50 (100%)']",1.0,False
+gpt-5.6-luna,zh,50,90.0,92.0,2.0,-4.0,10.0,0.5637028616507731,"['MGSM/nan: n_pairs=50, zh success 50/50 (100%)']",1.0,False
+gpt-5.6-luna,ar,20,45.0,40.0,-5.0,-15.0,2.5,0.31731050786291415,"['MAPS/GAIA: n_pairs=10, ar success 20/27 (74%)', 'MAPS/Math: n_pairs=10, ar success 20/22 (91%)']",1.0,False
+deepseek-flash,es,70,85.0,78.57142857142857,-6.428571428571429,-14.285714285714286,-0.7142857142857143,0.08604039578456761,"['MAPS/GAIA: n_pairs=10, es success 19/170 (11%)', 'MAPS/Math: n_pairs=10, es success 20/43 (47%)', 'MGSM/nan: n_pairs=50, es success 50/50 (100%)']",0.5162423747074056,False
+deepseek-flash,zh,50,96.0,94.0,-2.0,-10.0,4.0,0.5637028616507731,"['MGSM/nan: n_pairs=50, zh success 50/72 (69%)']",1.0,False
+deepseek-flash,ar,20,57.49999999999999,57.49999999999999,0.0,-7.5,17.5,1.0,"['MAPS/GAIA: n_pairs=10, ar success 20/94 (21%)', 'MAPS/Math: n_pairs=10, ar success 20/22 (91%)']",1.0,False
