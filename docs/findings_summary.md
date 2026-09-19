@@ -39,8 +39,8 @@ numbers below.
 
 Paired English-vs-non-English Wilcoxon tests on accuracy (results/phase1_accuracy_diffs.csv)
 did not reach significance for any language/model after Holm-Bonferroni
-correction -- but see Threats to Validity: the es/ar cells in that specific
-file were computed before the Math scoring fix and need re-running.
+correction. This file reflects the corrected (post-Math-fix) accuracy
+numbers -- see Threats to Validity for the fix itself.
 
 ## Threats to validity
 
@@ -56,11 +56,12 @@ file were computed before the Math scoring fix and need re-running.
   contain nested braces like `\boxed{\frac{121}{25}}`) and matching that
   short value against the already-saved model answer -- no API calls
   re-run. Corrected accuracy: 50-80% depending on model/language, a
-  realistic range for competition math. Rescored data:
-  results/phase1_maps_math_rescored.csv. **Not yet re-merged into
-  phase1_raw.csv's `correct` column or into phase1_accuracy_diffs.csv's
-  Wilcoxon test** -- those still reflect the pre-fix (always-0) Math
-  numbers for now.
+  realistic range for competition math. **Merged into phase1_raw.csv's
+  `correct` column and into phase1_accuracy_diffs.csv's Wilcoxon test**
+  (the intermediate side file, `results/phase1_maps_math_rescored.csv`,
+  no longer exists -- merged in and deleted). The cost ratio, accuracy,
+  and Wilcoxon numbers in this document all reflect the corrected data;
+  none of them need re-running.
 
 - **deepseek-flash/MAPS/GAIA: survivorship bias across all three
   languages** (es, en, ar -- not just Arabic; see

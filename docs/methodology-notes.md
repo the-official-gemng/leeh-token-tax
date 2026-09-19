@@ -548,3 +548,345 @@ data where it happened to work (v1/ar). The v2 lean-prompt data
 (`results/phase3_c2_raw_v2_leanprompt.csv`) and every number in this
 entry live separately and were never merged over `phase3_c2_raw.csv` or
 the decision_rule_*.csv files.
+
+## 2026-09-17 -- C4 pilot: design + pre-committed pass criterion (written BEFORE running anything)
+
+**Status:** a time-boxed pilot, parallel to paper-writing, not a
+replacement for anything already done. The confirmatory H1/H2/H3 result
+(above) stays exactly as it is, untouched and separately citable.
+`results/phase3_c0_raw.csv` doesn't exist as such -- C0 is
+`phase1_raw.csv`, untouched here -- and `phase3_c1_raw.csv`/
+`phase3_c2_raw.csv` are untouched by this pilot too.
+
+**What C4 is:** a single-call redesign, implemented as a new condition in
+`harness/conditions.py` (`run_c4()`) and `harness/router.py`
+(`should_skip_intervention()`), both purely additive -- C0/C1/C2/C3a's
+existing code paths are not modified. Detector runs first (language ID).
+Router applies a first-pass "low-tax-skip" check: skip intervention
+entirely if the input is English, or if the (model, language) pair's own
+Phase 1 cost-ratio CI upper bound already clears 1.2x (`results/
+phase1_cost_ratios.csv`) -- nothing to fix for that pair. Otherwise, one
+system+user message pair goes straight to the Executor: no Packer call
+(no separate translation call), no Equalizer (no cross-call token budget
+to reconcile with a single call -- `max_tokens` is left uncapped, same as
+C0's own MGSM calls), no Expander call (no post-hoc language check or
+retranslation safety net -- the system prompt's own instruction is the
+only thing keeping the answer in the target language on this path). The
+system prompt (36 tokens, verified via tiktoken o200k_base) was manually
+spot-checked on 2 real MGSM questions (deepseek-flash, es and zh) before
+any batch run -- correct answer, correct language, no English leakage in
+either, in both cases.
+
+**Pass criterion, committed in writing before seeing a single C4 result:**
+
+> C4 counts as working if the median per-task cost ratio (C4 / English)
+> is <=1.2x **and** the 95% bootstrap CI excludes 1.2, on **both** target
+> cells (`deepseek-flash`/es and `deepseek-flash`/zh independently -- not
+> pooled, not "2 of 2 on average").
+
+Statistic: bootstrap CI of the **median** per-task ratio (BCa with
+percentile fallback, alpha=0.05, 10,000 resamples) -- the same statistic
+`h1_cost_ratio()` in `scripts/analyze_decision_rules.py` uses, reused
+directly by import rather than reimplemented, specifically so this
+pilot cannot repeat the mean-ratio mistake documented in the H1 recheck
+entry above. Precision note, spelled out now so it can't be fudged after
+the fact: "median <=1.2x AND CI excludes 1.2" reduces exactly to **CI
+upper bound < 1.2, strictly** -- not <=1.2 like H1's original rule. This
+is deliberately a hair stricter than H1's own bar, so a boundary case
+like H1's gpt-5.6-luna/ar near-miss (CI upper bound 1.204 against a <=1.2
+target) can't get waved through as a pass here. If both cells clear
+CI_high < 1.2: PASS. If one does: PARTIAL, not a pass. If neither does:
+FAIL. No other outcome gets reported as "working."
+
+**English denominator, decided now, not after seeing costs:** C4 is not
+run on English in this pilot (see scope below) -- its English behavior is
+architecturally a raw passthrough, identical in shape to C0's own call
+(same `if language == "en": messages = [{"role": "user", ...}]` shape as
+C2's English branch, which has already been shown to track C0 closely).
+Rather than spend pilot budget re-confirming that, **the ratio's
+denominator is C0's own `phase1_raw.csv` MGSM/en per-task cost** -- the
+same denominator every other cost ratio in this project uses (Phase 1's
+`phase1_cost_ratios.csv`, Phase 3's `decision_rule_h1.csv`). Paired by
+`task_id`, same seed as everywhere else in this project, so the task_id
+sets already align without re-sampling.
+
+**Scope, exact:** MGSM only. N=50 (`MGSM_N_PROBLEMS`, unchanged --
+within the requested 30-50 range and reuses the exact existing seeded
+sample, so task_ids align with C0/C2 without any new sampling logic).
+`deepseek-flash` only -- not `gpt-5.6-luna`. `es` and `zh` only -- not
+`ar` (MGSM has no `ar` arm at all, per the Amendments Log, so this is
+automatic, not a separate exclusion to enforce). No MAPS/GAIA.
+
+**Three checks, in this order, before the pass/fail question -- written
+down now so the order is pre-committed too, not chosen after looking at
+results:**
+1. Completion token length vs. C0, same tasks -- flag if C4 generates
+   longer completions than needed.
+2. Whether the unexplained high-variance anomaly (2-4x cost spikes, 30-36%
+   of C2's zh rows) reappears under C4 -- report rate and severity as
+   measured, don't assume a different architecture removes a provider-side
+   effect just because the code changed.
+3. Accuracy vs. C0 and C1, same tasks.
+
+**Output file:** `results/phase3_c4_raw.csv` -- new, separate, never
+merged into or overwriting `phase3_c1_raw.csv` or `phase3_c2_raw.csv`.
+
+**Not in scope for this pilot (per explicit instruction):** no
+`gpt-5.6-luna`, no MAPS/GAIA, no `ar`, no scaling past N=50, no
+`harness/` changes beyond what C4 needs, no `paper_draft.md` edits. This
+entry is being committed before the pilot is run -- the result (pass,
+partial, or fail) is a separate entry appended after, not edited into
+this one.
+
+## 2026-09-17 -- C4 pilot: result -- FAIL against the pre-committed criterion
+
+Applies the criterion committed in the entry above, unchanged, to the
+actual pilot data. 100/100 rows collected, 0 errors, 0 truncation
+(`results/phase3_c4_raw.csv`).
+
+**Check 1 -- completion length vs. C0:** no inflation. C4 completions are
+*shorter* than C0's on both mean and median (es: 371.6/190.5 vs C0's
+496.3/232.0; zh: 447.8/169.5 vs C0's 519.0/205.0). Prompt-token delta vs.
+C0 is exactly +36 tokens on every one of the 100 rows -- matches the
+system prompt's measured size precisely.
+
+**Check 2 -- anomaly reappearance:** **0% (0/50 on both es and zh)**,
+sharp contrast to C2's 30-36% on zh. Prompt-token delta vs. C0 has
+*zero* variance across all 100 rows (min=p25=p50=p75=max=36) -- no
+bimodal split, no 2-4x spikes. Completion-token length does show real
+variance (coefficient of variation 1.27 es / 2.37 zh), but that's normal
+difficulty-driven variance already present in C0's own baseline (C0's own
+zh max completion_tokens was 6879; C4's is 7209, same order of
+magnitude) -- not the input-side anomaly being tested for, which was
+specifically about unexplained *prompt*-token inflation uncorrelated
+with input length. Reported as observed at N=50, not as proof the
+anomaly can't occur under C4 -- one clean batch isn't the same claim as
+"architecturally impossible."
+
+**Check 3 -- accuracy vs. C0 and C1:** held steady, no collapse. es: C0
+90.0%, C1 92.0%, C4 92.0%. zh: C0 94.0%, C1 90.0%, C4 92.0%.
+
+**Data-quality footnote, not a C4-specific defect:** 4/50 zh rows were
+misdetected by the Detector as `ko` (Korean) instead of `zh` --
+pre-existing `langdetect` limitation, already visible in C2's data, not
+introduced by C4. Checked directly: the model complied with the
+(wrong) instruction and answered in Korean for all 4. This does **not**
+give C4 a disadvantage C2 doesn't share -- C2's Expander checks against
+the same Router-derived target-language label, so it would make the
+identical mistake on these exact task_ids (Expander sees the output
+already "matches" the mis-detected target and does nothing). Accuracy
+scoring is unaffected either way, since `is_correct()` substring-matches
+the numeric answer, which appears identically in Korean and Chinese
+text.
+
+**Pass criterion applied (`scripts/analyze_c4_pilot.py`, reusing
+`analyze_decision_rules.py`'s `bootstrap_ci()` directly):**
+
+| model | language | n | median ratio | 95% CI | median<=1.2 | CI_high<1.2 | verdict |
+|---|---|---|---|---|---|---|---|
+| deepseek-flash | es | 50 | 1.301x | [1.144, 1.436] | No | No | **FAIL** |
+| deepseek-flash | zh | 50 | 1.209x | [1.034, 1.344] | No | No | **FAIL** |
+
+**OVERALL: FAIL.** Neither target cell clears the pre-committed
+criterion. Stated plainly, not rationalized: es fails clearly (median
+itself, 1.301x, is already above 1.2 before the CI is even considered).
+zh's median (1.209x) sits just above the 1.2 point-estimate threshold,
+but its CI ([1.034, 1.344]) is wide and does not come close to excluding
+1.2 -- this is not the kind of tight, ambiguous near-miss H1's own
+gpt-5.6-luna/ar cell was (CI upper bound 1.204 against <=1.2); zh's CI
+upper bound here is 1.344, meaningfully above the bar.
+
+**Context, not part of the verdict:** C4 is a substantial improvement
+over C2's confirmatory numbers for the same two cells -- es: 1.530x
+(C2 v1) -> 1.301x (C4); zh: 1.867x (C2 v1) -> 1.209x (C4), or against
+C2's v2 lean-prompt numbers, es: 1.304x -> 1.301x (essentially flat), zh:
+1.677x -> 1.209x (a large drop, consistent with Check 2's finding that
+the anomaly didn't reappear). Real, measured progress -- just not enough
+to clear the strict pre-committed bar on this pilot's N=50 draw.
+
+**File state:** `results/phase3_c4_raw.csv` (new) and
+`results/c4_pilot_cost_ratio.csv` (new, the table above) are the only
+new results files. `phase1_raw.csv`, `phase3_c1_raw.csv`,
+`phase3_c2_raw.csv`, and all three `decision_rule_h*.csv` files are
+untouched. Per the pilot's scope: stopping here -- not scaling to
+`gpt-5.6-luna`, MAPS/GAIA, or a larger N without a decision to proceed.
+
+## 2026-09-18 -- C4 pilot continuation: two targeted fixes, final iteration, PARTIAL result
+
+Continues the C4 pilot above with two independent, per-cell fixes, per
+explicit instruction. Same pre-committed criterion, same N=50, same
+cells, no new API calls for the diagnosis step. **This is the final
+iteration** -- no further rounds, no N scaling, regardless of outcome.
+
+**Step 1 -- diagnosis (existing data only, `results/phase3_c4_raw.csv`
+vs. `phase1_raw.csv`).** First pass used the wrong denominator (C4-lang
+vs. C0's *own* same-language cost) and had to be redone against the
+denominator that actually feeds the pilot's ratio (C4-lang vs. C0's
+*English* cost) -- corrected before reporting. The fixed +36-token
+overhead is confirmed exactly constant (zero variance across all 100
+v1 rows, as already established). Decomposing the dollar cost delta
+(C4 vs. C0/en) into its prompt-token and completion-token components:
+
+| lang | prompt ratio | completion ratio | % of $ delta: prompt-side | % of $ delta: completion-side |
+|---|---|---|---|---|
+| es | 1.611x | 1.199x | 25.9% | **74.1%** |
+| zh | 1.436x | 1.166x | 10.2% | **89.8%** |
+
+Both cells are predominantly completion-side, not prompt-side. es routes
+to the completion-verbosity fix per the pre-specified branch. zh gets
+the overhead-trim fix per explicit instruction regardless of its own
+diagnosis also showing completion-side dominance -- noted here plainly
+rather than silently substituting a different fix zh's own numbers might
+have suggested.
+
+**Step 2 -- es fix.** Added one clause to the existing 36-token template
+("give **only** the final answer... **no explanation**") targeting the
+diagnosed completion-side driver directly -- 38 tokens total (measured
+via tiktoken). Spot-checked on the same 2 real MGSM questions (es and
+zh) used for the original C4 prompt before batch-running: correct
+answer, correct language, no leakage, both cases -- the zh-question
+check came back a one-line "140 美元" with no explanation, a good sign
+the instruction is doing its job even off-target.
+
+**Step 3 -- zh fix.** Reused `harness/packer.py`'s already-validated
+18-token C2 lean-prompt template verbatim ("Think in English internally.
+Answer only in '{lang}'. Keep numbers/formatting exact.") rather than
+writing a new one -- the strongest low-risk choice available, since it's
+proven at N=50x2-models scale, not just a 2-question spot-check. Still
+spot-checked again standalone (no Expander backstop in C4, unlike its
+original C2 use) on the same 2 questions before batch-running: correct
+answer, correct language, no leakage, both cases.
+
+**Implementation:** `harness/conditions.py`'s `run_c4()` now selects a
+per-language template from `_C4_SYSTEM_TEMPLATES_BY_LANG` (es, zh tuned;
+falls back to the original shared 36-token template for any other
+language). This changes C4's own default behavior going forward -- there
+is no prior "confirmatory" C4 result to preserve (unlike C2's v1/v2
+split), so refining C4's own template in place is the appropriate
+iterative process here, not a violation of anything citable. The
+original pilot run (`results/phase3_c4_raw.csv`, produced by the shared
+36-token template) remains on file, unedited, and is no longer
+reproducible from current code -- exactly the same situation as C2's v1
+result after the lean-prompt template was edited in place, same
+precedent.
+
+**Re-run:** `python scripts/run_phase3.py --condition c4 --datasets MGSM
+--models deepseek-flash --languages es,zh --output-suffix _v2_fixed
+--retry-until-filled`. Both cells' fixes apply automatically via the
+per-language dispatch, so a single combined run covers both. 100/100
+rows, 0 errors, 0 truncation. Output:
+`results/phase3_c4_raw_v2_fixed.csv` -- new, separate from the v1 pilot
+file.
+
+**Step 4 -- pass criterion applied, plainly (`scripts/analyze_c4_pilot_v2.py`,
+same `bootstrap_ci()` import, same criterion, unchanged):**
+
+| language | median ratio | 95% CI | median<=1.2 | CI_high<1.2 | verdict |
+|---|---|---|---|---|---|
+| es | 1.008x | [0.951, 1.089] | Yes | Yes | **PASS** |
+| zh | 1.312x | [1.136, 1.405] | No | No | **FAIL** |
+
+**es: PASS.** Comfortably clears the bar -- median at parity with
+English, CI entirely below 1.2 with real margin. The completion-side fix
+worked as diagnosed.
+
+**zh: FAIL -- and notably, numerically worse than the v1 pilot's zh
+result (1.209x -> 1.312x), not just "still failing."** Checked directly,
+using only already-collected data (no new calls, consistent with this
+being the final iteration): C4's own *absolute* mean cost for zh
+actually went *down* slightly (v1 \$0.000142 -> v2 \$0.000133), prompt
+tokens dropped by ~17 (close to the ~18-token trim, matching
+expectations), and accuracy held exactly steady (92.0% both). The
+*ratio* getting worse despite lower absolute cost is not a contradiction
+-- the reported statistic is the **median of per-task ratios**, which is
+sensitive to the shape of a right-skewed, high-variance distribution
+(zh's completion-token coefficient of variation was already measured at
+2.37 in the original pilot) in a way a mean-of-costs comparison isn't;
+a small trim to a completion-side-dominated problem, combined with
+`deepseek-flash`'s inherent generation stochasticity across an
+independent batch draw, is a plausible explanation for the shift, but
+not confirmed -- flagging as the most likely explanation, not asserting
+it as proven, since chasing it further (a third batch, a variance
+decomposition) is out of scope for this iteration.
+
+**OVERALL: PARTIAL.** es passes the pre-committed criterion cleanly. zh
+does not, and the specific fix applied (mechanically justified -- shrink
+a confirmed-constant overhead -- but applied to a cell whose own
+diagnosis showed that overhead was a 10.2% minority driver, not the
+89.8% majority one) did not close the gap, and the ratio metric moved in
+the wrong direction on this draw. Per the pre-committed stop condition:
+**this is the final iteration.** No further rounds, no N scaling, no new
+models/datasets/conditions on C4.
+
+**File state:** `results/phase3_c4_raw_v2_fixed.csv` and
+`results/c4_pilot_v2_cost_ratio.csv` are new. `results/phase3_c4_raw.csv`
+and `results/c4_pilot_cost_ratio.csv` (the original pilot's files) are
+untouched, still on file and citable as the v1 pilot result.
+`phase3_c1_raw.csv`, `phase3_c2_raw.csv`, all three `decision_rule_h*.csv`
+files, and `docs/paper_draft.md` are untouched by this entire
+continuation.
+
+## 2026-09-19 -- Audit: no "C2 makes 4 API calls" claim found; C2's real call count clarified; Expander-firing rate confirmed unrecoverable from stored data
+
+Two checks, requested before scoping any new data collection around a
+per-pipeline-step cost breakdown for C2 (see the "per-step cost
+breakdown" question raised and left open above -- this entry answers a
+narrower documentation-accuracy question first).
+
+**1. Searched for an explicit "C2 makes 4 separate API calls" (or
+similar) claim across every doc that describes the harness --
+`methodology-notes.md` (this file), `paper_draft.md` (including
+Discussion and Conclusion), `phase4_writing_reference.md`,
+`harness_hardening_log.md`, `findings_summary.md`, `harness/README.md`.
+**No such claim exists, literally, anywhere in these files.** Reporting
+that plainly rather than inventing a correction for a claim that isn't
+there. The closest related passage is the "Detector → Router → Packer →
+Executor → Equalizer → Expander" six-module pipeline description
+(`paper_draft.md`'s Methods, `harness/README.md`) -- accurate as
+written (both already noted Packer's prompt-mode "no extra model call"
+and Expander "usually a no-op"), but a six-stage diagram invites
+misreading as six calls, or C2's five-arrow description as four or five.
+Tightened both to state the real call count explicitly: **C2 makes at
+most two model calls per task** -- one mandatory (Executor+Equalizer,
+translate-in instruction embedded in its own prompt, not a separate
+call) and one conditional (Expander, only when the model's answer isn't
+already in the target language). Detector, Router, and Packer's
+prompt-based mode are pure local logic, zero model calls, by
+construction.
+
+**2. Whether Expander's firing rate is recoverable from
+`phase3_c2_raw.csv` without new API calls: no.** Checked the actual
+code, not assumed: `harness/expander.py`'s `expand()` returns a
+`was_translated: bool` on its `ExpandedResult` -- this IS computed at
+runtime, every call -- but `harness/conditions.py`'s `_run_c2_family()`
+only ever reads `expanded.prompt_tokens`, `.completion_tokens`,
+`.latency_s`, `.cost_usd`, and `.final_text` from that result (confirmed
+via `grep -n "was_translated" harness/*.py` -- the name appears only
+inside `expander.py` itself, never in `conditions.py`). The flag is
+computed and then discarded; `ConditionResult` has no field for it, and
+`phase3_c2_raw.csv`'s header has no corresponding column. `route_through_
+english` narrows nothing further here either -- checked directly, all
+100 `deepseek-flash` es/zh rows have `route_through_english=True` (both
+are non-English languages), so every row was *eligible* for Expander to
+fire, with no signal distinguishing which ones actually did.
+
+No indirect proxy was substituted for the missing flag. `expand()`'s own
+translate-back prompt embeds the *executor's own output* as `{text}`
+(see `_EXPAND_PROMPT_TEMPLATE`), so unlike the Packer system-prompt
+overhead (a small, genuinely fixed addition that produced a clean,
+detectable constant jump earlier in this project), Expander's call size
+scales with each task's own answer length -- there is no clean constant
+signature to look for in the aggregated `prompt_tokens`/`cost_usd`
+totals, and attempting to infer per-row firing from that would be
+presenting a guess as a measurement. **This is confirmed as a new
+instrumentation + re-run question** (capture `was_translated` the same
+way `reasoning_content`/`reasoning_tokens` were added to `execute()` for
+the C4 track), separate from this documentation fix, and not undertaken
+here pending a decision on whether it's worth the additional C2 run.
+
+**File state:** `docs/paper_draft.md`'s Methods section and
+`harness/README.md`'s condition table were edited (the call-count
+clarification above) -- both explicitly authorized for this pass.
+`phase3_c1_raw.csv`, `phase3_c2_raw.csv`, all three `decision_rule_h*.csv`
+files, and every prior dated entry in this file (including the C4 pilot
+section) are untouched.

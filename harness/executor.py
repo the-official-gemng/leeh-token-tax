@@ -48,6 +48,19 @@ class ExecutionResult:
     truncated: bool = False
     tool_calls_made: int = 0
     error: Optional[str] = None
+    # Added 2026-09-18 (harness-hardening track, docs/harness_hardening_log.md)
+    # -- purely additive, doesn't change prompt_tokens/completion_tokens/
+    # cost_usd/any existing field's value for any existing caller.
+    # reasoning_tokens was ALREADY included inside completion_tokens (and
+    # therefore already correctly billed in cost_usd) before this change --
+    # verified empirically, not assumed -- some providers (deepseek-flash
+    # confirmed; gpt-5.6-luna not checked) additionally expose the
+    # reasoning *text* itself via a non-standard `reasoning_content`
+    # field on the response message, absent from the OpenAI SDK's typed
+    # Message model but present in the raw payload -- captured here via
+    # getattr with a None default so providers without it are unaffected.
+    reasoning_content: Optional[str] = None
+    reasoning_tokens: Optional[int] = None
 
 
 def _run_loop(model_name: str, provider: str, messages: list,
@@ -57,6 +70,8 @@ def _run_loop(model_name: str, provider: str, messages: list,
     client = get_client(provider)
     tool_executor = tool_executor or {}
     total_prompt = total_completion = 0
+    total_reasoning_tokens = 0
+    last_reasoning_content = None
     tool_calls_made = 0
     start = time.monotonic()
 
@@ -89,6 +104,16 @@ def _run_loop(model_name: str, provider: str, messages: list,
         total_prompt += usage.prompt_tokens
         total_completion += usage.completion_tokens
 
+        # Non-standard field some providers (deepseek-flash confirmed) add
+        # to the message payload -- not in the OpenAI SDK's typed Message
+        # model, so getattr (not choice.message.reasoning_content
+        # directly) to avoid an AttributeError on providers that omit it.
+        last_reasoning_content = getattr(choice.message, "reasoning_content", None) or last_reasoning_content
+        details = getattr(usage, "completion_tokens_details", None)
+        rt = getattr(details, "reasoning_tokens", None) if details else None
+        if rt:
+            total_reasoning_tokens += rt
+
         tool_calls = getattr(choice.message, "tool_calls", None)
         if not tool_calls:
             return ExecutionResult(
@@ -99,6 +124,8 @@ def _run_loop(model_name: str, provider: str, messages: list,
                 latency_s=time.monotonic() - start,
                 truncated=(choice.finish_reason == "length"),
                 tool_calls_made=tool_calls_made,
+                reasoning_content=last_reasoning_content,
+                reasoning_tokens=total_reasoning_tokens or None,
             )
 
         messages.append({"role": "assistant", "content": choice.message.content, "tool_calls": tool_calls})

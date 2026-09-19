@@ -1,0 +1,3 @@
+model,language,n,median_ratio,ci_low,ci_high,passes_pilot_criterion
+deepseek-flash,es,50,1.3008331028761062,1.1438356164383563,1.4360612109115103,False
+deepseek-flash,zh,50,1.2089120370370372,1.0338983050847457,1.3443080015732205,False

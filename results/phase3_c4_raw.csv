@@ -1,0 +1,605 @@
+timestamp,condition,model,provider,dataset,subset,language,task_id,repeat_index,question,expected_answer,model_answer,detected_language,task_type,route_through_english,prompt_tokens,completion_tokens,total_tokens,cost_usd,latency_s,correct,truncated,error
+2026-09-17T17:11:05,c4,deepseek-flash,deepseek,MGSM,,es,142,1,Jordan pasa 2 horas al día jugando videojuegos. También tiene un trabajo a tiempo parcial en el que gana $10 la hora. ¿Cuánto dinero ganaría Jordan en una semana si usara el tiempo que juega videojuegos para trabajar?,140,Jordan ganaría $140 en una semana.,es,single_turn,True,123,110,233,4.8020000000000004e-05,2.9219999999913853,True,False,
+2026-09-17T17:11:08,c4,deepseek-flash,deepseek,MGSM,,es,6,1,"En Toulouse hay el doble de ovejas que en Charleston. En Charleston hay 4 veces más ovejas que en Seattle. ¿Cuántas ovejas hay en total en Toulouse, Charleston y Seattle si en Seattle hay 20 ovejas?",260,"En Seattle hay 20 ovejas.
+
+En Charleston hay 4 veces más que en Seattle:  
+4 × 20 = 80 ovejas.
+
+En Toulouse hay el doble que en Charleston:  
+2 × 80 = 160 ovejas.
+
+Total:  
+160 + 80 + 20 = 260 ovejas.
+
+Hay **260 ovejas** en total.",es,single_turn,True,120,227,347,8.036000000000001e-05,1.6559999999881256,True,False,
+2026-09-17T17:11:10,c4,deepseek-flash,deepseek,MGSM,,es,97,1,"Cuando Freda prepara salsa con tomates enlatados, estos pierden la mitad de su volumen. Cada lata de tomates de 16 onzas que usa tiene tres tomates. En la última tanda de salsa de tomate, Freda preparó 32 onzas de salsa. ¿Cuántos tomates usó Freda?",12,"Freda necesitó 64 onzas de tomates enlatados para obtener 32 onzas de salsa, porque pierden la mitad de su volumen.
+
+Como cada lata de 16 onzas tiene 3 tomates:
+
+64 ÷ 16 = 4 latas  
+4 × 3 = 12 tomates
+
+**Freda usó 12 tomates.**",es,single_turn,True,137,271,408,9.506000000000001e-05,2.0309999999881256,True,False,
+2026-09-17T17:11:12,c4,deepseek-flash,deepseek,MGSM,,es,60,1,"Una canasta contiene 25 naranjas, de las cuales 1 está en mal estado, el 20 % no ha madurado, 2 son agrias y el resto está en buen estado. ¿Cuántas naranjas en buen estado hay?",17,"Hay **17** naranjas en buen estado.
+
+(25 − 1 mal estado − 5 sin madurar − 2 agrias = 17)",es,single_turn,True,121,210,331,7.574e-05,1.625,True,False,
+2026-09-17T17:11:13,c4,deepseek-flash,deepseek,MGSM,,es,112,1,"Un aula tiene una pizarra que comparten entre los 4 maestros que se turnan para usar el aula. Cada maestro tiene 2 clases al día y, en cada clase, usa la pizarra. Si la pizarra se limpia 3 veces por clase, ¿cuántas veces se limpia en un día?",24,"En un día hay \(4 \times 2 = 8\) clases.
+
+Si la pizarra se limpia 3 veces por clase:
+
+\(8 \times 3 = 24\)
+
+Se limpia **24 veces al día**.",es,single_turn,True,138,169,307,6.664000000000001e-05,1.4210000000020955,True,False,
+2026-09-17T17:11:15,c4,deepseek-flash,deepseek,MGSM,,es,181,1,"Sandra, la florista de la esquina, está muy desconforme con la entrega incompleta del pedido de Fred. Sandra había pedido cuatro veces más rosas rojas que claveles blancos. También pidió 200 calas rosas, que eran cinco veces la cantidad de claveles blancos. Sandra amenazó con cambiar de proveedor si no recibía las rosas rojas que faltaban antes de las 5 p. m. ¿Cuántas rosas rojas debe entregar Fred antes de las 5 p. m. para conservar el negocio de Sandra?",160,"Los claveles blancos eran \(200 \div 5 = 40\).
+
+Las rosas rojas pedidas eran \(4 \times 40 = 160\).
+
+Fred debe entregar **160 rosas rojas** antes de las 5 p. m. para conservar el negocio de Sandra.",es,single_turn,True,193,2115,2308,0.0006192200000000001,10.10899999999674,True,False,
+2026-09-17T17:11:25,c4,deepseek-flash,deepseek,MGSM,,es,197,1,"En la ciudad de Soda, hay exactamente 23 786 habitantes. Esto incluye 8417 varones y 9092 mujeres. El resto de la población está formada por niños. ¿Cuántos niños hay en Soda?",6277,En Soda hay **6277** niños.,es,single_turn,True,117,120,237,4.9980000000000006e-05,1.3910000000032596,True,False,
+2026-09-17T17:11:26,c4,deepseek-flash,deepseek,MGSM,,es,184,1,Jerry lanza un dado de seis caras. ¿Cuánto más probable es (expresado como porcentaje) que saque un número mayor que 3 que que saque dos números pares seguidos?,25,"La probabilidad de sacar un número mayor que 3 es \(3/6 = 50\%\).
+
+La probabilidad de sacar dos números pares seguidos es \((3/6)^2 = 1/4 = 25\%\).
+
+Por lo tanto, es el doble de probable: **100% más probable**.  
+Dicho de otra forma, hay una diferencia de **25 puntos porcentuales**.",es,single_turn,True,112,1267,1379,0.00037044000000000004,6.172000000020489,True,False,
+2026-09-17T17:11:32,c4,deepseek-flash,deepseek,MGSM,,es,9,1,"La tarifa de Eliza por hora para las primeras 40 horas de trabajo cada semana es $10. También recibe un pago por horas extras de 1,2 veces su tarifa habitual por hora. ¿Cuánto gana Eliza esta semana si trabajó 45 horas?",460,"Eliza gana esta semana **$460**.
+
+Cálculo:  
+- Primeras 40 horas: 40 × $10 = $400  
+- Horas extras: 5 × ($10 × 1,2) = 5 × $12 = $60  
+- Total: $400 + $60 = **$460**",es,single_turn,True,126,168,294,6.468000000000001e-05,1.2810000000172295,True,False,
+2026-09-17T17:11:34,c4,deepseek-flash,deepseek,MGSM,,es,104,1,"Poppy está armando un rompecabezas de 1000 piezas. Coloca una cuarta parte de las piezas en el tablero, luego su madre coloca un tercio de las piezas restantes. ¿Cuántas piezas del rompecabezas faltan colocar?",500,Faltan 500 piezas.,es,single_turn,True,132,85,217,4.2279999999999995e-05,0.9370000000053551,True,False,
+2026-09-17T17:11:35,c4,deepseek-flash,deepseek,MGSM,,es,200,1,"Baldur saca agua de un pozo. Saca 5 baldes de agua todas las mañanas y 6 baldes de agua todas las tardes. Si cada balde contiene 5 litros de agua, ¿cuántos litros de agua saca cada día?",55,55 litros de agua cada día.,es,single_turn,True,127,65,192,3.5980000000000004e-05,0.8909999999741558,True,False,
+2026-09-17T17:11:36,c4,deepseek-flash,deepseek,MGSM,,es,216,1,"Janeth pidió $2000 prestados y prometió devolverlos con un 10 % adicional al monto. Si va a pagar $165 por mes durante 12 meses, ¿qué saldo le quedará por pagar a Janeth para ese entonces?",220,Le quedará un saldo por pagar de $220.,es,single_turn,True,123,150,273,5.9220000000000006e-05,1.5469999999913853,True,False,
+2026-09-17T17:11:37,c4,deepseek-flash,deepseek,MGSM,,es,236,1,"Ram usa muchos bolígrafos. Se dio cuenta de que puede ahorrar dinero si mezcla la tinta de cinco bolígrafos vacíos para llenar un bolígrafo completo. Si compra 25 bolígrafos y luego los usa para hacer bolígrafos nuevos cuando se están quedando sin tinta, ¿cuántos bolígrafos termina teniendo en total?",31,"Ram termina teniendo **31 bolígrafos** en total.
+
+Explicación:
+- Compra 25 bolígrafos.
+- Al usarlos, obtiene 25 bolígrafos vacíos.
+- Con cada 5 vacíos puede llenar 1 bolígrafo nuevo.
+
+Con 25 vacíos puede hacer:
+- 25 → 5 nuevos, quedan 0 + 5 vacíos al usarlos = 5 vacíos
+- 5 vacíos → 1 nuevo, queda 0 + 1 vacío al usarlo = 1 vacío
+
+Pero contando el proceso paso a paso:
+- 25 vacíos permiten llenar 5 bolígrafos.
+- Esos 5, al usarse, dan 5 vacíos.
+- Con esos 5 vacíos llena 1 bolígrafo más.
+- Total de bolígrafos nuevos: 5 + 1 = 6.
+
+Entonces:  
+**25 + 6 = 31 bolígrafos**.",es,single_turn,True,153,923,1076,0.00027986,4.921999999991385,True,False,
+2026-09-17T17:11:42,c4,deepseek-flash,deepseek,MGSM,,es,240,1,"James tiene 6 caramelos más que Robert. John tiene el doble de caramelos que Robert. Si John tiene 54 caramelos, ¿cuántos caramelos más tiene John que James?",21,John tiene 21 caramelos más que James.,es,single_turn,True,107,102,209,4.354000000000001e-05,0.8910000000032596,True,False,
+2026-09-17T17:11:43,c4,deepseek-flash,deepseek,MGSM,,es,67,1,"Un cazador de tesoros encontró un cofre escondido lleno de gemas. Había 175 diamantes, 35 rubíes menos que los diamantes y dos veces la cantidad de esmeraldas que de rubíes. ¿Cuántas gemas había en el cofre?",595,"En el cofre había:
+
+- Diamantes: 175
+- Rubíes: 175 − 35 = 140
+- Esmeraldas: 2 × 140 = 280
+
+Total de gemas: 175 + 140 + 280 = 595
+
+Había **595 gemas** en el cofre.",es,single_turn,True,133,197,330,7.378e-05,1.2189999999827705,True,False,
+2026-09-17T17:11:44,c4,deepseek-flash,deepseek,MGSM,,es,224,1,"Carlos y Benji están en la playa. Carlos alquila una canoa por $30 la hora y Benji alquila un gomón con forma de banana por $18 la hora. Si Carlos usa el barco durante 3 horas y Benji usa el gomón durante 5 horas, ¿cuánto pagarán en total por los alquileres?",180,Carlos pagará $90 y Benji pagará $90. En total pagarán **$180**.,es,single_turn,True,147,93,240,4.6620000000000004e-05,1.2190000000118744,True,False,
+2026-09-17T17:11:46,c4,deepseek-flash,deepseek,MGSM,,es,194,1,Violeta quiere comprar crayones nuevos. Necesita de 5 colores diferentes y separó $20 para esta compra. Un crayón cuesta $2. ¿Cuánto cambio recibirá?,10,Recibirá $10 de cambio.,es,single_turn,True,111,100,211,4.354000000000001e-05,1.125,True,False,
+2026-09-17T17:11:47,c4,deepseek-flash,deepseek,MGSM,,es,15,1,"Un comerciante quiere elegir entre 2 planes de compra: joyas por un valor de $5000 o dispositivos electrónicos por un valor de $8000. Su asesor financiero especula con que el mercado de las joyas subirá un 2,5 % mientras que el mercado de los dispositivos electrónicos subirá un 1,2 % en el mismo mes. Si el comerciante quiere elegir una opción que le permita aumentar al máximo la ganancia al final de este mes, ¿de cuánto sería esta ganancia?",125,"Elegiría las joyas, ya que su ganancia sería:
+
+\(5000 \times 0{,}025 = 125\)
+
+La ganancia máxima al final del mes sería **$125**.",es,single_turn,True,188,208,396,8.456000000000002e-05,1.4070000000065193,True,False,
+2026-09-17T17:11:48,c4,deepseek-flash,deepseek,MGSM,,es,177,1,"Zaid gasta 1/4 de su salario en el alquiler, 1/3 en el combustible para el auto y dona la mitad del monto restante a su organización benéfica favorita. Le da a su hija $200 para sus gastos semanales y $700 a su esposa para la compra de provisiones y otros artículos para el hogar. Si Zaid gana $6000 al mes, ¿cuánto dinero tendrá después de todos estos gastos y donaciones?",350,"Salario: $6000  
+Alquiler: $6000 × 1/4 = $1500  
+Combustible: $6000 × 1/3 = $2000  
+
+Restante después de alquiler y combustible:  
+$6000 − $1500 − $2000 = $2500  
+
+Donación: mitad de $2500 = $1250  
+Restante después de donar:  
+$2500 − $1250 = $1250  
+
+Gastos para hija y esposa:  
+$200 + $700 = $900  
+
+Dinero final:  
+$1250 − $900 = $350  
+
+Zaid tendrá **$350** después de todos estos gastos y donaciones.",es,single_turn,True,179,807,986,0.00025102,3.75,True,False,
+2026-09-17T17:11:52,c4,deepseek-flash,deepseek,MGSM,,es,24,1,"Kyle compró el libro más vendido del año pasado por $19,50. Esto es con un 25 % de descuento del precio original. ¿Cuál era el precio original del libro?",26,"El precio original era $26,00.",es,single_turn,True,109,105,214,4.466000000000001e-05,1.437999999994645,True,False,
+2026-09-17T17:11:53,c4,deepseek-flash,deepseek,MGSM,,es,247,1,"Isabelle compró artículos de fiesta para la fiesta de cumpleaños de su hermanita. Gastó $12 en ingredientes para el pastel, $43 en regalos de cumpleaños, $15 en decoraciones, $4 en tarjetas de invitación y $22 en bolsas con golosinas para los invitados a la fiesta. Dividió el costo en tres partes iguales con su padre y su madre. ¿Cuántos dólares pagó cada persona?",32,"Isabelle gastó en total $12 + $43 + $15 + $4 + $22 = $96.
+
+Dividió el costo en tres partes iguales: $96 ÷ 3 = $32.
+
+Cada persona pagó **$32**.",es,single_turn,True,175,111,286,5.5580000000000007e-05,1.0320000000065193,True,False,
+2026-09-17T17:11:54,c4,deepseek-flash,deepseek,MGSM,,es,19,1,"Marissa sale de excursión por un sendero de 12 millas. Le llevó 1 hora caminar las primeras 4 millas, luego otra hora caminar las siguientes dos millas. Si quiere que su velocidad promedio sea 4 millas por hora, ¿a qué velocidad (en millas por hora) debe caminar el resto de la distancia?",6,"Debe caminar a **6 millas por hora**.
+
+Para tener una velocidad promedio de 4 mph en 12 millas, el tiempo total debe ser:
+
+12 ÷ 4 = 3 horas
+
+Ya ha caminado durante 2 horas, así que le queda 1 hora para recorrer las 6 millas restantes:
+
+6 ÷ 1 = 6 mph",es,single_turn,True,144,242,386,8.792000000000001e-05,1.8280000000086147,True,False,
+2026-09-17T17:11:56,c4,deepseek-flash,deepseek,MGSM,,es,114,1,"El teléfono de Jamal puede guardar 6 veces más fotografías que el teléfono de Brittany. La cantidad máxima de fotografías que puede guardar el teléfono de Brittany es 50 veces más que la cantidad de aves que hay en la fotografía que Jamal tomó de los patos en el zoológico. Si el teléfono de Jamal puede guardar 1800 fotografías, ¿cuántos patos se pueden ver en la fotografía que Jamal tomó de los patos en el zoológico?",6,"El teléfono de Jamal guarda 1800 fotografías, que son 6 veces las de Brittany:
+
+\[
+1800 = 6 \times \text{Brittany}
+\]
+
+\[
+\text{Brittany} = 300
+\]
+
+El teléfono de Brittany puede guardar 50 veces la cantidad de aves en la fotografía de los patos:
+
+\[
+300 = 50 \times \text{patos}
+\]
+
+\[
+\text{patos} = \frac{300}{50} = 6
+\]
+
+**Se pueden ver 6 patos en la fotografía.**",es,single_turn,True,183,550,733,0.00017962000000000002,2.9539999999979045,True,False,
+2026-09-17T17:11:59,c4,deepseek-flash,deepseek,MGSM,,es,68,1,"En la escuela del Dr. Wertz, hay el doble de niños que de niñas. Si hay 60 niñas y 5 estudiantes para cada maestro, ¿cuántos maestros hay?",36,"Hay 60 niñas y el doble de niños, es decir, 120 niños.  
+Total de estudiantes: 60 + 120 = 180.  
+Como hay 5 estudiantes por maestro: 180 ÷ 5 = 36.  
+
+Hay **36 maestros**.",es,single_turn,True,109,183,292,6.65e-05,1.1719999999913853,True,False,
+2026-09-17T17:12:00,c4,deepseek-flash,deepseek,MGSM,,es,176,1,"En una carrera de 240 asiáticos, 80 eran japoneses y el resto eran chinos. Si la cantidad de niños en el equipo chino era 60, ¿cuántas niñas había en el equipo chino?",100,"En el equipo chino había \(240 - 80 = 160\) personas.
+
+Si 60 eran niños, entonces las niñas eran:
+
+\[
+160 - 60 = 100
+\]
+
+Había **100 niñas** en el equipo chino.",es,single_turn,True,115,244,359,8.442000000000001e-05,1.4679999999934807,True,False,
+2026-09-17T17:12:02,c4,deepseek-flash,deepseek,MGSM,,es,45,1,"Meredith es una bloguera independiente que escribe sobre temas de salud y hace entregas a sus clientes a diario como trabajo permanente. Un artículo del blog lleva un promedio de 4 horas entre la investigación y la elaboración. La semana pasada, Meredith escribió 5 artículos el lunes y 2/5 veces más de artículos el martes que el lunes. El miércoles, escribió el doble de los artículos que redactó el martes. Calcule la cantidad total de horas que Meredith dedicó a los artículos durante los tres días.",104,"Meredith escribió:
+
+- Lunes: 5 artículos.
+- Martes: \(5 + \frac{2}{5} \times 5 = 5 + 2 = 7\) artículos.
+- Miércoles: \(2 \times 7 = 14\) artículos.
+
+Total de artículos en los tres días:  
+\(5 + 7 + 14 = 26\) artículos.
+
+Cada artículo le toma 4 horas, así que el total de horas es:  
+\(26 \times 4 = 104\) horas.
+
+**Meredith dedicó 104 horas a los artículos durante los tres días.**",es,single_turn,True,191,625,816,0.00020174000000000003,3.35999999998603,True,False,
+2026-09-17T17:12:05,c4,deepseek-flash,deepseek,MGSM,,es,55,1,"Jean tiene 30 paletas. Jean come 2 de las paletas. Con las paletas que sobran, Jean quiere envasar 2 paletas en una bolsa. ¿Cuántas bolsas puede llenar Jean?",14,Jean puede llenar 14 bolsas.,es,single_turn,True,117,70,187,3.5980000000000004e-05,0.9070000000065193,True,False,
+2026-09-17T17:12:06,c4,deepseek-flash,deepseek,MGSM,,es,10,1,"Un programa nuevo tuvo 60 descargas en el primer mes. La cantidad de descargas en el segundo mes fue tres veces más que las descargas en el primer mes, pero luego se redujo un 30 % en el tercer mes. ¿Cuántas descargas tuvo en total el programa durante los tres meses?",366,"Primer mes: 60 descargas.  
+Segundo mes: 3 × 60 = 180 descargas.  
+Tercer mes: 180 menos un 30 % = 180 × 0,70 = 126 descargas.  
+
+Total: 60 + 180 + 126 = 366 descargas.  
+
+El programa tuvo **366 descargas** en total durante los tres meses.",es,single_turn,True,132,503,635,0.00015932,2.889999999984866,True,False,
+2026-09-17T17:12:09,c4,deepseek-flash,deepseek,MGSM,,es,30,1,La proporción de las edades de Darrell y Allen es 7:11. Calcule la edad de Allen dentro de 10 años si la edad total de ambos ahora es 162.,109,"La edad actual de Allen es \(11k\), y la de Darrell es \(7k\).
+
+\[
+7k + 11k = 162 \Rightarrow 18k = 162 \Rightarrow k = 9
+\]
+
+Entonces, Allen tiene ahora:
+
+\[
+11 \times 9 = 99
+\]
+
+Dentro de 10 años tendrá:
+
+\[
+99 + 10 = 109
+\]
+
+**Allen tendrá 109 años dentro de 10 años.**",es,single_turn,True,106,184,290,6.636000000000001e-05,1.2820000000065193,True,False,
+2026-09-17T17:12:10,c4,deepseek-flash,deepseek,MGSM,,es,120,1,"Miguel usa 2 cuadernos a la semana para sus dibujos. Si un cuaderno tiene 30 hojas, ¿cuántas hojas usa cada mes?",240,"Miguel usa **240 hojas** cada mes.
+
+Cálculo: 2 cuadernos × 30 hojas = 60 hojas por semana.  
+60 hojas × 4 semanas = 240 hojas al mes.",es,single_turn,True,103,169,272,6.174000000000002e-05,1.3599999999860302,True,False,
+2026-09-17T17:12:12,c4,deepseek-flash,deepseek,MGSM,,es,201,1,"John gana un premio en el trabajo. El premio consta de una recompensa monetaria por única vez de $5000 y un aumento del 5 % en el salario. Si gana 2000 por semana todas las semanas del año y recibió el premio el primer día del año, ¿cuánto dinero ganó ese año?",114200,"Ganó:
+
+- Salario semanal con aumento: $2000 × 1.05 = $2100
+- Salario anual: $2100 × 52 = $109,200
+- Más el premio único: $109,200 + $5000 = $114,200
+
+Ese año ganó **$114,200**.",es,single_turn,True,142,458,600,0.00014812,2.827999999979511,False,False,
+2026-09-17T17:12:14,c4,deepseek-flash,deepseek,MGSM,,es,33,1,Gretchen tiene 110 monedas. Hay 30 monedas más de oro que de plata. ¿Cuántas monedas de oro tiene Gretchen?,70,Gretchen tiene 70 monedas de oro.,es,single_turn,True,102,101,203,4.256e-05,1.0160000000032596,True,False,
+2026-09-17T17:12:15,c4,deepseek-flash,deepseek,MGSM,,es,141,1,"Hay 700 abejas en una colmena. Hay dos veces más de abejas obreras que de abejas bebés, y dos veces más de abejas bebés que de abejas reinas. ¿Cuántas abejas obreras hay?",400,Hay 400 abejas obreras.,es,single_turn,True,127,380,507,0.00012418000000000002,2.1559999999881256,True,False,
+2026-09-17T17:12:18,c4,deepseek-flash,deepseek,MGSM,,es,219,1,Cuatro estudiantes anotaron un total de 251 puntos en un juego de mesa. Naomi anotó 68 de los puntos. Yuri anotó 10 más de la mitad de puntos que anotó Naomi y Brianna anotó 17 puntos más que Naomi. ¿Cuántos puntos anotó Jojo?,54,"Naomi anotó 68 puntos.
+
+- Yuri anotó 10 más de la mitad de los puntos de Naomi:  
+  \(68 \div 2 = 34\), entonces \(34 + 10 = 44\).
+
+- Brianna anotó 17 más que Naomi:  
+  \(68 + 17 = 85\).
+
+Puntos de Naomi, Yuri y Brianna:  
+\(68 + 44 + 85 = 197\)
+
+Total de puntos: 251  
+Puntos de Jojo:  
+\(251 - 197 = 54\)
+
+**Jojo anotó 54 puntos.**",es,single_turn,True,136,249,385,8.876000000000002e-05,1.625,True,False,
+2026-09-17T17:12:19,c4,deepseek-flash,deepseek,MGSM,,es,25,1,"Marie pidió una comida con pollo que cuesta $12, 5 cajas de leche que cuestan $3 cada una, 4 manazas que cuestan $1,50 cada una y algunas cajas de pizza. Marie pagó un total de $50. ¿Cuántas cajas de pizza pidió Marie si cada caja cuesta $8,50?",2,"Marie pidió **2 cajas de pizza**.
+
+Cálculo:  
+- Comida con pollo: $12  
+- 5 cajas de leche: 5 × $3 = $15  
+- 4 manzanas: 4 × $1,50 = $6  
+- Total sin pizza: $12 + $15 + $6 = $33  
+- Dinero para pizzas: $50 − $33 = $17  
+- Cajas de pizza: $17 ÷ $8,50 = 2  
+
+Por lo tanto, pidió **2 cajas de pizza**.",es,single_turn,True,149,364,513,0.00012278000000000001,1.937999999994645,True,False,
+2026-09-17T17:12:21,c4,deepseek-flash,deepseek,MGSM,,es,111,1,El bote de Julia comenzó a tener filtraciones mientras estaba en el lago. Entraban dos litros de agua por cada diez pies que remaba hacia la orilla. Le llevó dieciséis segundos remar veinte pies. La orilla estaba a 64 segundos de distancia. ¿Cuánta agua tenía el bote cuando Julia llegó a la orilla?,16,"En 16 segundos recorre 20 pies, así que su velocidad es \(20/16 = 1{,}25\) pies por segundo.
+
+En 64 segundos recorre:
+
+\(1{,}25 \times 64 = 80\) pies.
+
+Entran 2 litros por cada 10 pies:
+
+\(80 \div 10 = 8\)
+
+\(8 \times 2 = 16\)
+
+Por lo tanto, cuando Julia llegó a la orilla, el bote tenía **16 litros** de agua.",es,single_turn,True,147,534,681,0.00017010000000000001,3.0939999999827705,True,False,
+2026-09-17T17:12:24,c4,deepseek-flash,deepseek,MGSM,,es,18,1,Claire prepara una tortilla de huevos con 3 huevos todas las mañanas para el desayuno. ¿Cuántas docenas de huevo comerá en 4 semanas?,7,Comerá 7 docenas de huevos.,es,single_turn,True,108,113,221,4.6760000000000006e-05,1.2339999999967404,True,False,
+2026-09-17T17:12:26,c4,deepseek-flash,deepseek,MGSM,,es,196,1,"En una ciudad determinada, se distribuirán 200 libras de zanahorias a 40 restaurantes. Cada restaurante debe recibir 2 libras de zanahorias. ¿Cuántas libras de zanahoria no se usarán?",120,"Se usarán \(40 \times 2 = 80\) libras de zanahorias.
+
+No se usarán \(200 - 80 = 120\) libras de zanahorias.",es,single_turn,True,125,106,231,4.7180000000000006e-05,1.312000000005355,True,False,
+2026-09-17T17:12:27,c4,deepseek-flash,deepseek,MGSM,,es,180,1,"Dos candidatos se postulan para delegado de clase en la escuela de Sarai. Si el ganador obtuvo 3/4 de los votos y la cantidad total de alumnos que votaron en la clase fue de 80, calcule la cantidad de votos que obtuvo el perdedor.",20,"El perdedor obtuvo \( \frac{1}{4} \) de los votos.
+
+\[
+\frac{1}{4} \times 80 = 20
+\]
+
+**El perdedor obtuvo 20 votos.**",es,single_turn,True,133,133,266,5.5860000000000004e-05,1.139999999984866,True,False,
+2026-09-17T17:12:28,c4,deepseek-flash,deepseek,MGSM,,es,159,1,"Finn observa a 11 renacuajos nadando en el estanque. De repente, ve que aparecen 6 que estaban escondidos debajo de un camalote y luego ve que 2 se esconden debajo de una piedra. ¿Cuántos renacuajos puede ver Finn en el estanque ahora?",15,Finn puede ver ahora **15** renacuajos en el estanque.,es,single_turn,True,142,231,373,8.456000000000002e-05,1.5469999999913853,True,False,
+2026-09-17T17:12:30,c4,deepseek-flash,deepseek,MGSM,,es,118,1,"Un oficial de aduana en el puerto principal del despacho de aduana costero contó 2 contenedores de vehículos importados, cada uno con 5 vehículos en su interior. Al día siguiente, trajeron más contenedores, y la cantidad total de vehículos en el puerto pasó a ser 30. Calcule la cantidad de contenedores que se importaron el segundo día, suponiendo que todos los contenedores tengan 5 vehículos.",4,"El segundo día se importaron **4 contenedores**.
+
+Inicialmente había:  
+2 × 5 = 10 vehículos.
+
+Total final: 30 vehículos.  
+Vehículos añadidos: 30 − 10 = 20.
+
+Contenedores añadidos:  
+20 ÷ 5 = **4**.",es,single_turn,True,176,153,329,6.748e-05,1.5,True,False,
+2026-09-17T17:12:31,c4,deepseek-flash,deepseek,MGSM,,es,96,1,Harry durmió 9 horas anoche. Su amigo James durmió solo 2/3 de lo que durmió Harry. ¿Cuántas horas más que James durmió Harry?,3,Harry durmió 3 horas más que James.,es,single_turn,True,109,53,162,3.0100000000000007e-05,1.1560000000172295,True,False,
+2026-09-17T17:12:32,c4,deepseek-flash,deepseek,MGSM,,es,108,1,"Henry está preparando galletas para una competencia local de repostería. Quiere hacer dos veces más que las que hizo el año pasado. Cuando termina de hornear, se da cuenta de que en realidad horneó 15 galletas más de las que quería. Cuando las pone a enfriar, descarta 5 de las galletas y ahora tiene un total de 110 galletas. ¿Cuántas galletas horneó Henry el año pasado?",50,"Henry quería hornear 100 galletas, porque horneó 15 más y luego descartó 5:
+
+- Galletas que horneó: \(110 + 5 = 115\)
+- Galletas que quería hornear: \(115 - 15 = 100\)
+- El año pasado hizo la mitad: \(100 \div 2 = 50\)
+
+**Henry horneó 50 galletas el año pasado.**",es,single_turn,True,170,389,559,0.00013272000000000002,2.3429999999934807,True,False,
+2026-09-17T17:12:35,c4,deepseek-flash,deepseek,MGSM,,es,185,1,"Jenna y su madre recogieron algunas manzanas de su huerto de manzanas. Jenna recogió la mitad de manzanas que su madre. Si su madre tenía 20 manzanas, ¿cuántas manzanas recogieron ambas?",30,"Jenna recogió la mitad de manzanas que su madre, es decir, 10 manzanas.  
+Entre las dos recogieron 20 + 10 = 30 manzanas.",es,single_turn,True,124,106,230,4.704000000000001e-05,1.4689999999827705,True,False,
+2026-09-17T17:12:36,c4,deepseek-flash,deepseek,MGSM,,es,222,1,Andy planta 90 geranios y 40 petunias menos que geranios. ¿Cuántas flores planta en total?,140,Andy planta 90 geranios y 50 petunias. En total planta 140 flores.,es,single_turn,True,95,134,229,5.0820000000000005e-05,0.9539999999979045,True,False,
+2026-09-17T17:12:37,c4,deepseek-flash,deepseek,MGSM,,es,16,1,"Dos trenes salen de San Rafael a la misma hora. Comienzan a viajar hacia el oeste, ambos recorren 80 millas. Al día siguiente, viajan hacia el norte y recorren 150 milla. ¿Qué distancia recorrió cada tren en los dos días?",230,Cada tren recorrió **80 + 150 = 230 millas** en los dos días.,es,single_turn,True,129,900,1029,0.0002700600000000001,4.01500000001397,True,False,
+2026-09-17T17:12:41,c4,deepseek-flash,deepseek,MGSM,,es,146,1,"Johnny está recogiendo los juguetes del piso de su habitación. Había desparramado por el piso una caja de bloques Lego de 500 piezas, otra que tenía 3 veces más piezas que la de 500 piezas y otra que tenía 1/4 de la cantidad de piezas. ¿Cuántos bloques recoge Johnny si junta todos los bloques Lego?",2125,"La segunda caja tiene \(3 \times 500 = 1.500\) piezas.  
+La tercera caja tiene \(\frac{1}{4} \times 500 = 125\) piezas.  
+
+En total: \(500 + 1.500 + 125 = 2.125\).
+
+Johnny recoge **2.125 bloques Lego**.",es,single_turn,True,156,1061,1217,0.00031892000000000004,4.8439999999827705,False,False,
+2026-09-17T17:12:46,c4,deepseek-flash,deepseek,MGSM,,es,69,1,"Bailey comienza con una determinada cantidad de dinero. Luego, recibe una mesada semanal de $5 durante 8 semanas. Si al final de las 8 semanas tiene $100 en total, ¿con cuánto dinero comenzó Bailey?",60,"Bailey comenzó con $60.
+
+Cálculo: recibe $5 durante 8 semanas, es decir, $5 × 8 = $40.  
+Si al final tiene $100, entonces comenzó con $100 − $40 = $60.",es,single_turn,True,120,160,280,6.16e-05,1.2660000000032596,True,False,
+2026-09-17T17:12:47,c4,deepseek-flash,deepseek,MGSM,,es,173,1,"Jessica está intentando calcular cuánto debe pagar en todas sus deudas cada mes. Sus préstamos para estudiantes tienen un pago mínimo de $300 al mes, el mínimo de su tarjeta de crédito es de $200 al mes y el mínimo de su hipoteca es de $500 al mes. Si Jessica quiere pagar un 50 % más que el mínimo, ¿cuánto paga en un año?",18000,"El pago mínimo mensual total es:
+
+$300 + $200 + $500 = $1000
+
+Si paga un 50 % más que el mínimo:
+
+$1000 × 1.50 = $1500 al mes
+
+En un año paga:
+
+$1500 × 12 = $18,000
+
+Jessica paga **$18,000** en un año.",es,single_turn,True,156,222,378,8.400000000000001e-05,1.6570000000065193,False,False,
+2026-09-17T17:12:49,c4,deepseek-flash,deepseek,MGSM,,es,38,1,John corre 60 millas por semana. Corre 3 días a la semana. El primer día corre 3 horas y la mitad de lo que corre los otros dos días. ¿A qué velocidad corre?,10,"Sea \(x\) la distancia que corre el primer día.
+
+Como el primer día corre la mitad de lo que corre en los otros dos días juntos, los otros dos días suman \(2x\).
+
+Entonces:
+
+\[
+x + 2x = 60
+\]
+
+\[
+3x = 60
+\]
+
+\[
+x = 20
+\]
+
+El primer día corre 20 millas en 3 horas.
+
+\[
+\text{Velocidad}=\frac{20}{3}=6.666\ldots
+\]
+
+John corre a **\(6{,}67\) millas por hora** aproximadamente.",es,single_turn,True,108,2358,2466,0.00067536,10.655999999988126,False,False,
+2026-09-17T17:13:00,c4,deepseek-flash,deepseek,MGSM,,zh,142,1,乔丹每天玩电子游戏 2 小时。他还有一份时薪 10 美元的兼职工作。如果乔丹把玩游戏的时间用来工作，他一周能赚多少钱？,140,"乔丹一周玩游戏的时间是：2 小时 × 7 天 = 14 小时。
+
+如果把这些时间用来工作，他能赚：14 小时 × 10 美元 = 140 美元。
+
+所以，他一周能赚 **140 美元**。",zh,single_turn,True,102,127,229,4.9840000000000004e-05,1.1719999999913853,True,False,
+2026-09-17T17:13:01,c4,deepseek-flash,deepseek,MGSM,,zh,6,1,图卢兹的绵羊数量是查尔斯顿的两倍。查尔斯顿的绵羊数量是西雅图的 4 倍。如果西雅图有 20 只绵羊，图卢兹、查尔斯顿和西雅图一共有多少只绵羊？,260,"西雅图有 20 只绵羊。  
+查尔斯顿是西雅图的 4 倍：20 × 4 = 80 只。  
+图卢兹是查尔斯顿的 2 倍：80 × 2 = 160 只。  
+
+总数：160 + 80 + 20 = 260 只绵羊。",zh,single_turn,True,125,149,274,5.9220000000000006e-05,1.125,True,False,
+2026-09-17T17:13:02,c4,deepseek-flash,deepseek,MGSM,,zh,97,1,当弗雷达把罐装番茄煮成番茄酱时，份量减少了一半。她使用的每个 16 盎司番茄罐头含有 3 颗番茄。弗雷达的最后一批番茄酱是 32 盎司的酱。弗雷达用了多少颗番茄？,12,"弗雷达最后得到 32 盎司番茄酱。  
+因为煮成番茄酱时份量减少了一半，所以原来需要：
+
+32 × 2 = 64 盎司罐装番茄
+
+每个罐头是 16 盎司：
+
+64 ÷ 16 = 4 个罐头
+
+每个罐头有 3 颗番茄：
+
+4 × 3 = 12 颗番茄
+
+她用了 **12 颗番茄**。",zh,single_turn,True,123,261,384,9.030000000000001e-05,1.687000000005355,True,False,
+2026-09-17T17:13:04,c4,deepseek-flash,deepseek,MGSM,,zh,60,1,一个篮子里放着 25 颗橙子，其中 1 颗是坏的，20% 是不熟的，2 颗是酸的，剩下的是好的。好的橙子有多少颗？,17,好的橙子有 17 颗。,zh,single_turn,True,107,171,278,6.286e-05,1.2809999999881256,True,False,
+2026-09-17T17:13:05,c4,deepseek-flash,deepseek,MGSM,,zh,112,1,一间教室有一张白板，由 4 名老师共用，他们轮流使用这间教室。每位老师每天有 2 节课，每节课都使用白板。如果白板每节课擦 3 次，白板每天擦多少次？,24,白板每天擦 **24 次**。,zh,single_turn,True,121,110,231,4.774e-05,0.9210000000020955,True,False,
+2026-09-17T17:13:06,c4,deepseek-flash,deepseek,MGSM,,zh,181,1,桑德拉是拐角一家花店的店主，她对弗莱德没有完成订单配送非常不满意。桑德拉订购的红玫瑰数量是白色康乃馨的 4 倍。她还订购了 200 支粉色马蹄莲，这个数量是白色康乃馨的 5 倍。桑德拉威胁道，如果漏送的红玫瑰没有在下午 5 点前送到，她就更换供应商。为了留住桑德拉的业务，弗莱德必须在下午 5 点前送来多少支红玫瑰？,160,"白色康乃馨数量：200 ÷ 5 = 40 支。  
+红玫瑰数量：40 × 4 = 160 支。  
+
+因此，弗莱德必须在下午 5 点前送来 **160 支红玫瑰**。",zh,single_turn,True,174,597,771,0.00019152000000000004,2.98499999998603,True,False,
+2026-09-17T17:13:09,c4,deepseek-flash,deepseek,MGSM,,zh,197,1,"在索达市，居民的确切人数是 23,786。他们包括 8,417 个男性和 9,092 个女性。其他人口由儿童构成。索达市有多少儿童？",6277,"索达市有 6,277 名儿童。",zh,single_turn,True,111,89,200,4.046e-05,1.0160000000032596,False,False,
+2026-09-17T17:13:10,c4,deepseek-flash,deepseek,MGSM,,zh,184,1,杰瑞正在摇一颗六面骰子。他摇出一个大于 3 的数字的可能性比连续摇出两个偶数的可能性大多少（以百分比表达）？,25,"大于 3 的数字有 4、5、6，共 3 个，所以概率是：
+
+\(3/6 = 1/2 = 50\%\)
+
+连续摇出两个偶数：每次摇出偶数的概率是 \(3/6 = 1/2\)，连续两次的概率是：
+
+\((1/2) \times (1/2) = 1/4 = 25\%\)
+
+两者相差：
+
+\(50\% - 25\% = 25\%\)
+
+答案：大 \(25\%\)。",zh,single_turn,True,102,869,971,0.00025760000000000003,4.453000000008615,True,False,
+2026-09-17T17:13:14,c4,deepseek-flash,deepseek,MGSM,,zh,9,1,伊莉莎每周工作的前 40 个小时的时薪是 10 美元。她加班还能获得标准时薪 1.2 倍的工资。如果 Eliza 这周工作了 45 小时，她这周的收入是多少？,460,伊莉莎这周的收入是 460 美元。,zh,single_turn,True,117,95,212,4.2980000000000005e-05,1.0150000000139698,True,False,
+2026-09-17T17:13:15,c4,deepseek-flash,deepseek,MGSM,,zh,104,1,"波比正在拼一幅 1,000 片的拼图。她在拼板上拼完了四分之一的拼片，然后她妈妈拼完了剩下拼片的三分之一。拼图还剩下多少片需要拼？",500,还剩 500 片需要拼。,zh,single_turn,True,110,128,238,5.1240000000000004e-05,1.4059999999881256,True,False,
+2026-09-17T17:13:17,c4,deepseek-flash,deepseek,MGSM,,zh,200,1,巴尔德尔从井里打水。他每天上午打 5 桶水，每天下午打 6 桶水。如果每桶有 5 升水，他每天获得多少升水？,55,"他每天共打水：5 + 6 = 11 桶。  
+每桶有 5 升水，所以每天获得：11 × 5 = 55 升。  
+
+答：55 升。",zh,single_turn,True,111,168,279,6.258e-05,1.2190000000118744,True,False,
+2026-09-17T17:13:18,c4,deepseek-flash,deepseek,MGSM,,zh,216,1,"珍妮丝借了 2,000 美元并承诺额外返还该金额的 10%。如果她打算 12 个月每月支付 165 美元，到那时珍妮丝剩余的欠款为多少？",220,"珍妮丝总共需要偿还：2,000 美元 + 2,000 美元的 10% = 2,200 美元。
+
+12 个月每月支付 165 美元，共支付：165 × 12 = 1,980 美元。
+
+因此剩余欠款为：2,200 - 1,980 = 220 美元。
+
+答案是：**220 美元**。",zh,single_turn,True,112,203,315,7.252e-05,1.4070000000065193,True,False,
+2026-09-17T17:13:19,c4,deepseek-flash,deepseek,MGSM,,zh,236,1,拉姆使用很多钢笔。他发现他可以通过将五支空钢笔的墨水混合做成一支满墨的钢笔来省钱。如果他买了 25 支钢笔，然后在墨水快用完时用它们来制作新的钢笔，他会获得多少支满墨的钢笔？,31,"总共会获得 **31 支满墨钢笔**。
+
+计算：  
+- 先买 25 支满墨钢笔；  
+- 用完得到 25 支空钢笔，可制作 \(25 \div 5 = 5\) 支满墨钢笔；  
+- 这 5 支用完又得到 5 支空钢笔，可再制作 \(5 \div 5 = 1\) 支满墨钢笔。  
+
+所以总数是：\(25 + 5 + 1 = 31\) 支。  
+其中额外制作的是 **6 支**。",zh,single_turn,True,121,2078,2199,0.00059878,10.155999999988126,True,False,
+2026-09-17T17:13:30,c4,deepseek-flash,deepseek,MGSM,,zh,240,1,詹姆斯比罗伯特多 6 块糖果。约翰的糖果是罗伯特的两倍。如果约翰有 54 块糖果，约翰比詹姆斯多多少块糖果？,21,"罗伯特有 54 ÷ 2 = 27 块糖果。  
+詹姆斯有 27 + 6 = 33 块糖果。  
+约翰比詹姆斯多 54 − 33 = 21 块糖果。",zh,single_turn,True,101,116,217,4.662e-05,0.9220000000204891,True,False,
+2026-09-17T17:13:31,c4,deepseek-flash,deepseek,MGSM,,zh,67,1,一位寻宝人找到了一个埋藏的百宝箱。百宝箱里面装满了宝石，有 175 颗钻石，比钻石数量少 35 颗的红宝石，比红宝石数量多一倍的绿宝石。百宝箱里有多少颗宝石？,595,"红宝石数量：175 − 35 = 140 颗  
+绿宝石数量：140 × 2 = 280 颗  
+宝石总数：175 + 140 + 280 = 595 颗  
+
+百宝箱里共有 **595 颗宝石**。",zh,single_turn,True,122,197,319,7.224e-05,1.5309999999881256,True,False,
+2026-09-17T17:13:32,c4,deepseek-flash,deepseek,MGSM,,zh,224,1,卡洛斯和本吉在海滩上。卡洛斯以每小时 30 美元的价格租了一艘独木舟，本吉以每小时 18 美元的价格租了一艘香蕉船筏。如果卡洛斯用船 3 小时，本吉用筏 5 小时，他们一共要付多少租金？,180,卡洛斯要付 30 × 3 = 90 美元，本吉要付 18 × 5 = 90 美元。总共是 90 + 90 = 180 美元。,zh,single_turn,True,133,135,268,5.6420000000000005e-05,1.4210000000020955,True,False,
+2026-09-17T17:13:34,c4,deepseek-flash,deepseek,MGSM,,zh,194,1,维奥莱塔想买新的蜡笔。她需要 5 种不同颜色的蜡笔，并为这次购买准备了 20 美元。一支蜡笔 2 美元。她会收到多少零钱？,10,"她买 5 支蜡笔，每支 2 美元，共花：
+
+5 × 2 = 10 美元
+
+她有 20 美元，所以零钱是：
+
+20 − 10 = 10 美元
+
+她会收到 10 美元零钱。",zh,single_turn,True,110,122,232,4.9560000000000007e-05,1.125,True,False,
+2026-09-17T17:13:35,c4,deepseek-flash,deepseek,MGSM,,zh,15,1,"一个商人想要在两种购买计划中做出购买选择：价值 5,000 美元的珠宝和价值 8,000 美元的电子产品。他的财务顾问推测，珠宝市场将上涨 2.5%，而电子产品市场在同一个月内也将上涨 1.2%。如果这个商人期望通过做出选择，在本月末获得最大的利润，则利润会是多少？",125,"最大利润为 **125 美元**。
+
+计算：
+- 珠宝利润：\(5000 \times 2.5\% = 125\) 美元
+- 电子产品利润：\(8000 \times 1.2\% = 96\) 美元
+
+因此，商人应选择购买珠宝，最大利润是 **125 美元**。",zh,single_turn,True,141,300,441,0.00010374,1.937999999994645,True,False,
+2026-09-17T17:13:37,c4,deepseek-flash,deepseek,MGSM,,zh,177,1,"扎伊德用 1/4 的工资付房租，用 1/3 的工资付加油费，并将剩余工资的一半捐赠给他最喜欢的慈善机构。他给他女儿 200 美元作为每周的花销，给他妻子 700 美元作为日用品和其他家庭用品的预算。如果扎伊德每个月挣 6,000 美元，则在支付所有这些费用和捐款后，他还有多少钱？",350,"按每月 4 周计算：
+
+- 房租：\(6000 \times \frac{1}{4} = 1500\) 美元  
+- 加油费：\(6000 \times \frac{1}{3} = 2000\) 美元  
+- 剩余：\(6000 - 1500 - 2000 = 2500\) 美元  
+- 捐赠一半：\(2500 \div 2 = 1250\) 美元  
+- 捐赠后剩余：\(2500 - 1250 = 1250\) 美元  
+- 给女儿：\(200 \times 4 = 800\) 美元  
+- 给妻子：700 美元  
+
+总支出：\(1500 + 2000 + 1250 + 800 + 700 = 6250\) 美元  
+
+所以最后：\(6000 - 6250 = -250\) 美元  
+
+他没有剩余的钱，反而短缺 **250 美元**。",zh,single_turn,True,154,1315,1469,0.00038976000000000006,6.5460000000020955,False,False,
+2026-09-17T17:13:43,c4,deepseek-flash,deepseek,MGSM,,zh,24,1,凯尔花了 19.50 美元买了一本去年的畅销书，购买价是原价的七五折。这本书的原价是多少？,26,这本书的原价是 26.00 美元。,zh,single_turn,True,95,133,228,5.054e-05,1.2820000000065193,True,False,
+2026-09-17T17:13:44,c4,deepseek-flash,deepseek,MGSM,,zh,247,1,伊莎贝尔为她妹妹的生日派对买了派对用品。她花 12 美元买了蛋糕的原材料，43 美元买了生日礼物，15 美元买了装饰品，4 美元买了邀请函，22 美元买了派对客人的礼品袋。她和父母三人平摊费用。每人付了多少美元？,32,"总费用：12 + 43 + 15 + 4 + 22 = 96 美元。  
+三人平摊：96 ÷ 3 = 32 美元。  
+
+每人付了 32 美元。",zh,single_turn,True,132,139,271,5.74e-05,1.1570000000065193,True,False,
+2026-09-17T17:13:46,c4,deepseek-flash,deepseek,MGSM,,zh,19,1,玛丽莎正在一条长 12 英里的小径上徒步旅行。她用了 1 小时走完前面 4 英里，然后再用一小时走完 2 英里。如果她希望平均速度达到每小时 4 英里，则要走完剩下的距离，她的速度需要达到多少（以英里每小时为单位）？,6,"她还需要走剩下的 6 英里。
+
+全程平均速度为每小时 4 英里，则总时间应为：
+
+12 ÷ 4 = 3 小时
+
+她已经用了 2 小时，所以只剩 1 小时。
+
+因此剩余速度需要达到：
+
+6 ÷ 1 = 6 英里/小时
+
+答案：每小时 6 英里。",zh,single_turn,True,135,185,320,7.070000000000001e-05,1.3909999999741558,True,False,
+2026-09-17T17:13:47,c4,deepseek-flash,deepseek,MGSM,,zh,114,1,"贾马尔的手机能容纳的照片数量是布列塔尼手机的 6 倍。布列塔尼的手机能容纳的最大照片数量是贾马尔在动物园拍摄的鸭子照片中鸭子数量的 50 倍。如果贾马尔的手机能容纳 1,800 张照片，贾马尔在动物园拍摄的照片中能看到多少只鸭子？",6,"贾马尔的手机能容纳 1,800 张照片。
+
+布列塔尼的手机能容纳：  
+1,800 ÷ 6 = 300 张照片
+
+这些照片数量是鸭子数量的 50 倍，所以鸭子数量为：  
+300 ÷ 50 = 6
+
+因此，贾马尔在动物园拍摄的照片中能看到 **6 只鸭子**。",zh,single_turn,True,139,227,366,8.302e-05,1.672000000020489,True,False,
+2026-09-17T17:13:49,c4,deepseek-flash,deepseek,MGSM,,zh,68,1,在韦茨博士的学校里，男生数量是女生数量的两倍。如果有 60 个女生，而且每 5 个学生有一位老师，则这间学校有多少位老师？,36,"女生有 60 人，男生是女生的两倍，所以男生有 120 人。
+
+学生总数：60 + 120 = 180 人。
+
+每 5 个学生有一位老师：180 ÷ 5 = 36。
+
+所以，这间学校有 36 位老师。",zh,single_turn,True,106,122,228,4.9000000000000005e-05,1.2190000000118744,True,False,
+2026-09-17T17:13:50,c4,deepseek-flash,deepseek,MGSM,,zh,176,1,在一场 240 名亚洲人参加的比赛中，80 名是日本人，剩下的是中国人。如果中国队有 60 名男子队员，则中国队有多少名女子队员？,100,"中国队共有 \(240-80=160\) 名队员。  
+其中男子队员有 60 名，所以女子队员有：
+
+\(160-60=100\)
+
+答：中国队有 **100 名女子队员**。",zh,single_turn,True,104,127,231,5.012000000000001e-05,1.125,True,False,
+2026-09-17T17:13:51,c4,deepseek-flash,deepseek,MGSM,,zh,45,1,梅雷迪思是一位自由博主，每天撰写关于健康主题的博文，然后提交给客户，这是她的固定职业。一篇博文平均需要 4 小时进行研究和写作。上周，她在周一写了 5 篇博文。她在周二写的博文数量比周一多 2/5 倍。她在周三写的博文数量比周二多一倍。请计算她在这三天用于撰写博文的总时间。,104,"周一写了 5 篇博文。  
+周二比周一多 \( \frac{2}{5} \) 倍：\(5 + 5 \times \frac{2}{5} = 7\) 篇。  
+周三比周二多一倍：\(7 \times 2 = 14\) 篇。  
+
+三天共写：\(5 + 7 + 14 = 26\) 篇。  
+每篇平均需要 4 小时，所以总时间为：  
+\(26 \times 4 = 104\) 小时。  
+
+她在这三天用于撰写博文的总时间是 **104 小时**。",zh,single_turn,True,157,386,543,0.00013006,2.5469999999913853,True,False,
+2026-09-17T17:13:54,c4,deepseek-flash,deepseek,MGSM,,zh,55,1,吉恩有 30 根棒棒糖。吉恩吃掉了其中 2 根棒棒糖。对于剩下的棒棒糖，吉恩想 2 根装一包。吉恩能装几包？,14,"吉恩剩下 30 - 2 = 28 根棒棒糖。  
+每 2 根装一包，能装 28 ÷ 2 = 14 包。",zh,single_turn,True,114,105,219,4.536e-05,1.0780000000086147,True,False,
+2026-09-17T17:13:55,c4,deepseek-flash,deepseek,MGSM,,zh,10,1,一款新程序在第一个月被下载了 60 次，第二个月的下载次数是第一个月下载次数的三倍，但第三个月的下载次数减少了 30%。三个月来，这款程序一共被下载了多少次？,366,"第一个月下载了 60 次。  
+第二个月是第一个月的三倍：60 × 3 = 180 次。  
+第三个月比第二个月减少了 30%：180 ×（1 - 30%）= 180 × 0.7 = 126 次。  
+
+三个月总共下载：60 + 180 + 126 = 366 次。",zh,single_turn,True,113,249,362,8.554000000000002e-05,1.5939999999827705,True,False,
+2026-09-17T17:13:56,c4,deepseek-flash,deepseek,MGSM,,zh,30,1,达雷尔和亚伦的年龄比是 7:11。如果他们现在的年龄总和是 162，请计算 Allen 10 年后的年龄。,109,"亚伦现在年龄为 \(162 \times \frac{11}{7+11}=99\) 岁，10 年后为 \(99+10=109\) 岁。
+
+答案：109 岁。",zh,single_turn,True,99,720,819,0.00021546000000000003,4.047000000020489,True,False,
+2026-09-17T17:14:00,c4,deepseek-flash,deepseek,MGSM,,zh,120,1,米盖尔每周用 2 叠纸画画。如果一叠纸有 30 张纸，他每个月用掉多少张纸？,240,"每周用纸：2 叠 × 30 张 = 60 张  
+每月按 4 周计算：60 张 × 4 = 240 张  
+
+他每个月用掉 240 张纸。",zh,single_turn,True,97,160,257,5.838000000000001e-05,1.562999999994645,True,False,
+2026-09-17T17:14:02,c4,deepseek-flash,deepseek,MGSM,,zh,201,1,"约翰在工作中获奖了。这个奖项包括 5,000 美元的 1 倍现金奖励和 5% 的加薪。如果他每周赚 2,000（一年中的每周），并且他在一年中的第一天获奖，则他在这一年赚多少钱？",114200,"约翰加薪后的每周收入为：2,000 × 1.05 = 2,100 美元。
+
+一年按 52 周计算，工资收入为：2,100 × 52 = 109,200 美元。
+
+再加上一次性现金奖励：109,200 + 5,000 = 114,200 美元。
+
+所以，他在这一年赚了 **114,200 美元**。",zh,single_turn,True,120,605,725,0.0001862,2.937999999994645,False,False,
+2026-09-17T17:14:05,c4,deepseek-flash,deepseek,MGSM,,zh,33,1,格雷琴有 110 个硬币。金币比银币多 30 个。格雷琴有多少个金币？,70,그레첸은 금화를 70개 가지고 있습니다.,ko,single_turn,True,91,98,189,4.0180000000000005e-05,1.3429999999934807,True,False,
+2026-09-17T17:14:06,c4,deepseek-flash,deepseek,MGSM,,zh,141,1,蜂巢中有 700 只蜜蜂。工蜂的数量是幼蜂的两倍，幼蜂的数量是蜂后的两倍。工蜂有多少只？,400,工蜂有 **400** 只。,zh,single_turn,True,98,104,202,4.284e-05,1.1089999999967404,True,False,
+2026-09-17T17:14:07,c4,deepseek-flash,deepseek,MGSM,,zh,219,1,四名学生在一场棋盘游戏中一共获得了 251 分。娜奥米得了 68 分。尤里的得分比娜奥米的一半多 10 分，布里安娜比娜奥米多得了 17 分。乔乔得了多少分？,54,조조는 54점을 얻었습니다.,ko,single_turn,True,121,140,261,5.614e-05,1.2190000000118744,True,False,
+2026-09-17T17:14:09,c4,deepseek-flash,deepseek,MGSM,,zh,25,1,玛丽订购了一份 12 美元的鸡肉饭、5 盒牛奶（每盒 3 美元）、4 颗苹果（每颗 1.50 美元）和几盒披萨。Marie 一共支付了 50 美元。如果每盒披萨 8.50 美元，Marie 订购了多少盒？,2,"Marie 订购了 **2 盒披萨**。
+
+计算：
+- 鸡肉饭：12 美元
+- 牛奶：5 × 3 = 15 美元
+- 苹果：4 × 1.50 = 6 美元
+- 合计：12 + 15 + 6 = 33 美元
+
+剩余金额：50 − 33 = 17 美元  
+每盒披萨 8.50 美元：17 ÷ 8.50 = 2
+
+所以，Marie 订购了 **2 盒披萨**。",zh,single_turn,True,136,251,387,8.932e-05,1.625,True,False,
+2026-09-17T17:14:10,c4,deepseek-flash,deepseek,MGSM,,zh,111,1,朱丽叶在湖上时，她的船漏水了。她朝着岸边每划 10 英尺，船就进水 2 升。她用 16 秒划了20 英尺。到达岸边需要 64 秒。当朱丽叶到达岸边时，船的进水量是多少？,16,朱丽叶到达岸边时，船的进水量是 **16 升**。,zh,single_turn,True,129,180,309,6.846e-05,1.625,True,False,
+2026-09-17T17:14:12,c4,deepseek-flash,deepseek,MGSM,,zh,18,1,克莱尔每天早上用 3 颗鸡蛋做一份煎蛋饼当早餐。四周内她能吃多少打鸡蛋？,7,她四周内一共吃 **7 打** 鸡蛋。,zh,single_turn,True,91,107,198,4.270000000000001e-05,1.312000000005355,True,False,
+2026-09-17T17:14:13,c4,deepseek-flash,deepseek,MGSM,,zh,196,1,200 磅胡萝卜要分配给某座城市的 40 家餐厅。每家餐厅会收到 2 磅胡萝卜。有多少磅胡萝卜不会用到？,120,남는 당근은 120파운드입니다.,ko,single_turn,True,97,188,285,6.622000000000001e-05,1.7339999999967404,True,False,
+2026-09-17T17:14:15,c4,deepseek-flash,deepseek,MGSM,,zh,180,1,在撒莱的学校，两名候选人正在竞选班级代表。如果当选者获得 3/4 的票，而且班级内投票的学生总数是 80 人，请计算落选者获得的票数。,20,"落选者获得的票数是：
+
+\(80 \times \left(1-\frac{3}{4}\right)=80 \times \frac{1}{4}=20\)
+
+所以，落选者获得 **20 票**。",zh,single_turn,True,112,162,274,6.104000000000001e-05,1.2190000000118744,True,False,
+2026-09-17T17:14:16,c4,deepseek-flash,deepseek,MGSM,,zh,159,1,芬恩看着 11 只蝌蚪在池塘里游来游去。突然，他看到其中 6 只从藏身的睡莲叶子下面游了出来，然后他看到其中 2 只躲在石头下。芬恩现在能在池塘里看到多少只蝌蚪？,15,"芬恩现在能在池塘里看到 15 只蝌蚪。
+
+计算：11 + 6 - 2 = 15。",zh,single_turn,True,128,7209,7337,0.00203644,31.40600000001723,True,False,
+2026-09-17T17:14:48,c4,deepseek-flash,deepseek,MGSM,,zh,118,1,海滨清关处主码头的一位海关官员清点了 2 个进口自行车集装箱，每个集装箱里面有 5 辆自行车。第二天来了更多集装箱，码头上的自行车总数达到 30 辆。假设所有集装箱各有 5 辆自行车，请计算第二天进口的集装箱数量。,4,"第二天进口的集装箱数量为：
+
+\(30 \div 5 - 2 = 6 - 2 = 4\)
+
+所以，第二天进口了 **4 个集装箱**。",zh,single_turn,True,127,134,261,5.53e-05,1.5,True,False,
+2026-09-17T17:14:49,c4,deepseek-flash,deepseek,MGSM,,zh,96,1,哈利昨晚睡了 9 个小时。他的朋友詹姆斯的睡眠时间只有哈利的 2/3。哈利比詹姆斯多睡了几个小时？,3,哈利比詹姆斯多睡了 **3 个小时**。,zh,single_turn,True,96,57,153,2.9400000000000003e-05,1.047000000020489,True,False,
+2026-09-17T17:14:50,c4,deepseek-flash,deepseek,MGSM,,zh,108,1,亨利正在为当地的一场烘焙竞赛制作饼干。他想比去年多做一倍。当他烤完后，他意识到自己实际上比想做的多做了 15 片饼干。在把饼干拿出去晾凉时，他掉了 5 片饼干，现在他一共有 110 片饼干。亨利去年做了多少片饼干？,50,"设亨利去年做了 \(x\) 片饼干。
+
+他想比去年多做一倍，所以今年想做 \(2x\) 片。  
+实际上他比想做的多做了 15 片，因此实际做了 \(2x+15\) 片。  
+后来掉了 5 片，剩下 110 片：
+
+\[
+2x+15-5=110
+\]
+
+\[
+2x+10=110
+\]
+
+\[
+2x=100
+\]
+
+\[
+x=50
+\]
+
+所以，亨利去年做了 **50 片饼干**。",zh,single_turn,True,134,311,445,0.00010584000000000002,2.0469999999913853,True,False,
+2026-09-17T17:14:52,c4,deepseek-flash,deepseek,MGSM,,zh,185,1,詹娜和她妈妈从自家苹果园里摘了一些苹果。詹娜比她妈妈多摘了一半的苹果。如果她妈妈摘了 20 颗苹果，她们两个人摘了多少颗苹果？,30,"妈妈摘了 20 颗苹果。  
+詹娜比她妈妈多摘了一半，也就是多摘了 20 ÷ 2 = 10 颗。  
+所以詹娜摘了 20 + 10 = 30 颗。  
+
+两人一共摘了：20 + 30 = 50 颗苹果。",zh,single_turn,True,107,222,329,7.714000000000001e-05,1.827999999979511,True,False,
+2026-09-17T17:14:54,c4,deepseek-flash,deepseek,MGSM,,zh,222,1,安迪种了 90 株天竺葵和比天竺葵少 40 株的矮牵牛花。他一共种了多少株花？,140,앤디는 140株의 꽃을 심었습니다.,ko,single_turn,True,100,98,198,4.144e-05,1.2650000000139698,True,False,
+2026-09-17T17:14:55,c4,deepseek-flash,deepseek,MGSM,,zh,16,1,两列火车同时离开圣拉斐尔。它们开始向西行驶，并且都行驶了 80 英里。第二天，它们向北行驶，行驶了 150 英里。在这两天中，每列火车行驶了多长距离？,230,"每列火车在这两天中行驶的总距离是：
+
+80 英里 + 150 英里 = 230 英里
+
+所以，每列火车都行驶了 **230 英里**。",zh,single_turn,True,116,272,388,9.240000000000002e-05,1.8280000000086147,True,False,
+2026-09-17T17:14:57,c4,deepseek-flash,deepseek,MGSM,,zh,146,1,约翰尼正在从他房间里的地板上捡起玩具。他往地板上倒了一套 500 块的盒装乐高，还倒了一套数量比 500 块这一套多 3 倍的乐高和一套只有这个数量的 1/4 的乐高。如果约翰尼要捡起所有乐高，他要捡起多少块？,2125,"第一套：500 块。  
+第二套：500×3=1500 块。  
+第三套：1500×1/4=375 块。  
+总数：500+1500+375=2375 块。  
+
+答案：2375 块。",zh,single_turn,True,141,1980,2121,0.0005741400000000001,8.422000000020489,False,False,
+2026-09-17T17:15:06,c4,deepseek-flash,deepseek,MGSM,,zh,69,1,贝莉一开始领取一定数量的钱。然后她每周领取 5 美元，为期 8 周。8 周结束后，如果贝莉一共领取了 100 美元，她一开始领取的金额是多少？,60,贝莉一开始领取的金额是 60 美元。,zh,single_turn,True,112,96,208,4.2560000000000006e-05,1.077999999979511,True,False,
+2026-09-17T17:15:07,c4,deepseek-flash,deepseek,MGSM,,zh,173,1,杰西卡试图弄清楚自己每个月需要为所有债务偿还多少钱。她学生贷款的每月最低还款额为 300 美元，信用卡的每月最低还款额为 200 美元，抵押贷款的每月最低还款额为 500 美元。如果杰西卡想比最低还款额多还款 50%，她一年还款多少金额？,18000,"杰西卡每月最低还款总额为：
+
+300 + 200 + 500 = 1000 美元
+
+如果她比最低还款额多还 50%，则每月还款：
+
+1000 × 1.5 = 1500 美元
+
+一年还款金额为：
+
+1500 × 12 = 18000 美元
+
+她一年需要还款 **18000 美元**。",zh,single_turn,True,134,182,316,6.972e-05,1.5150000000139698,True,False,
+2026-09-17T17:15:08,c4,deepseek-flash,deepseek,MGSM,,zh,38,1,约翰每周跑 60 英里。他每周跑 3 天，第一天跑 3 小时，后面两天各跑第一天一半的时间。他的跑步速度是多少？,10,"约翰每周总跑步时间为：
+
+第一天：3 小时  
+后两天：各 1.5 小时，共 3 小时  
+总时间：3 + 1.5 + 1.5 = 6 小时
+
+总距离为 60 英里，因此速度是：
+
+60 ÷ 6 = 10 英里/小时
+
+他的跑步速度是 **10 英里/小时**。",zh,single_turn,True,102,210,312,7.308000000000001e-05,1.4070000000065193,True,False,

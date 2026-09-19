@@ -54,6 +54,16 @@ FIELDNAMES = [
     "detected_language", "task_type", "route_through_english",
     "prompt_tokens", "completion_tokens", "total_tokens", "cost_usd",
     "latency_s", "correct", "truncated", "error",
+    # Added 2026-09-18 (harness-hardening track, docs/harness_hardening_log.md)
+    # -- only ever populated for condition="c4" currently (see
+    # harness/conditions.py's run_c4()); empty for every other condition's
+    # rows. New columns only, appended at the end -- safe for any existing
+    # file whose header predates this (DictWriter's default restval=''
+    # fills missing keys), but ONLY when appending to a file that already
+    # has these columns in its own header; never append this schema onto
+    # a file written before this change without regenerating its header,
+    # which is why this track always uses a fresh --output-suffix file.
+    "reasoning_content", "reasoning_tokens",
 ]
 
 # Per-dataset base_max_tokens for the Equalizer (C2/C3a only -- C1 doesn't
@@ -124,10 +134,15 @@ def run_one(condition: str, model: dict, dataset: str, subset, language: str,
         "detected_language": None, "task_type": None, "route_through_english": None,
         "prompt_tokens": None, "completion_tokens": None, "total_tokens": None,
         "cost_usd": None, "latency_s": None, "correct": None, "truncated": None, "error": None,
+        "reasoning_content": None, "reasoning_tokens": None,
     }
     try:
         if condition == "c1":
             kwargs = {"language": language}
+        elif condition == "c4":
+            # No base_max_tokens -- C4 has no Equalizer (single call, no
+            # cross-call budget to reconcile). See harness/conditions.py.
+            kwargs = {"task_type_hint": task_type_hint}
         else:
             kwargs = {"task_type_hint": task_type_hint, "base_max_tokens": MAX_TOKENS_BY_DATASET.get(dataset)}
         result = run_condition(condition, model["name"], model["provider"], question, **kwargs)
@@ -143,6 +158,8 @@ def run_one(condition: str, model: dict, dataset: str, subset, language: str,
         row["truncated"] = result.truncated
         row["correct"] = is_correct(result.final_answer, expected_answer)
         row["error"] = result.error
+        row["reasoning_content"] = result.reasoning_content
+        row["reasoning_tokens"] = result.reasoning_tokens
     except Exception as e:
         row["error"] = f"{type(e).__name__}: {e}"
 
@@ -213,7 +230,7 @@ def remaining_deficit(condition: str, completed_keys: set, datasets: set = froze
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--condition", required=True, choices=["c0", "c1", "c2", "c3a"])
+    parser.add_argument("--condition", required=True, choices=["c0", "c1", "c2", "c3a", "c4"])
     parser.add_argument("--models", type=str, default=None,
                          help="Comma-separated model names to run (default: all).")
     parser.add_argument("--retry-until-filled", action="store_true",
@@ -229,6 +246,11 @@ if __name__ == "__main__":
                          help="Appended to the results filename: phase3_<condition>_raw<suffix>.csv. "
                               "Use to keep a post-hoc variant run separate from the original "
                               "confirmatory results file (default: none, writes the original file).")
+    parser.add_argument("--languages", type=str, default=None,
+                         help="Comma-separated MGSM language codes to run (default: all of "
+                              "MGSM_LANGS). Only filters the MGSM block -- MAPS uses a separate "
+                              "language-naming scheme (MAPS_LANGS/MAPS_LANG_CODE) this flag "
+                              "doesn't touch, since nothing has needed that yet.")
     args = parser.parse_args()
 
     if args.models:
@@ -243,6 +265,14 @@ if __name__ == "__main__":
     unknown_ds = wanted_datasets - {"MGSM", "MAPS"}
     if unknown_ds:
         raise SystemExit(f"--datasets: unknown dataset(s) {unknown_ds}, expected subset of MGSM, MAPS")
+
+    if args.languages:
+        wanted_langs = {l.strip() for l in args.languages.split(",")}
+        unknown_langs = wanted_langs - set(MGSM_LANGS)
+        if unknown_langs:
+            raise SystemExit(f"--languages: unknown language(s) {unknown_langs}, expected subset of {MGSM_LANGS}")
+        MGSM_LANGS[:] = [l for l in MGSM_LANGS if l in wanted_langs]
+        print(f"Running with MGSM languages restricted to: {MGSM_LANGS}")
 
     OUTPUT_SUFFIX = args.output_suffix
 
