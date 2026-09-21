@@ -90,6 +90,11 @@ MODELS = [
 PRICES = {
     "gpt-5.6-luna": {"input_per_1m": 0.20, "output_per_1m": 1.20},
     "deepseek-flash": {"input_per_1m": 0.14, "output_per_1m": 0.28},
+    # Added 2026-09-20 (harness-hardening track, multi-step pilot) -- same
+    # rate already used by scripts/harness_hardening_gemini.py, duplicated
+    # here (not imported) since that script predates this shared PRICES
+    # dict being a usable extension point for a third model.
+    "gemini-3.5-flash-lite": {"input_per_1m": 0.30, "output_per_1m": 2.50},
 }
 
 MGSM_LANGS = ["en", "es", "zh"]  # 'ar' dropped -- see Amendments Log
@@ -124,6 +129,20 @@ def get_client(provider: str) -> OpenAI:
                 raise RuntimeError("DEEPSEEK_API_KEY not set (see .env)")
             _clients[provider] = OpenAI(
                 api_key=key, base_url="https://api.deepseek.com", timeout=60.0, max_retries=2
+            )
+        elif provider == "gemini":
+            # Added 2026-09-20 (harness-hardening track, multi-step pilot) --
+            # purely additive, same pattern as deepseek above. gemini-3.5-
+            # flash-lite was previously only called via its own standalone
+            # script's client (scripts/harness_hardening_gemini.py); this
+            # registers it here too so it can go through harness/executor.py's
+            # shared tool-call loop, unaffected for every existing caller.
+            key = os.getenv("GEMINI_API_KEY")
+            if not key:
+                raise RuntimeError("GEMINI_API_KEY not set (see .env)")
+            _clients[provider] = OpenAI(
+                api_key=key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+                timeout=60.0, max_retries=2
             )
         else:
             raise ValueError(f"unknown provider: {provider}")

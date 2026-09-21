@@ -61,11 +61,21 @@ class ExecutionResult:
     # getattr with a None default so providers without it are unaffected.
     reasoning_content: Optional[str] = None
     reasoning_tokens: Optional[int] = None
+    # Added 2026-09-19 (harness-hardening track, bounded early-cutoff retry
+    # for deepseek-flash/zh) -- purely additive, only ever set by
+    # execute_with_cutoff_retry() below. Every other caller/condition gets
+    # the defaults (False/None) and is completely unaffected.
+    retry_fired: bool = False
+    cutoff_hit_first: bool = False
+    cutoff_hit_second: bool = False
+    est_completion_tokens_first: Optional[int] = None
+    wasted_cost_usd: Optional[float] = None
 
 
 def _run_loop(model_name: str, provider: str, messages: list,
                tools: Optional[list], tool_executor: Optional[dict],
-               max_tokens: Optional[int] = None) -> ExecutionResult:
+               max_tokens: Optional[int] = None,
+               temperature: Optional[float] = None) -> ExecutionResult:
     messages = list(messages)  # don't mutate the caller's list
     client = get_client(provider)
     tool_executor = tool_executor or {}
@@ -77,6 +87,13 @@ def _run_loop(model_name: str, provider: str, messages: list,
 
     for _turn in range(MAX_TOOL_TURNS):
         kwargs = {"model": model_name, "messages": messages}
+        if temperature is not None:
+            # Purely additive, same passthrough pattern as max_tokens below --
+            # None (this branch skipped) preserves the provider default for
+            # every existing caller. Added 2026-09-19 (harness-hardening
+            # track) to test whether lower temperature shrinks deepseek-flash/
+            # zh's completion-length tail (docs/harness_hardening_log.md).
+            kwargs["temperature"] = temperature
         if max_tokens is not None:
             # OpenAI's newer models (gpt-5.6-luna included) reject the
             # classic `max_tokens` outright -- "Unsupported parameter:
@@ -96,8 +113,13 @@ def _run_loop(model_name: str, provider: str, messages: list,
             # smoke test, not documented anywhere in this repo beforehand).
             # Only set this when tools are actually in play, so the
             # tools=None path (everything Phase 1 already validated) is
-            # completely unaffected.
-            kwargs["reasoning_effort"] = "none"
+            # completely unaffected. Scoped to provider=="openai" (added
+            # 2026-09-20, multi-step pilot) -- confirmed empirically that
+            # gemini's OpenAI-compat endpoint rejects `reasoning_effort`
+            # outright (400 INVALID_ARGUMENT) when tools are also present;
+            # this param is an openai-specific quirk, not a general one.
+            if provider == "openai":
+                kwargs["reasoning_effort"] = "none"
         resp = client.chat.completions.create(**kwargs)
         choice = resp.choices[0]
         usage = resp.usage
@@ -152,20 +174,22 @@ def _run_loop(model_name: str, provider: str, messages: list,
 
 def execute(model_name: str, provider: str, messages: list,
             tools: Optional[list] = None, tool_executor: Optional[dict] = None,
-            max_tokens: Optional[int] = None,
+            max_tokens: Optional[int] = None, temperature: Optional[float] = None,
             hard_timeout_s: float = HARD_TIMEOUT_S) -> ExecutionResult:
     """Same hard-timeout-via-abandoned-thread pattern as Phase 1's
     call_model_with_hard_timeout -- bounds the whole loop (all turns, all
     tool calls) to hard_timeout_s wall-clock seconds, regardless of what
     the SDK's own retry/backoff is doing internally.
 
-    max_tokens is passed through to every turn of the underlying API call
-    unmodified -- it's None (provider default) unless a caller sets it.
-    harness/equalizer.py is what actually computes a per-language value
-    and passes it in; this function doesn't have an opinion about the
-    right value, only about passing one through when given."""
+    max_tokens and temperature are passed through to every turn of the
+    underlying API call unmodified -- each is None (provider default)
+    unless a caller sets it. harness/equalizer.py is what actually
+    computes a per-language max_tokens value and passes it in; this
+    function doesn't have an opinion about the right value for either,
+    only about passing one through when given."""
     ex = ThreadPoolExecutor(max_workers=1)
-    future = ex.submit(_run_loop, model_name, provider, messages, tools, tool_executor, max_tokens)
+    future = ex.submit(_run_loop, model_name, provider, messages, tools, tool_executor,
+                        max_tokens, temperature)
     try:
         return future.result(timeout=hard_timeout_s)
     except FutureTimeoutError:
@@ -177,3 +201,176 @@ def execute(model_name: str, provider: str, messages: list,
         return ExecutionResult(error=f"{type(e).__name__}: {e}")
     finally:
         ex.shutdown(wait=False)
+
+
+# --- Bounded early-cutoff retry (added 2026-09-19, harness-hardening --------
+# track, docs/harness_hardening_log.md) --------------------------------------
+#
+# Single-shot only -- no tool-call loop, no max_tokens interaction (a
+# separate, narrower code path from _run_loop()/execute() above, which are
+# completely untouched by any of this). Purpose: deepseek-flash/zh's
+# completion-length tail (~8-10% of calls) is what's driving its cost ratio
+# over 1.2x -- not a rare catastrophic spike a max_tokens cap could safely
+# clip (that was tried and ruled out), but not something temperature fixes
+# either (also tried and ruled out). This monitors the stream as it
+# generates and cancels + retries once if it's heading into the tail,
+# rather than paying for the whole thing.
+#
+# Token counting during the stream uses tiktoken (o200k_base) as an
+# approximate proxy -- deepseek's real tokenizer isn't o200k_base, so this
+# is consistent with (not more precise than) the same approximation this
+# project already uses elsewhere to sanity-check prompt template lengths
+# (harness/conditions.py, harness/packer.py). It is ONLY used to estimate
+# the completion-token count of an ABORTED call, which never receives a
+# real usage object from the API (usage only arrives on the final chunk
+# of a stream that finishes normally). A completed call (first attempt
+# under threshold, or the retry, win or lose) always uses the API's own
+# real `usage`, never the tiktoken estimate.
+#
+# Billing-semantics caveat, stated plainly rather than assumed: closing
+# the stream's underlying connection is the standard client-side signal
+# for "stop generating", and empirically the aborted request returns in a
+# fraction of the time a full generation would take (~0.8s to detect and
+# close at a 15-token test threshold vs. ~12.7s for an uncut ~1700-token
+# response on the same client) -- consistent with the provider halting
+# generation on disconnect. This project has no visibility into
+# DeepSeek's actual billing meter, so that consistency is the strongest
+# verification available from the client side, not proof. If DeepSeek
+# in fact bills the full originally-intended generation regardless of
+# disconnect, the true savings would be smaller than reported here
+# (worst case zero) -- flagged, not swept under the rug.
+
+import tiktoken  # noqa: E402  (local import section, keeps this block self-contained)
+
+_TOKENIZER = None
+
+
+def _approx_tokens(text: str) -> int:
+    global _TOKENIZER
+    if _TOKENIZER is None:
+        _TOKENIZER = tiktoken.get_encoding("o200k_base")
+    return len(_TOKENIZER.encode(text)) if text else 0
+
+
+def _stream_once(client, model_name: str, messages: list,
+                  cutoff_tokens: int, temperature: Optional[float],
+                  enforce_cutoff: bool) -> dict:
+    """Runs one streaming completion. If enforce_cutoff, cancels the
+    instant the running content+reasoning token estimate reaches
+    cutoff_tokens (no real `usage` in that case -- crossed=True signals
+    the caller to fall back to the tiktoken estimate). If not
+    enforce_cutoff, still tracks whether it *would* have crossed
+    (`crossed`) for reporting, but always lets the stream finish
+    naturally and returns the real `usage`."""
+    kwargs = {"model": model_name, "messages": messages, "stream": True,
+              "stream_options": {"include_usage": True}}
+    if temperature is not None:
+        kwargs["temperature"] = temperature
+    start = time.monotonic()
+    content_parts, reasoning_parts = [], []
+    usage = None
+    finish_reason = None
+    crossed = False
+    stream = client.chat.completions.create(**kwargs)
+    try:
+        for chunk in stream:
+            if chunk.choices:
+                choice = chunk.choices[0]
+                delta = choice.delta
+                c = getattr(delta, "content", None)
+                if c:
+                    content_parts.append(c)
+                rc = getattr(delta, "reasoning_content", None)
+                if rc:
+                    reasoning_parts.append(rc)
+                if choice.finish_reason:
+                    finish_reason = choice.finish_reason
+            if getattr(chunk, "usage", None):
+                usage = chunk.usage
+            if not crossed:
+                running = "".join(content_parts) + "".join(reasoning_parts)
+                if _approx_tokens(running) >= cutoff_tokens:
+                    crossed = True
+                    if enforce_cutoff:
+                        break
+    finally:
+        stream.close()
+    return {
+        "text": "".join(content_parts),
+        "reasoning_text": "".join(reasoning_parts) or None,
+        "usage": usage,
+        "finish_reason": finish_reason,
+        "crossed": crossed,
+        "latency_s": time.monotonic() - start,
+        "est_tokens": _approx_tokens("".join(content_parts) + "".join(reasoning_parts)),
+    }
+
+
+def execute_with_cutoff_retry(model_name: str, provider: str, messages: list,
+                               cutoff_tokens: int, temperature: Optional[float] = None,
+                               hard_timeout_s: float = HARD_TIMEOUT_S) -> ExecutionResult:
+    """Bounded, early-cutoff retry: stream the completion; if the running
+    content+reasoning token estimate crosses cutoff_tokens before the
+    model finishes, cancel immediately (paying only for tokens generated
+    up to that point) and re-issue the identical call once. If the retry
+    ALSO crosses the threshold, accept it as-is -- one retry maximum, no
+    loop. Applies identically regardless of arm language; the same
+    cutoff_tokens value should be passed for the English arm as for the
+    target language, to keep the fair-comparison discipline intact (it
+    should just rarely/never fire there)."""
+    client = get_client(provider)
+
+    def _attempt(enforce_cutoff):
+        return _stream_once(client, model_name, messages, cutoff_tokens, temperature, enforce_cutoff)
+
+    ex = ThreadPoolExecutor(max_workers=1)
+    try:
+        first = ex.submit(_attempt, True).result(timeout=hard_timeout_s)
+    except FutureTimeoutError:
+        return ExecutionResult(error=f"Hard timeout: no response within {hard_timeout_s}s (thread abandoned)",
+                                latency_s=hard_timeout_s)
+    except Exception as e:
+        return ExecutionResult(error=f"{type(e).__name__}: {e}")
+    finally:
+        ex.shutdown(wait=False)
+
+    if not first["crossed"]:
+        u = first["usage"]
+        return ExecutionResult(
+            answer_text=first["text"], prompt_tokens=u.prompt_tokens, completion_tokens=u.completion_tokens,
+            total_tokens=u.prompt_tokens + u.completion_tokens,
+            cost_usd=cost_usd(model_name, u.prompt_tokens, u.completion_tokens),
+            latency_s=first["latency_s"], truncated=(first["finish_reason"] == "length"),
+            reasoning_content=first["reasoning_text"], retry_fired=False, cutoff_hit_first=False,
+        )
+
+    # First attempt crossed the threshold and was cancelled -- retry once,
+    # letting it run to completion regardless of outcome (bounded = one
+    # retry max). Real usage from the retry gives us its exact prompt
+    # token count, which is identical to the first attempt's (same
+    # messages) -- reused rather than re-estimated, so only the aborted
+    # call's COMPLETION side needs the tiktoken estimate.
+    ex2 = ThreadPoolExecutor(max_workers=1)
+    try:
+        second = ex2.submit(_attempt, False).result(timeout=hard_timeout_s)
+    except FutureTimeoutError:
+        return ExecutionResult(error=f"Hard timeout on retry: no response within {hard_timeout_s}s",
+                                latency_s=first["latency_s"] + hard_timeout_s,
+                                retry_fired=True, cutoff_hit_first=True)
+    except Exception as e:
+        return ExecutionResult(error=f"{type(e).__name__}: {e}", retry_fired=True, cutoff_hit_first=True)
+    finally:
+        ex2.shutdown(wait=False)
+
+    u = second["usage"]
+    wasted_cost = cost_usd(model_name, u.prompt_tokens, first["est_tokens"])
+    real_cost = cost_usd(model_name, u.prompt_tokens, u.completion_tokens)
+    return ExecutionResult(
+        answer_text=second["text"], prompt_tokens=u.prompt_tokens, completion_tokens=u.completion_tokens,
+        total_tokens=u.prompt_tokens + u.completion_tokens,
+        cost_usd=wasted_cost + real_cost,
+        latency_s=first["latency_s"] + second["latency_s"], truncated=(second["finish_reason"] == "length"),
+        reasoning_content=second["reasoning_text"], retry_fired=True, cutoff_hit_first=True,
+        cutoff_hit_second=second["crossed"], est_completion_tokens_first=first["est_tokens"],
+        wasted_cost_usd=wasted_cost,
+    )

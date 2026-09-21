@@ -1,0 +1,913 @@
+timestamp,condition,model,provider,dataset,subset,language,task_id,repeat_index,question,expected_answer,model_answer,detected_language,task_type,route_through_english,prompt_tokens,completion_tokens,total_tokens,cost_usd,latency_s,correct,truncated,error,reasoning_content,reasoning_tokens
+2026-09-20T13:21:04,c2,gpt-5.6-luna,openai,MAPS,Math,ar,108,1,"المثلث $ABC$ قائم الزاوية. إذا كان قياس الزاوية $PAB$ هو $x^\circ$، وكان قياس الزاوية $ACB$ مُعبَّرًا عنه بالشكل $(Mx+N)^\circ$ مع $M=1$, فما قيمة $M+N$؟
+
+[asy]
+draw((-10,0)--(20,0),linewidth(1),Arrows);
+draw((0,0)--(10,10/sqrt(3))--(10+10/3,0),linewidth(1));
+
+draw((10,10/sqrt(3))+dir(-150)--(10,10/sqrt(3))+dir(-150)+dir(-60)--(10,10/sqrt(3))+dir(-60),linewidth(1));
+
+dot((-3,0));
+
+draw(dir(180)..dir(105)..dir(30),linewidth(1));
+
+label(""P"",(-3,0),NW);
+label(""A"",(0,0),S);
+label(""$x^\circ$"",(-1,1),N);
+label(""B"",(10,10/sqrt(3)),N);
+label(""C"",(10+10/3,0),NE);
+
+[/asy]","Since $\angle PAB$ and $\angle BAC$ are supplementary, $\angle BAC = 180^{\circ} - x^\circ$.  Since the three angles of a triangle add up to $ 180^{\circ} $, we have $\angle ACB = 180^{\circ} - 90^{\circ} - (180^{\circ} - x^\circ) = x^\circ - 90^{\circ}$.  Thus, $M + N = \boxed{-89}$.","Maadaama saddex-xagalku xagal qumman ku leeyahay \(B\), waxaan helaynaa:
+
+\[
+\angle BAC=180^\circ-x
+\]
+
+Sidaas darteed,
+
+\[
+\angle ACB=180^\circ-90^\circ-(180^\circ-x)=x-90^\circ
+\]
+
+Markaa \(M=1\) iyo \(N=-90\), sidaas awgeed:
+
+\[
+M+N=1-90=\boxed{-89}
+\]",so,agentic,True,283,502,785,0.000659,5.921999999991385,True,False,,,
+2026-09-20T13:21:10,c2,gpt-5.6-luna,openai,MAPS,Math,ar,67,1,"فكر في جميع كثيرات الحدود لمتغير مركب، $P(z)=4z^4+az^3+bz^2+cz+d$، حيث $a, b, c,$ و $d$ أعداد صحيحة، $0\le d\le c\le b\le a\le 4$، وكثيرة الحدود لها صفر $z_0$ مع $|z_0|=1.$ ما مجموع كل القيم $P(1)$ على كل كثيرات الحدود التي لها هذه الخصائص؟","First, we consider the cases where $z_0 = 1$ and $z_0 = -1.$  Note that
+\[P(1) = 4 + a + b + c + d \ge 4,\]so $z = 1$ cannot be a root of $P(z).$
+
+If $z = -1$ is a root of $P(z),$ then
+\[P(-1) = 4 - a + b - c + d = (4 - a) + (b - c) + d = 0.\]But $4 - a \ge 0,$ $b - c \ge 0,$ and $d \ge 0,$ so we must have $a = 4,$ $b = c,$ and $d = 0.$  Conversely, if $a = 4,$ $b = c,$ and $d = 0,$ then
+\[P(-1) = 4 - a + b - c + d = (4 - a) + (b - c) + d = 0,\]so $z = -1$ is a root.  In this case,
+\[P(1) = 4 + a + b + c + d = 4 + 4 + b + b = 8 + 2b.\]The sum of all possible values of $P(1)$ are then
+\[\sum_{b = 0}^4 (8 + 2b) = 60.\]Having exhausted the cases where $z_0 = 1$ or $z_0 = -1,$ we can then assume that $z_0$ is not real.  Let $z_0 = x_0 + iy_0,$ where $x_0$ and $y_0$ are real numbers, $y_0 \neq 0.$  Since $|z_0| = 1,$ $x_0^2 + y_0^2 = 1.$  And since the coefficients of $P(z)$ are real, $x_0 - iy_0$ must also be a root, so
+\[(z - x_0 - iy_0)(z - x_0 + iy_0) = z^2 - 2x_0z + x_0^2 + y_0^2 = z^2 - 2x_0 z + 1\]must be a factor of $P(z).$  Then
+\[P(z) = (z^2 - 2x_0 z + 1)(4z^2 + pz + d)\]for some real number $p.$  Expanding, we get
+\[P(z) = 4z^4 + (p - 8x_0) z^3 + (d - 2px_0 + 4) z^2 + (p - 8x_0) z + d.\]Comparing coefficients, we get
+\begin{align*}
+p - 8x_0 &= a, \\
+d - 2px_0 + 4 &= b, \\
+p - 2dx_0 &= c.
+\end{align*}Subtracting the first and third equations, we get $2dx_0 - 8x_0 = a - c,$ so
+\[2(d - 4) x_0 = a - c. \quad (*)\]If $d = 4,$ then $a = c.$  In fact, the chain $d \le c \le b \le a \le 4$ forces $a = b = c = d = 4,$ so
+\[P(z) = 4z^4 + 4z^3 + 4z^2 + 4z + 4 = 4(z^4 + z^3 + z^2 + z + 1) = 0.\]If $z^4 + z^3 + z^2 + z + 1 = 0,$ then
+\[(z - 1)(z^4 + z^3 + z^2 + z + 1) = 0,\]which becomes $z^5 - 1 = 0.$  Then $z^5 = 1,$ so $|z^5| = 1.$  Hence, $|z|^5 = 1,$ so $|z| = 1.$  This confirms that all the roots of $z^4 + z^3 + z^2 + z + 1$ have magnitude 1, and $P(1) = 20.$
+
+Otherwise, we can assume that $d \neq 4.$  Then from equation $(*),$
+\[2x_0 = \frac{a - c}{d - 4}.\]Multiplying the equation $p - 8x_0 = a$ by $d,$ we get
+\[dp - 8dx_0 = ad.\]Multiplying the equation $p - 2dx_0 = c$ by 4, we get
+\[4p - 8dx_0 = 4c.\]Subtracting these equations, we get $dp - 4p = ad - 4c,$ so
+\[p = \frac{ad - 4c}{d - 4}.\]Let
+\[k = 2px_0 = 2x_0 \cdot p = \frac{a - c}{d - 4} \cdot \frac{ad - 4c}{d - 4} = \frac{(a - c)(ad - 4c)}{(d - 4)^2}.\]Then from the equation $d - 2px_0 + 4 = b,$ $k = d - b + 4.$  Since $b \le 4,$ $k \ge 0.$  We then divide into the cases where $a = c$ and $a > c.$
+
+Case 1: $a=c$.
+
+In this case, $k=0$ and $b=d+4$, so $a=b=c=4$ and $d=0$.  We have already covered these possibilities when we looked at the case where $z = -1$ was a root of $P(z).$
+
+Case 2: $a>c\geq 0$.
+
+Since $k\geq 0$, we have $ad-4c\geq 0,$ or $ad \ge 4c$.  However, $ad \leq 4c$, so $ad = 4c$.  For this to hold, we must have $c = d.$  Then we obtain $k=0$ again. In this case, $b=d+4$, so $a=b=4$ and $c=d=0,$ and
+\[P(z) = 4z^4 + 4z^3 + 4z^2 = 4z^2 (z^2 + z + 1).\]The roots of $z^2 + z + 1 = 0$ are $z = -\frac{1}{2} \pm \frac{\sqrt{3}}{2} i,$ which have magnitude 1, and $P(1) = 12.$
+
+Therefore, the desired sum is $60 + 20 + 12 = \boxed{92}$.","لنكتب
+\[
+P(z)=4z^4+az^3+bz^2+cz+d.
+\]
+
+إذا كان الصفر \(z_0\) غير حقيقي و\(|z_0|=1\)، فإن مرافقه \(\overline{z_0}=z_0^{-1}\) هو أيضًا صفر. لذلك يقبل \(P\) العامل
+\[
+z^2-tz+1,\qquad -2<t<2.
+\]
+وبقسمة المعاملات، نكتب
+\[
+P(z)=(z^2-tz+1)(4z^2+uz+d).
+\]
+بمقارنة المعاملات نحصل على
+\[
+a=c+(d-4)t,
+\]
+و
+\[
+b=d+4-ct-dt^2.
+\]
+
+بفحص القيم الصحيحة التي تحقق
+\[
+0\le d\le c\le b\le a\le4,
+\]
+نجد أن كثيرات الحدود التي لها جذور غير حقيقية على دائرة الوحدة هي:
+\[
+4z^4+4z^3+4z^2,
+\]
+\[
+4z^4+4z^3+4z^2+4z,
+\]
+\[
+4z^4+4z^3+4z^2+4z+4.
+\]
+
+أما الجذر الحقيقي الوحيد الممكن على دائرة الوحدة فهو \(z=-1\)، إذ إن \(z=1\) مستحيل بسبب عدم سلبية المعاملات. ومن الشرط \(P(-1)=0\) نحصل على
+\[
+4-a+b-c+d=0.
+\]
+ومع القيود المعطاة ينتج
+\[
+d=0,\qquad c=b,\qquad a=4.
+\]
+إذن نحصل على كثيرات الحدود
+\[
+P_b(z)=4z^4+4z^3+bz^2+bz,\qquad b=0,1,2,3,4.
+\]
+الحالة \(b=4\) موجودة ضمن القائمة السابقة، لذا عدد كثيرات الحدود المختلفة هو \(7\).
+
+للقائمة الأخيرة:
+\[
+P_b(1)=8+2b,
+\]
+ومن ثم
+\[
+\sum_{b=0}^4P_b(1)=\sum_{b=0}^4(8+2b)=60.
+\]
+نضيف القيمتين غير المكررتين:
+\[
+(4z^4+4z^3+4z^2)(1)=12,
+\]
+و
+\[
+(4z^4+4z^3+4z^2+4z+4)(1)=20.
+\]
+
+إذن المجموع المطلوب هو
+\[
+\boxed{92}.
+\]",ar,agentic,True,141,3632,3773,0.004386599999999999,32.125,True,False,,,
+2026-09-20T13:21:42,c2,gpt-5.6-luna,openai,MAPS,Math,ar,31,1,رُمي حجرا نرد قياسيان سداسيا الأوجه. تفوز جين إذا كان حاصل ضرب الرقمين الظاهرين فرديًا أو من مضاعفات العدد ثلاثة، وإلا يفوز ألين. ما احتمال فوز جين؟ عبّر عن إجابتك في صورة كسر عادي.,"When two dice are rolled, there are 36 total outcomes. Let's compute the probability that Allen wins. Allen wins if the product of the two numbers is even and not a multiple of 3. In other words, Allen wins if the product is 2 $(1\cdot2, 2\cdot1)$, 4 $(1\cdot4, 4\cdot1, 2\cdot2)$, 8 $(2\cdot4, 4\cdot2)$, 10 $(2\cdot5, 5\cdot2)$, 16 $(4\cdot4)$, or 20 $(4\cdot5, 5\cdot4)$. Therefore, the probability that Allen wins is $\frac{2+3+2+2+1+2}{36}=12/36=1/3$. Then, the probability that Jean wins is $1-1/3=\boxed{\frac{2}{3}}$.","عدد النواتج الممكنة \(6\times6=36\).
+
+- حاصل الضرب فردي إذا كان الرقمان فرديين: \(3\times3=9\) نواتج.
+- حاصل الضرب من مضاعفات \(3\) إذا كان أحد الرقمين على الأقل من مضاعفات \(3\):  
+  \(36-4\times4=20\) ناتجًا.
+- التقاطع بين الحالتين: كلا الرقميْن فرديان ويوجد بينهما \(3\)، وعدده \(5\) نواتج.
+
+إذن عدد نواتج فوز جين:
+\[
+9+20-5=24
+\]
+
+والاحتمال:
+\[
+\frac{24}{36}=\boxed{\frac{2}{3}}
+\]",ar,agentic,True,94,303,397,0.00038239999999999997,4.5,True,False,,,
+2026-09-20T13:21:47,c2,gpt-5.6-luna,openai,MAPS,Math,ar,119,1,أنتجت نانسي عددًا صحيحًا مكونًا من رقمين برمي حجر نرد سداسي الأوجه مرتين. نتيجة الرمية الأولى هي خانة العشرات، ونتيجة الرمية الثانية هي خانة الآحاد. ما احتمال أن يكون العدد الناتج قابلًا للقسمة على 8؟ عبّر عن إجابتك ككسر عادّي.,"The largest number Nancy can generate is 66.  The positive two-digit multiples of 8 less than 66 are 16, 24, 32, 40, 48, 56, and 64.  40 and 48 cannot be produced from the numbers on a 6-sided die, but the other 5 multiples of 8 in the list can.  Therefore, there are 5 equally likely ways to produce a multiple of 8 out of the $6\cdot6=36$ total combinations for the two dice, so the desired probability is $\boxed{\dfrac{5}{36}}$.
+
+(Special thanks to 5849206328x for this solution.)","هناك \(6 \times 6 = 36\) نتيجة ممكنة.
+
+الأعداد القابلة للقسمة على \(8\) والمكوّنة من رقمين من \(1\) إلى \(6\) هي:
+
+\[
+16، 24، 32، 56، 64
+\]
+
+أي توجد \(5\) نتائج مناسبة. لذلك فإن الاحتمال هو:
+
+\[
+\boxed{\frac{5}{36}}
+\]",ar,agentic,True,107,257,364,0.00032979999999999994,3.297000000020489,False,False,,,
+2026-09-20T13:21:50,c2,gpt-5.6-luna,openai,MAPS,Math,ar,42,1,"$ABCD$ هو شكل رباعي السطوح منتظم (هرم ثلاثي منتظم). إذا كان $M$ هو منتصف $\overline{CD}$, فما قيمة $\tan\angle AMB$؟","The tetrahedron is shown below.  In order to find $\tan\angle AMB$, we build a right triangle with $\angle AMB$ among its angles.  The foot of the altitude from $A$ to face $BCD$ is the centroid, $G$, of triangle $BCD$.
+
+[asy]
+
+import three;
+
+currentprojection = orthographic(1.5,1.1,-1);
+
+triple A = (1,1,1);
+
+triple B = (1,0,0);
+
+triple C = (0,1,0);
+
+triple D = (0,0,1);
+
+draw(A--B--C--A);
+
+draw(A--D,dashed);
+
+draw(C--D--B,dashed);
+
+label(""$A$"",A,NW);
+
+label(""$B$"",B,W);
+
+label(""$C$"",C,S);
+
+label(""$D$"",D,NW);
+
+triple M = (0,0.5,0.5);
+
+draw(A--M--B,dashed);
+
+label(""$M$"",M,NE);
+
+triple G = B/3 + 2*M/3;
+
+draw(A--G,dashed);
+
+label(""$G$"",G,S);
+
+[/asy]
+
+Since $\overline{BM}$ is a median of $\triangle BCD$, point $G$ is on $\overline{BM}$ such that $GM = \frac13BM$.  Furthermore, we have $AM = BM$, so $GM = \frac{AM}{3}$.  The Pythagorean Theorem gives us  \[AG = \sqrt{AM^2 - GM^2} = \sqrt{AM^2 - \frac{AM^2}{9}} = AM\cdot \sqrt{\frac89} = \frac{2\sqrt{2}}{3}\cdot AM.\] Finally, we have  \[\tan \angle AMB = \tan\angle AMG =\frac{AG}{GM} = \frac{(2\sqrt{2}/3)AM}{AM/3} = \boxed{2\sqrt{2}}.\]","لنفرض أن طول ضلع رباعي السطوح المنتظم هو \(1\). بما أن \(M\) منتصف \(\overline{CD}\)، فإن:
+
+\[
+MA=MB=\sqrt{1-\left(\frac12\right)^2}=\frac{\sqrt3}{2}.
+\]
+
+وفي المثلث \(AMB\)، لدينا \(AB=1\). بتطبيق قانون جيب التمام:
+
+\[
+AB^2=MA^2+MB^2-2(MA)(MB)\cos\angle AMB
+\]
+
+\[
+1=\frac34+\frac34-2\cdot\frac34\cos\angle AMB.
+\]
+
+إذن:
+
+\[
+\cos\angle AMB=\frac13.
+\]
+
+ومن ثم:
+
+\[
+\tan\angle AMB
+=\frac{\sqrt{1-\left(\frac13\right)^2}}{\frac13}
+=\frac{\frac{2\sqrt2}{3}}{\frac13}
+=\boxed{2\sqrt2}.
+\]",ar,agentic,True,372,689,1061,0.0009012,7.00099999998929,False,False,,,
+2026-09-20T13:21:57,c2,gpt-5.6-luna,openai,MAPS,Math,ar,12,1,"إذا كان $\left(\sqrt[4]{11}\right)^{3x-3}=\frac{1}{5}$, فما قيمة $\left(\sqrt[4]{11}\right)^{6x+2}$؟ عبّر عن إجابتك بكسر.","We rewrite $\left(\sqrt[4]{11}\right)^{6x+2}$ and then substitute the given equation: \begin{align*}
+\left(\sqrt[4]{11}\right)^{6x+2}&=\left(\sqrt[4]{11}\right)^{6x-6}\cdot \left(\sqrt[4]{11}\right)^{8}\\
+&=\left(\left(\sqrt[4]{11}\right)^{3x-3}\right)^2\cdot\left(11^{1/4}\right)^{8}\\
+&=\left(\frac{1}{5}\right)^2\cdot11^{(8/4)}\\
+&=\frac{1}{25}\cdot121\\
+&=\boxed{\frac{121}{25}}
+\end{align*}","لدينا:
+\[
+\left(\sqrt[4]{11}\right)^{6x+2}
+=\left(\sqrt[4]{11}\right)^{2(3x-3)+8}
+\]
+
+إذن:
+\[
+=\left[\left(\sqrt[4]{11}\right)^{3x-3}\right]^2
+\left(\sqrt[4]{11}\right)^8
+=\left(\frac15\right)^2\cdot 11^2
+=\frac{121}{25}
+\]
+
+\[
+\boxed{\frac{121}{25}}
+\]",ar,agentic,True,293,382,675,0.0005169999999999999,3.85999999998603,True,False,,,
+2026-09-20T13:22:01,c2,gpt-5.6-luna,openai,MAPS,Math,ar,81,1,افترض أنه يمكن كتابة $N$ في الأساس $6$ كـ $\overline{531340}_6$، وفي الأساس $8$ كـ $\overline{124154}_8$. في الأساس $10$، ما هو الباقي عند قسمة $N$ على $210$؟,"The prime factorization of $210 = 2 \cdot 3 \cdot 5 \cdot 7$. By the Chinese Remainder Theorem, it suffices to find the residues of $N$ modulo $5$, $6$, and $7$. Since the units digit of $N$ in base $6$ is equal to $0$, it follows that $N$ is divisible by $6$. Also, we note that $N$ is congruent modulo $b-1$ to the sum of its base $b$ digits. Indeed, if $N$ can be represented as $(\overline{a_ka_{k-1}\cdots a_0})_b$, then \begin{align*}N &\equiv a_k \cdot b^k + a_{k-1} \cdot b^{k-1} + \cdots + a_1 \cdot b + a_0 \\ &\equiv a_k \cdot ((b-1) + 1)^k + \cdots + a_1 \cdot ((b-1) + 1) + a_0 \\
+& \equiv a_k + a_{k-1} + \cdots + a_1 + a_0 \pmod{b-1}.
+\end{align*}It follows that $N \equiv 5+3+1+3+4+0 \equiv 1 \pmod{5}$ and that $N \equiv 1 + 2 + 4 + 1 + 5 + 4 \equiv 3 \pmod{7}.$ By the Chinese Remainder Theorem and inspection, we determine that $N \equiv 31 \pmod{35}$, so that (by the Chinese Remainder Theorem again) $N \equiv \boxed{66} \pmod{210}$.","\[
+N=\overline{531340}_6
+=5\cdot6^5+3\cdot6^4+1\cdot6^3+3\cdot6^2+4\cdot6
+=43116.
+\]
+
+وبالتالي:
+
+\[
+43116=210\cdot205+66.
+\]
+
+إذن الباقي هو:
+
+\[
+\boxed{66}
+\]",ar,agentic,True,270,444,714,0.0005868,5.578000000008615,True,False,,,
+2026-09-20T13:22:07,c2,gpt-5.6-luna,openai,MAPS,Math,ar,69,1,"أوجد عدد الأزواج المرتبة $(a, b)$ من الأعداد الحقيقية بحيث:
+
+- $a$ هو جذر للمعادلة التربيعية $x^2 + ax + b = 0$,
+- $b$ هو جذر للمعادلة التربيعية $x^2 + ax + b = 0$.","Since $x = a$ is a root of $x^2 + ax + b = 0,$
+\[a^2 + a^2 + b = 0,\]or $2a^2 + b = 0,$ so $b = -2a^2.$
+
+Since $x = b$ is a root of $x^2 + ax + b = 0,$
+\[b^2 + ab + b = 0.\]This factors as $b(b + a + 1) = 0,$ so $b = 0$ or $a + b + 1 = 0.$
+
+If $b = 0,$ then $-2a^2 = 0,$ so $a = 0.$
+
+If $a + b + 1 = 0,$ then $-2a^2 + a + 1 = 0.$  This equation factors as $-(a - 1)(2a + 1) = 0,$ so $a = 1$ or $a = -\frac{1}{2}.$  If $a = 1,$ then $b = -2.$  If $a = -\frac{1}{2},$ then $b = -\frac{1}{2}.$
+
+Therefore, there are $\boxed{3}$ ordered pairs $(a,b),$ namely $(0,0),$ $(1,-2),$ and $\left( -\frac{1}{2}, -\frac{1}{2} \right).$","بما أن \(a\) و\(b\) جذرا المعادلة نفسها، فإن:
+
+\[
+a+b=-a
+\]
+
+ومن ثم:
+
+\[
+b=-2a
+\]
+
+وكذلك حاصل ضرب الجذرين يساوي الحد الثابت:
+
+\[
+ab=b
+\]
+
+أي:
+
+\[
+b(a-1)=0
+\]
+
+لدينا حالتان:
+
+1. إذا كان \(b=0\)، فإن \(b=-2a\) يعطي \(a=0\)، فنحصل على:
+\[
+(a,b)=(0,0)
+\]
+
+2. إذا كان \(a=1\)، فإن \(b=-2a=-2\)، فنحصل على:
+\[
+(a,b)=(1,-2)
+\]
+
+إذن عدد الأزواج المرتبة هو:
+
+\[
+\boxed{2}
+\]",ar,agentic,True,100,301,401,0.0003812,2.7820000000065193,False,False,,,
+2026-09-20T13:22:09,c2,gpt-5.6-luna,openai,MAPS,Math,ar,104,1,"يتكون إطار الصورة من شريطين مستطيلين من الخشب، كل منهما بعرض بوصة واحدة من جميع الجوانب. إذا كانت مساحة الشريط الرمادي الفاتح الداخلي 100 $\text{in}^2$، فاحسب مساحة الشريط الرمادي الداكن الخارجي بالبوصة المربعة. [asy]
+import olympiad; import geometry; size(100); defaultpen(linewidth(0.8));
+real width = 0.4;
+filldraw((origin)--(7,0)--(7,5)--(0,5)--cycle,fillpen=gray(0.2));
+filldraw((origin + (width,width))--((7,0)+(-width,width))--((7,5)+(-width,-width))--((0,5)+(width,-width))--cycle,fillpen=gray(0.5));
+filldraw((origin + 2(width,width))--((7,0)+2(-width,width))--((7,5)+2(-width,-width))--((0,5)+2(width,-width))--cycle,fillpen=white);
+[/asy]","Imagine cutting the picture frame into pieces as shown.
+
+[asy]
+import olympiad; import geometry; size(100); defaultpen(linewidth(0.8));
+real width = 0.4;
+filldraw((origin)--(7,0)--(7,5)--(0,5)--cycle,fillpen=gray(0.2));
+filldraw((origin + (width,width))--((7,0)+(-width,width))--((7,5)+(-width,-width))--((0,5)+(width,-width))--cycle,fillpen=gray(0.5));
+filldraw((origin + 2(width,width))--((7,0)+2(-width,width))--((7,5)+2(-width,-width))--((0,5)+2(width,-width))--cycle,fillpen=white);
+draw((2*width,0)--(2*width,2*width),red+1bp);
+draw((0,width)--(2*width,width),red+1bp);
+draw((7,5)-(2*width,0)--(7,5)-(2*width,2*width),red+1bp);
+draw((7,5)-(0,width)--(7,5)-(2*width,width),red+1bp);
+draw((2*width,5)--(2*width,5-2*width),red+1bp);
+draw((0,5-width)--(2*width,5-width),red+1bp);
+draw((7,5)-(2*width,5)--(7,5)-(2*width,5-2*width),red+1bp);
+draw((7,5)-(0,5-width)--(7,5)-(2*width,5-width),red+1bp);
+
+[/asy]
+
+
+Clearly the long light and dark gray strips along the four sides are identical, so they have the same area.  The only leftover dark gray pieces are the four $1\,\mathrm{in}\times 2\,\mathrm{in}$ pieces in the corners.  In other words, the dark gray part of the frame is 8 square inches greater than the light gray region, which means that it has an area of $\boxed{108}~\text{in}^2$.","لنفرض أن أبعاد المستطيل الأبيض الداخلي هي \(x\) و\(y\) بوصة.
+
+مساحة الشريط الرمادي الفاتح هي:
+
+\[
+(x+2)(y+2)-xy=100
+\]
+
+وبالتبسيط:
+
+\[
+2x+2y+4=100
+\]
+
+\[
+2x+2y=96
+\]
+
+الشريط الرمادي الداكن يضيف شريطًا بعرض بوصة واحدة من الخارج، لذا تكون أبعاده الخارجية \(x+4\) و\(y+4\)، ومساحته:
+
+\[
+(x+4)(y+4)-(x+2)(y+2)
+\]
+
+\[
+=2x+2y+12
+\]
+
+وبالتعويض عن \(2x+2y=96\):
+
+\[
+96+12=\boxed{108\text{ in}^2}
+\]",en,agentic,False,247,629,876,0.0008041999999999999,5.297000000020489,True,False,,,
+2026-09-20T13:22:15,c2,gpt-5.6-luna,openai,MAPS,Math,ar,109,1,سيتم رمي أربعة أحجار نرد قياسية سداسية الأوجه. ما هو احتمال أن يكون حاصل ضرب الأرقام على الوجوه العلوية عددًا أوليًا؟ عبّر عن إجابتك ككسر اعتيادي.,"The product of four positive integers is prime only if three of the integers are 1 and the fourth is a prime number.  Therefore, of the $6^4$ outcomes for the roll of four dice, only the outcomes $(1,1,1,p)$, $(1,1,p,1)$, $(1,p,1,1)$, and $(p,1,1,1)$ for $p=2$, $3$, or $5$ give a prime product.  The probability of achieving a prime product is therefore \[
+\frac{12}{6\cdot6\cdot6\cdot6}=\frac{2}{6\cdot6\cdot6}=\frac{1}{3\cdot6^2}=\boxed{\frac{1}{108}}.
+\]","لكي يكون حاصل الضرب عددًا أوليًا، يجب أن تكون ثلاث نتائج هي \(1\)، والنتيجة الرابعة عددًا أوليًا من \(\{2,3,5\}\).
+
+عدد النتائج الملائمة:
+\[
+4 \times 3 = 12
+\]
+
+إجمالي النتائج:
+\[
+6^4=1296
+\]
+
+إذًا الاحتمال:
+\[
+\frac{12}{1296}=\boxed{\frac{1}{108}}
+\]",ar,agentic,True,78,191,269,0.0002448,2.5,True,False,,,
+2026-09-20T13:22:17,c2,gpt-5.6-luna,openai,MAPS,Math,ar,108,2,"المثلث $ABC$ قائم الزاوية. إذا كان قياس الزاوية $PAB$ هو $x^\circ$، وكان قياس الزاوية $ACB$ مُعبَّرًا عنه بالشكل $(Mx+N)^\circ$ مع $M=1$, فما قيمة $M+N$؟
+
+[asy]
+draw((-10,0)--(20,0),linewidth(1),Arrows);
+draw((0,0)--(10,10/sqrt(3))--(10+10/3,0),linewidth(1));
+
+draw((10,10/sqrt(3))+dir(-150)--(10,10/sqrt(3))+dir(-150)+dir(-60)--(10,10/sqrt(3))+dir(-60),linewidth(1));
+
+dot((-3,0));
+
+draw(dir(180)..dir(105)..dir(30),linewidth(1));
+
+label(""P"",(-3,0),NW);
+label(""A"",(0,0),S);
+label(""$x^\circ$"",(-1,1),N);
+label(""B"",(10,10/sqrt(3)),N);
+label(""C"",(10+10/3,0),NE);
+
+[/asy]","Since $\angle PAB$ and $\angle BAC$ are supplementary, $\angle BAC = 180^{\circ} - x^\circ$.  Since the three angles of a triangle add up to $ 180^{\circ} $, we have $\angle ACB = 180^{\circ} - 90^{\circ} - (180^{\circ} - x^\circ) = x^\circ - 90^{\circ}$.  Thus, $M + N = \boxed{-89}$.","Maadaama \(ABC\) yahay saddex-xagal xagal-qumman ah, xagallada \(A\) iyo \(C\) waxay isu daraan \(90^\circ\).
+
+\(P,A,C\) waa hal xariiq, sidaas darteed:
+\[
+\angle BAC=180^\circ-x.
+\]
+
+Markaa:
+\[
+\angle ACB=90^\circ-(180^\circ-x)=x-90^\circ.
+\]
+
+Sidaa darteed \(M=1\), \(N=-90\), waxaana:
+\[
+M+N=1-90=\boxed{-89}.
+\]",so,agentic,True,283,472,755,0.000623,4.421999999991385,True,False,,,
+2026-09-20T13:22:22,c2,gpt-5.6-luna,openai,MAPS,Math,ar,67,2,"فكر في جميع كثيرات الحدود لمتغير مركب، $P(z)=4z^4+az^3+bz^2+cz+d$، حيث $a, b, c,$ و $d$ أعداد صحيحة، $0\le d\le c\le b\le a\le 4$، وكثيرة الحدود لها صفر $z_0$ مع $|z_0|=1.$ ما مجموع كل القيم $P(1)$ على كل كثيرات الحدود التي لها هذه الخصائص؟","First, we consider the cases where $z_0 = 1$ and $z_0 = -1.$  Note that
+\[P(1) = 4 + a + b + c + d \ge 4,\]so $z = 1$ cannot be a root of $P(z).$
+
+If $z = -1$ is a root of $P(z),$ then
+\[P(-1) = 4 - a + b - c + d = (4 - a) + (b - c) + d = 0.\]But $4 - a \ge 0,$ $b - c \ge 0,$ and $d \ge 0,$ so we must have $a = 4,$ $b = c,$ and $d = 0.$  Conversely, if $a = 4,$ $b = c,$ and $d = 0,$ then
+\[P(-1) = 4 - a + b - c + d = (4 - a) + (b - c) + d = 0,\]so $z = -1$ is a root.  In this case,
+\[P(1) = 4 + a + b + c + d = 4 + 4 + b + b = 8 + 2b.\]The sum of all possible values of $P(1)$ are then
+\[\sum_{b = 0}^4 (8 + 2b) = 60.\]Having exhausted the cases where $z_0 = 1$ or $z_0 = -1,$ we can then assume that $z_0$ is not real.  Let $z_0 = x_0 + iy_0,$ where $x_0$ and $y_0$ are real numbers, $y_0 \neq 0.$  Since $|z_0| = 1,$ $x_0^2 + y_0^2 = 1.$  And since the coefficients of $P(z)$ are real, $x_0 - iy_0$ must also be a root, so
+\[(z - x_0 - iy_0)(z - x_0 + iy_0) = z^2 - 2x_0z + x_0^2 + y_0^2 = z^2 - 2x_0 z + 1\]must be a factor of $P(z).$  Then
+\[P(z) = (z^2 - 2x_0 z + 1)(4z^2 + pz + d)\]for some real number $p.$  Expanding, we get
+\[P(z) = 4z^4 + (p - 8x_0) z^3 + (d - 2px_0 + 4) z^2 + (p - 8x_0) z + d.\]Comparing coefficients, we get
+\begin{align*}
+p - 8x_0 &= a, \\
+d - 2px_0 + 4 &= b, \\
+p - 2dx_0 &= c.
+\end{align*}Subtracting the first and third equations, we get $2dx_0 - 8x_0 = a - c,$ so
+\[2(d - 4) x_0 = a - c. \quad (*)\]If $d = 4,$ then $a = c.$  In fact, the chain $d \le c \le b \le a \le 4$ forces $a = b = c = d = 4,$ so
+\[P(z) = 4z^4 + 4z^3 + 4z^2 + 4z + 4 = 4(z^4 + z^3 + z^2 + z + 1) = 0.\]If $z^4 + z^3 + z^2 + z + 1 = 0,$ then
+\[(z - 1)(z^4 + z^3 + z^2 + z + 1) = 0,\]which becomes $z^5 - 1 = 0.$  Then $z^5 = 1,$ so $|z^5| = 1.$  Hence, $|z|^5 = 1,$ so $|z| = 1.$  This confirms that all the roots of $z^4 + z^3 + z^2 + z + 1$ have magnitude 1, and $P(1) = 20.$
+
+Otherwise, we can assume that $d \neq 4.$  Then from equation $(*),$
+\[2x_0 = \frac{a - c}{d - 4}.\]Multiplying the equation $p - 8x_0 = a$ by $d,$ we get
+\[dp - 8dx_0 = ad.\]Multiplying the equation $p - 2dx_0 = c$ by 4, we get
+\[4p - 8dx_0 = 4c.\]Subtracting these equations, we get $dp - 4p = ad - 4c,$ so
+\[p = \frac{ad - 4c}{d - 4}.\]Let
+\[k = 2px_0 = 2x_0 \cdot p = \frac{a - c}{d - 4} \cdot \frac{ad - 4c}{d - 4} = \frac{(a - c)(ad - 4c)}{(d - 4)^2}.\]Then from the equation $d - 2px_0 + 4 = b,$ $k = d - b + 4.$  Since $b \le 4,$ $k \ge 0.$  We then divide into the cases where $a = c$ and $a > c.$
+
+Case 1: $a=c$.
+
+In this case, $k=0$ and $b=d+4$, so $a=b=c=4$ and $d=0$.  We have already covered these possibilities when we looked at the case where $z = -1$ was a root of $P(z).$
+
+Case 2: $a>c\geq 0$.
+
+Since $k\geq 0$, we have $ad-4c\geq 0,$ or $ad \ge 4c$.  However, $ad \leq 4c$, so $ad = 4c$.  For this to hold, we must have $c = d.$  Then we obtain $k=0$ again. In this case, $b=d+4$, so $a=b=4$ and $c=d=0,$ and
+\[P(z) = 4z^4 + 4z^3 + 4z^2 = 4z^2 (z^2 + z + 1).\]The roots of $z^2 + z + 1 = 0$ are $z = -\frac{1}{2} \pm \frac{\sqrt{3}}{2} i,$ which have magnitude 1, and $P(1) = 12.$
+
+Therefore, the desired sum is $60 + 20 + 12 = \boxed{92}$.","إذا كان الصفر \(z_0\) غير حقيقي و \(|z_0|=1\)، فإن مرافقه \(\overline{z_0}=1/z_0\) يكون أيضًا صفرًا. لذلك يقسم \(P\) كثير الحدود
+
+\[
+z^2-tz+1,\qquad -2<t<2.
+\]
+
+نكتب
+
+\[
+P(z)=(z^2-tz+1)(4z^2+uz+d).
+\]
+
+بمقارنة المعاملات نحصل على
+
+\[
+a=u-4t,\qquad b=d-tu+4,\qquad c=u-dt.
+\]
+
+وبما أن \(0\le d\le c\le b\le a\le4\)، فإن فحص الحالات \(d=0,1,2,3,4\) يعطي فقط كثيرتي الحدود اللتين لهما أصفار غير حقيقية على دائرة الوحدة:
+
+\[
+( a,b,c,d)=(4,4,0,0),\qquad (4,4,4,0).
+\]
+
+وقيم \(P(1)\) لهما هي، على الترتيب،
+
+\[
+12,\qquad 16.
+\]
+
+أما الصفر الحقيقي الوحيد الممكن على دائرة الوحدة فهو \(z_0=-1\)، إذ إن \(P(1)>0\). وشرط \(P(-1)=0\) هو
+
+\[
+4-a+b-c+d=0.
+\]
+
+بوضع
+
+\[
+x=a-b,\qquad y=b-c,\qquad z=c-d,
+\]
+
+ينتج \(x+z=4\)، ومع القيود المعطاة نحصل على
+
+\[
+(a,b,c,d)=(4,k,k,0),\qquad k=0,1,2,3,4.
+\]
+
+ومن ثم
+
+\[
+P(1)=4+4+k+k=8+2k,
+\]
+
+ومجموع هذه القيم هو
+
+\[
+\sum_{k=0}^4(8+2k)=60.
+\]
+
+نلاحظ أن كثير الحدود الموافق لـ \(k=4\) هو نفسه \((4,4,4,0)\)، لذا لا نحسبه مرتين. كذلك توجد الحالة
+
+\[
+(a,b,c,d)=(4,4,4,4),
+\]
+
+وقيمتها
+
+\[
+P(1)=20.
+\]
+
+إذن المجموع الكلي هو
+
+\[
+60+12+20=\boxed{92}.
+\]",ar,agentic,True,141,4056,4197,0.004895399999999999,33.90700000000652,True,False,,,
+2026-09-20T13:22:56,c2,gpt-5.6-luna,openai,MAPS,Math,ar,31,2,رُمي حجرا نرد قياسيان سداسيا الأوجه. تفوز جين إذا كان حاصل ضرب الرقمين الظاهرين فرديًا أو من مضاعفات العدد ثلاثة، وإلا يفوز ألين. ما احتمال فوز جين؟ عبّر عن إجابتك في صورة كسر عادي.,"When two dice are rolled, there are 36 total outcomes. Let's compute the probability that Allen wins. Allen wins if the product of the two numbers is even and not a multiple of 3. In other words, Allen wins if the product is 2 $(1\cdot2, 2\cdot1)$, 4 $(1\cdot4, 4\cdot1, 2\cdot2)$, 8 $(2\cdot4, 4\cdot2)$, 10 $(2\cdot5, 5\cdot2)$, 16 $(4\cdot4)$, or 20 $(4\cdot5, 5\cdot4)$. Therefore, the probability that Allen wins is $\frac{2+3+2+2+1+2}{36}=12/36=1/3$. Then, the probability that Jean wins is $1-1/3=\boxed{\frac{2}{3}}$.","عدد النتائج الممكنة \(36\).
+
+- حاصل الضرب فردي إذا كان الرقمان فرديين: \(3\times3=9\) نتائج.
+- حاصل الضرب من مضاعفات \(3\) إذا ظهر \(3\) أو \(6\) على أحد الحجرين على الأقل:
+  \[
+  36-4\times4=20
+  \]
+- الحالات المشتركة: حاصل ضرب فردي ومن مضاعفات \(3\)، أي يظهر الرقم \(3\) مع كون الرقمين فرديين:
+  \[
+  3\times3-2\times2=5
+  \]
+
+إذن عدد نتائج فوز جين:
+\[
+9+20-5=24
+\]
+
+وعليه فإن الاحتمال هو:
+\[
+\frac{24}{36}=\boxed{\frac{2}{3}}
+\]",ar,agentic,True,94,341,435,0.000428,3.702999999979511,True,False,,,
+2026-09-20T13:22:59,c2,gpt-5.6-luna,openai,MAPS,Math,ar,119,2,أنتجت نانسي عددًا صحيحًا مكونًا من رقمين برمي حجر نرد سداسي الأوجه مرتين. نتيجة الرمية الأولى هي خانة العشرات، ونتيجة الرمية الثانية هي خانة الآحاد. ما احتمال أن يكون العدد الناتج قابلًا للقسمة على 8؟ عبّر عن إجابتك ككسر عادّي.,"The largest number Nancy can generate is 66.  The positive two-digit multiples of 8 less than 66 are 16, 24, 32, 40, 48, 56, and 64.  40 and 48 cannot be produced from the numbers on a 6-sided die, but the other 5 multiples of 8 in the list can.  Therefore, there are 5 equally likely ways to produce a multiple of 8 out of the $6\cdot6=36$ total combinations for the two dice, so the desired probability is $\boxed{\dfrac{5}{36}}$.
+
+(Special thanks to 5849206328x for this solution.)","الأعداد القابلة للقسمة على 8 والمكوّنة من رقمين حيث كل رقم بين 1 و6 هي:
+
+\(16، 24، 32، 56، 64\)
+
+أي توجد \(5\) نتائج مناسبة من أصل \(6 \times 6 = 36\) نتيجة ممكنة.
+
+إذًا الاحتمال هو:
+
+\[
+\boxed{\frac{5}{36}}
+\]",ar,agentic,True,107,220,327,0.0002854,2.2810000000172295,False,False,,,
+2026-09-20T13:23:02,c2,gpt-5.6-luna,openai,MAPS,Math,ar,42,2,"$ABCD$ هو شكل رباعي السطوح منتظم (هرم ثلاثي منتظم). إذا كان $M$ هو منتصف $\overline{CD}$, فما قيمة $\tan\angle AMB$؟","The tetrahedron is shown below.  In order to find $\tan\angle AMB$, we build a right triangle with $\angle AMB$ among its angles.  The foot of the altitude from $A$ to face $BCD$ is the centroid, $G$, of triangle $BCD$.
+
+[asy]
+
+import three;
+
+currentprojection = orthographic(1.5,1.1,-1);
+
+triple A = (1,1,1);
+
+triple B = (1,0,0);
+
+triple C = (0,1,0);
+
+triple D = (0,0,1);
+
+draw(A--B--C--A);
+
+draw(A--D,dashed);
+
+draw(C--D--B,dashed);
+
+label(""$A$"",A,NW);
+
+label(""$B$"",B,W);
+
+label(""$C$"",C,S);
+
+label(""$D$"",D,NW);
+
+triple M = (0,0.5,0.5);
+
+draw(A--M--B,dashed);
+
+label(""$M$"",M,NE);
+
+triple G = B/3 + 2*M/3;
+
+draw(A--G,dashed);
+
+label(""$G$"",G,S);
+
+[/asy]
+
+Since $\overline{BM}$ is a median of $\triangle BCD$, point $G$ is on $\overline{BM}$ such that $GM = \frac13BM$.  Furthermore, we have $AM = BM$, so $GM = \frac{AM}{3}$.  The Pythagorean Theorem gives us  \[AG = \sqrt{AM^2 - GM^2} = \sqrt{AM^2 - \frac{AM^2}{9}} = AM\cdot \sqrt{\frac89} = \frac{2\sqrt{2}}{3}\cdot AM.\] Finally, we have  \[\tan \angle AMB = \tan\angle AMG =\frac{AG}{GM} = \frac{(2\sqrt{2}/3)AM}{AM/3} = \boxed{2\sqrt{2}}.\]","لنفترض أن طول ضلع رباعي السطوح المنتظم هو \(a\).
+
+بما أن \(M\) منتصف \(CD\)، فإن المثلث \(ACD\) متساوي الأضلاع، وبالتالي:
+
+\[
+AM=\sqrt{a^2-\left(\frac a2\right)^2}
+=\frac{\sqrt3}{2}a
+\]
+
+وبالمثل:
+
+\[
+BM=\frac{\sqrt3}{2}a
+\]
+
+وفي المثلث \(AMB\)، لدينا \(AB=a\). باستخدام قانون جيب التمام:
+
+\[
+\cos\angle AMB
+=\frac{AM^2+BM^2-AB^2}{2(AM)(BM)}
+=\frac{\frac34a^2+\frac34a^2-a^2}{2\cdot\frac34a^2}
+=\frac13
+\]
+
+إذن:
+
+\[
+\tan\angle AMB
+=\frac{\sqrt{1-\cos^2\angle AMB}}{\cos\angle AMB}
+=\frac{\sqrt{1-\frac19}}{\frac13}
+=2\sqrt2
+\]
+
+\[
+\boxed{2\sqrt2}
+\]",ar,agentic,True,410,814,1224,0.0010588,6.796999999991385,False,False,,,
+2026-09-20T13:23:08,c2,gpt-5.6-luna,openai,MAPS,Math,ar,12,2,"إذا كان $\left(\sqrt[4]{11}\right)^{3x-3}=\frac{1}{5}$, فما قيمة $\left(\sqrt[4]{11}\right)^{6x+2}$؟ عبّر عن إجابتك بكسر.","We rewrite $\left(\sqrt[4]{11}\right)^{6x+2}$ and then substitute the given equation: \begin{align*}
+\left(\sqrt[4]{11}\right)^{6x+2}&=\left(\sqrt[4]{11}\right)^{6x-6}\cdot \left(\sqrt[4]{11}\right)^{8}\\
+&=\left(\left(\sqrt[4]{11}\right)^{3x-3}\right)^2\cdot\left(11^{1/4}\right)^{8}\\
+&=\left(\frac{1}{5}\right)^2\cdot11^{(8/4)}\\
+&=\frac{1}{25}\cdot121\\
+&=\boxed{\frac{121}{25}}
+\end{align*}","لدينا:
+\[
+\left(\sqrt[4]{11}\right)^{6x+2}
+=\left(\sqrt[4]{11}\right)^{2(3x-3)+8}
+\]
+
+إذًا:
+\[
+=\left[\left(\sqrt[4]{11}\right)^{3x-3}\right]^2
+\left(\sqrt[4]{11}\right)^8
+=\left(\frac15\right)^2\cdot 11^2
+=\frac{121}{25}
+\]
+
+\[
+\boxed{\frac{121}{25}}
+\]",ar,agentic,True,294,396,690,0.000534,3.8910000000032596,True,False,,,
+2026-09-20T13:23:12,c2,gpt-5.6-luna,openai,MAPS,Math,ar,81,2,افترض أنه يمكن كتابة $N$ في الأساس $6$ كـ $\overline{531340}_6$، وفي الأساس $8$ كـ $\overline{124154}_8$. في الأساس $10$، ما هو الباقي عند قسمة $N$ على $210$؟,"The prime factorization of $210 = 2 \cdot 3 \cdot 5 \cdot 7$. By the Chinese Remainder Theorem, it suffices to find the residues of $N$ modulo $5$, $6$, and $7$. Since the units digit of $N$ in base $6$ is equal to $0$, it follows that $N$ is divisible by $6$. Also, we note that $N$ is congruent modulo $b-1$ to the sum of its base $b$ digits. Indeed, if $N$ can be represented as $(\overline{a_ka_{k-1}\cdots a_0})_b$, then \begin{align*}N &\equiv a_k \cdot b^k + a_{k-1} \cdot b^{k-1} + \cdots + a_1 \cdot b + a_0 \\ &\equiv a_k \cdot ((b-1) + 1)^k + \cdots + a_1 \cdot ((b-1) + 1) + a_0 \\
+& \equiv a_k + a_{k-1} + \cdots + a_1 + a_0 \pmod{b-1}.
+\end{align*}It follows that $N \equiv 5+3+1+3+4+0 \equiv 1 \pmod{5}$ and that $N \equiv 1 + 2 + 4 + 1 + 5 + 4 \equiv 3 \pmod{7}.$ By the Chinese Remainder Theorem and inspection, we determine that $N \equiv 31 \pmod{35}$, so that (by the Chinese Remainder Theorem again) $N \equiv \boxed{66} \pmod{210}$.","من تمثيله في الأساس \(6\):
+
+\[
+N=5\cdot6^5+3\cdot6^4+1\cdot6^3+3\cdot6^2+4\cdot6
+\]
+
+\[
+N=38880+3888+216+108+24=43116.
+\]
+
+وبالتالي:
+
+\[
+43116=210\cdot205+66
+\]
+
+إذن الباقي هو:
+
+\[
+\boxed{66}
+\]",ar,agentic,True,95,330,425,0.000415,3.875,True,False,,,
+2026-09-20T13:23:16,c2,gpt-5.6-luna,openai,MAPS,Math,ar,69,2,"أوجد عدد الأزواج المرتبة $(a, b)$ من الأعداد الحقيقية بحيث:
+
+- $a$ هو جذر للمعادلة التربيعية $x^2 + ax + b = 0$,
+- $b$ هو جذر للمعادلة التربيعية $x^2 + ax + b = 0$.","Since $x = a$ is a root of $x^2 + ax + b = 0,$
+\[a^2 + a^2 + b = 0,\]or $2a^2 + b = 0,$ so $b = -2a^2.$
+
+Since $x = b$ is a root of $x^2 + ax + b = 0,$
+\[b^2 + ab + b = 0.\]This factors as $b(b + a + 1) = 0,$ so $b = 0$ or $a + b + 1 = 0.$
+
+If $b = 0,$ then $-2a^2 = 0,$ so $a = 0.$
+
+If $a + b + 1 = 0,$ then $-2a^2 + a + 1 = 0.$  This equation factors as $-(a - 1)(2a + 1) = 0,$ so $a = 1$ or $a = -\frac{1}{2}.$  If $a = 1,$ then $b = -2.$  If $a = -\frac{1}{2},$ then $b = -\frac{1}{2}.$
+
+Therefore, there are $\boxed{3}$ ordered pairs $(a,b),$ namely $(0,0),$ $(1,-2),$ and $\left( -\frac{1}{2}, -\frac{1}{2} \right).$","بما أن \(a\) جذر للمعادلة، نعوّض \(x=a\):
+
+\[
+a^2+a^2+b=0 \implies b=-2a^2.
+\]
+
+وبما أن \(b\) جذر لها أيضًا:
+
+\[
+b^2+ab+b=0
+\]
+
+أي:
+
+\[
+b(b+a+1)=0.
+\]
+
+نبحث في حالتين:
+
+1. إذا كان \(b=0\)، فإن \(b=-2a^2\) يعطي \(a=0\)، فنحصل على:
+\[
+(a,b)=(0,0).
+\]
+
+2. إذا كان \(b+a+1=0\)، وبالتعويض عن \(b=-2a^2\):
+
+\[
+-2a^2+a+1=0
+\]
+
+\[
+2a^2-a-1=0
+\]
+
+\[
+(a-1)(2a+1)=0.
+\]
+
+إذًا:
+
+- \(a=1 \implies b=-2\)،
+- \(a=-\frac12 \implies b=-\frac12\).
+
+وعليه فإن الأزواج المرتبة هي:
+
+\[
+(0,0),\quad (1,-2),\quad \left(-\frac12,-\frac12\right).
+\]
+
+إذن عددها هو:
+
+\[
+\boxed{3}
+\]",ar,agentic,True,100,476,576,0.0005912,4.342999999993481,True,False,,,
+2026-09-20T13:23:21,c2,gpt-5.6-luna,openai,MAPS,Math,ar,104,2,"يتكون إطار الصورة من شريطين مستطيلين من الخشب، كل منهما بعرض بوصة واحدة من جميع الجوانب. إذا كانت مساحة الشريط الرمادي الفاتح الداخلي 100 $\text{in}^2$، فاحسب مساحة الشريط الرمادي الداكن الخارجي بالبوصة المربعة. [asy]
+import olympiad; import geometry; size(100); defaultpen(linewidth(0.8));
+real width = 0.4;
+filldraw((origin)--(7,0)--(7,5)--(0,5)--cycle,fillpen=gray(0.2));
+filldraw((origin + (width,width))--((7,0)+(-width,width))--((7,5)+(-width,-width))--((0,5)+(width,-width))--cycle,fillpen=gray(0.5));
+filldraw((origin + 2(width,width))--((7,0)+2(-width,width))--((7,5)+2(-width,-width))--((0,5)+2(width,-width))--cycle,fillpen=white);
+[/asy]","Imagine cutting the picture frame into pieces as shown.
+
+[asy]
+import olympiad; import geometry; size(100); defaultpen(linewidth(0.8));
+real width = 0.4;
+filldraw((origin)--(7,0)--(7,5)--(0,5)--cycle,fillpen=gray(0.2));
+filldraw((origin + (width,width))--((7,0)+(-width,width))--((7,5)+(-width,-width))--((0,5)+(width,-width))--cycle,fillpen=gray(0.5));
+filldraw((origin + 2(width,width))--((7,0)+2(-width,width))--((7,5)+2(-width,-width))--((0,5)+2(width,-width))--cycle,fillpen=white);
+draw((2*width,0)--(2*width,2*width),red+1bp);
+draw((0,width)--(2*width,width),red+1bp);
+draw((7,5)-(2*width,0)--(7,5)-(2*width,2*width),red+1bp);
+draw((7,5)-(0,width)--(7,5)-(2*width,width),red+1bp);
+draw((2*width,5)--(2*width,5-2*width),red+1bp);
+draw((0,5-width)--(2*width,5-width),red+1bp);
+draw((7,5)-(2*width,5)--(7,5)-(2*width,5-2*width),red+1bp);
+draw((7,5)-(0,5-width)--(7,5)-(2*width,5-width),red+1bp);
+
+[/asy]
+
+
+Clearly the long light and dark gray strips along the four sides are identical, so they have the same area.  The only leftover dark gray pieces are the four $1\,\mathrm{in}\times 2\,\mathrm{in}$ pieces in the corners.  In other words, the dark gray part of the frame is 8 square inches greater than the light gray region, which means that it has an area of $\boxed{108}~\text{in}^2$.","لنفرض أن أبعاد المستطيل الأبيض الداخلي هي \(x\) و\(y\).
+
+مساحة الشريط الرمادي الفاتح تساوي:
+
+\[
+(x+2)(y+2)-xy=100
+\]
+
+وبالتبسيط:
+
+\[
+2x+2y+4=100 \quad\Rightarrow\quad x+y=48
+\]
+
+الشريط الرمادي الداكن يضيف بوصة أخرى من كل جانب، لذا مساحته تساوي:
+
+\[
+(x+4)(y+4)-(x+2)(y+2)
+\]
+
+\[
+=2x+2y+12
+\]
+
+وبالتعويض عن \(x+y=48\):
+
+\[
+2(48)+12=\boxed{108\text{ in}^2}
+\]",en,agentic,False,247,429,676,0.0005641999999999999,3.3429999999934807,True,False,,,
+2026-09-20T13:23:24,c2,gpt-5.6-luna,openai,MAPS,Math,ar,109,2,سيتم رمي أربعة أحجار نرد قياسية سداسية الأوجه. ما هو احتمال أن يكون حاصل ضرب الأرقام على الوجوه العلوية عددًا أوليًا؟ عبّر عن إجابتك ككسر اعتيادي.,"The product of four positive integers is prime only if three of the integers are 1 and the fourth is a prime number.  Therefore, of the $6^4$ outcomes for the roll of four dice, only the outcomes $(1,1,1,p)$, $(1,1,p,1)$, $(1,p,1,1)$, and $(p,1,1,1)$ for $p=2$, $3$, or $5$ give a prime product.  The probability of achieving a prime product is therefore \[
+\frac{12}{6\cdot6\cdot6\cdot6}=\frac{2}{6\cdot6\cdot6}=\frac{1}{3\cdot6^2}=\boxed{\frac{1}{108}}.
+\]","لكي يكون حاصل الضرب عددًا أوليًا، يجب أن يظهر على نرد واحد فقط عدد أولي من بين \(2،3،5\)، وأن تظهر \(1\) على النردات الثلاثة الأخرى.
+
+عدد النتائج الملائمة:
+\[
+4 \times 3 = 12
+\]
+
+وعدد النتائج الكلي:
+\[
+6^4=1296
+\]
+
+إذًا الاحتمال:
+\[
+\frac{12}{1296}=\boxed{\frac{1}{108}}
+\]",ar,agentic,True,78,195,273,0.0002496,2.687999999994645,True,False,,,
+2026-09-20T13:23:27,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,983bba7c-c092-455f-b6c9-7857003d48fc,1,"ما هي الحيوانات التي ذُكرت في ورقتي إلياس لاجكوفاردوس وأولجا تابيا حول أنواع ""ألفي"" من الجنس المسمى على اسم كوبنهاجن خارج الببليوغرافيات، والتي كانت موجودة أيضًا في المقالة المنشورة عام 2021 والمذكورة في صفحة ويكيبيديا الخاصة بأنواع ""ألفي"" حول دراسة متعددة المراكز وعشوائية ومزدوجة التعمية؟",فئران,"الحيوانات المشتركة بين الورقتين هي:
+
+- الفئران  
+- الجرذان (الجرذان المخبرية)
+
+وقد استُبعدت أسماء الحيوانات الواردة في قوائم المراجع والببليوغرافيا.",ar,agentic,True,123,2125,2248,0.0025746000000000002,18.21799999999348,True,False,,,
+2026-09-20T13:23:45,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,1dcc160f-c187-48c2-b68e-319bd4354f3d,1,"وفقاً لموقع Openreview.net، في مؤتمر NeurIPS 2022، كم عدد الأوراق التي قُبلت بتوصية ""مؤكدة"" لمؤلف يُدعى يوري؟",3,وفقاً لبيانات OpenReview لمؤتمر NeurIPS 2022، بلغ العدد **ورقتين**.,ar,agentic,True,72,3901,3973,0.0046956,36.875,False,False,,,
+2026-09-20T13:24:22,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,d0633230-7067-47a9-9dbf-ee11e0a2cdd6,1,في سجل التغييرات الخاص بـ Scikit-Learn لشهر يوليو 2017، ما هو الأمر الأساسي الآخر للتنبؤ الذي تلقى إصلاحًا لخطأ؟ فقط أعطِ الاسم، وليس المسار.,انتشار التسمية الأساسية,predict_proba,ar,agentic,True,161,581,742,0.0007294000000000001,6.625,False,False,,,
+2026-09-20T13:24:28,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,72c06643-a2fa-4186-aa5c-9ec33ae9b445,1,ما هو الحجم بالميلليلتر لنظام يتكون من 0.312 كجم من مبرد الفريون-12 عند وضعه في قاع خندق ماريانا والسماح له بالاستقرار عند درجة الحرارة القصوى للخندق، مقربًا لأقرب ملليلتر؟ قدم إجابتك كقيمة عددية صحيحة فقط.,55,١٩٥,ar,agentic,True,189,3580,3769,0.0043338000000000005,39.25,False,False,,,
+2026-09-20T13:25:08,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,08cae58d-4084-4616-b6dd-dd6534e4825b,1,وفقًا لـ Google Finance، في أي سنة تجاوز سهم Apple لأول مرة 50 دولارًا (بدون تعديل لتقسيم الأسهم)؟,2018,وفقًا لبيانات Google Finance، تجاوز سهم Apple سعر **50 دولارًا لأول مرة في عام 1983**، وذلك على أساس السعر الاسمي غير المعدّل لتقسيمات الأسهم.,ar,agentic,True,56,1780,1836,0.0021471999999999997,16.844000000011874,False,False,,,
+2026-09-20T13:25:24,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,7673d772-ef80-4f0f-a602-1bf4485c9b43,1,"على موقع معهد المعلومات القانونية بكلية الحقوق بجامعة كورنيل، تحت القسم الخامس من القواعد الفيدرالية مرتبة أبجدياً، ما هي الكلمة التي حُذفت في التعديل الأخير للقاعدة الأولى في المقال الذي يحتوي على كلمة ""الشهود"" في معظم العناوين حتى عام 2021؟",استنتاج,الكلمة التي حُذفت هي **«otherwise»** («خلاف ذلك»).,ar,agentic,True,96,1576,1672,0.0019103999999999998,14.75,False,False,,,
+2026-09-20T13:25:39,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,c3a79cfe-8206-451f-aca8-3fec8ebe51d3,1,السنة هي 2022. أنا في متحف الطيران والفضاء الوطني شرق نهر بوتوماك. أريد الذهاب إلى محطة الإطفاء 301 DCA ARFF باستخدام المترو. أذهب في الاتجاه الخاطئ وأصل إلى المحطة الأقرب إلى مدرسة كليفلاند الابتدائية. كم عدد محطات المترو التي أبعد عنها عن وجهتي الأصلية إذا لم أغير الخطوط؟ يجب أن تكون إجابتك قيمة عددية صحيحة.,8,9,ar,agentic,True,215,2618,2833,0.0031845999999999997,26.312000000005355,False,False,,,
+2026-09-20T13:26:06,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,853c8244-429e-46ca-89f2-addf40dfb2bd,1,"في معرض متحف المتروبوليتان للفنون لعام 2015 الذي يحمل عنوان حيوان البروج الصينية لعام 2015، كم من ""حيوانات البروج الصينية الاثني عشر"" لها يد مرئية؟",11,لا يوجد أيٌّ منها؛ **0** من الحيوانات الاثني عشر لها يد مرئية.,ar,agentic,True,74,2095,2169,0.0025288000000000003,19.578000000008615,False,False,,,
+2026-09-20T13:26:25,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,e29834fd-413a-455c-a33e-c3915b07401c,1,"أود أن أتعرف أكثر على بعض برامج مسابقات تلفزيون الواقع الشهيرة. بحلول نهاية الموسم 44 من النسخة الأمريكية من برنامج ""سيرفايفر""، كم عدد الفائزين الفريدين الإضافيين الذين تم تتويجهم مقارنة بعدد الفائزين في برنامج ""أمريكان آيدول""؟",21,"بحلول نهاية الموسم 44 من **سيرفايفر**:
+
+- عدد الفائزين الفريدين في **سيرفايفر**: **42**، لأن ساندرا دياز-تاين وُتوجت مرتين، وكذلك توني فلاشوس.
+- عدد الفائزين في **أمريكان آيدول**: **21**.
+
+إذن، تُوِّج في **سيرفايفر** عدد **21 فائزًا فريدًا إضافيًا** مقارنةً بـ«أمريكان آيدول».",ar,agentic,True,100,902,1002,0.0011024,8.937000000005355,True,False,,,
+2026-09-20T13:26:34,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,48eb8242-1099-4c26-95d4-ef22b002457a,1,كم عدد التماسيح غير الأصلية التي عُثر عليها في فلوريدا من عام 2000 حتى عام 2020؟ يمكنك الحصول على البيانات من قاعدة بيانات الأنواع المائية غير الأصلية التابعة لهيئة المسح الجيولوجي الأمريكية.,6,"وفقًا لقاعدة بيانات الأنواع المائية غير الأصلية التابعة لهيئة المسح الجيولوجي الأمريكية، عُثر على **13 سجلًا لتماسيح غير أصلية في فلوريدا** خلال الفترة من **2000 إلى 2020**.
+
+وهذا الرقم يمثل **سجلات العثور أو المشاهدة** في قاعدة البيانات، وليس بالضرورة عدد الحيوانات الفردية.",ar,agentic,True,83,2676,2759,0.0032278,24.28100000001723,False,False,,,
+2026-09-20T13:26:58,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,983bba7c-c092-455f-b6c9-7857003d48fc,2,"ما هي الحيوانات التي ذُكرت في ورقتي إلياس لاجكوفاردوس وأولجا تابيا حول أنواع ""ألفي"" من الجنس المسمى على اسم كوبنهاجن خارج الببليوغرافيات، والتي كانت موجودة أيضًا في المقالة المنشورة عام 2021 والمذكورة في صفحة ويكيبيديا الخاصة بأنواع ""ألفي"" حول دراسة متعددة المراكز وعشوائية ومزدوجة التعمية؟",فئران,"الحيوانات المشتركة بين النصَّين، مع استبعاد قوائم المراجع، هي:
+
+- الفئران
+- الجرذان
+
+ولم يظهر في المتن تقاطعٌ آخر واضح لأسماء حيوانات بين ورقة لاجكوڤاردوس وتابيا ومقالة عام 2021.",ar,agentic,True,123,2142,2265,0.002595,18.062000000005355,True,False,,,
+2026-09-20T13:27:16,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,1dcc160f-c187-48c2-b68e-319bd4354f3d,2,"وفقاً لموقع Openreview.net، في مؤتمر NeurIPS 2022، كم عدد الأوراق التي قُبلت بتوصية ""مؤكدة"" لمؤلف يُدعى يوري؟",3,وفقًا لبيانات OpenReview لمؤتمر NeurIPS 2022، تم قبول **ورقتين** للمؤلف الذي يُدعى يوري بتوصية **«مؤكدة»**.,ar,agentic,True,72,3002,3074,0.0036168,29.171999999991385,False,False,,,
+2026-09-20T13:27:46,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,d0633230-7067-47a9-9dbf-ee11e0a2cdd6,2,في سجل التغييرات الخاص بـ Scikit-Learn لشهر يوليو 2017، ما هو الأمر الأساسي الآخر للتنبؤ الذي تلقى إصلاحًا لخطأ؟ فقط أعطِ الاسم، وليس المسار.,انتشار التسمية الأساسية,`predict_proba`,ar,agentic,True,163,1084,1247,0.0013333999999999998,10.187000000005355,False,False,,,
+2026-09-20T13:27:56,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,72c06643-a2fa-4186-aa5c-9ec33ae9b445,2,ما هو الحجم بالميلليلتر لنظام يتكون من 0.312 كجم من مبرد الفريون-12 عند وضعه في قاع خندق ماريانا والسماح له بالاستقرار عند درجة الحرارة القصوى للخندق، مقربًا لأقرب ملليلتر؟ قدم إجابتك كقيمة عددية صحيحة فقط.,55,177,ar,agentic,True,187,3271,3458,0.0039626,31.625,False,False,,,
+2026-09-20T13:28:27,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,08cae58d-4084-4616-b6dd-dd6534e4825b,2,وفقًا لـ Google Finance، في أي سنة تجاوز سهم Apple لأول مرة 50 دولارًا (بدون تعديل لتقسيم الأسهم)؟,2018,وفقًا لبيانات Google Finance، تجاوز سهم Apple حاجز **50 دولارًا لأول مرة عام 1983**، مع احتساب السعر التاريخي الاسمي وعدم تعديله وفقًا لتقسيمات الأسهم.,ar,agentic,True,56,565,621,0.0006892000000000001,5.828000000008615,False,False,,,
+2026-09-20T13:28:33,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,7673d772-ef80-4f0f-a602-1bf4485c9b43,2,"على موقع معهد المعلومات القانونية بكلية الحقوق بجامعة كورنيل، تحت القسم الخامس من القواعد الفيدرالية مرتبة أبجدياً، ما هي الكلمة التي حُذفت في التعديل الأخير للقاعدة الأولى في المقال الذي يحتوي على كلمة ""الشهود"" في معظم العناوين حتى عام 2021؟",استنتاج,الكلمة التي حُذفت هي **«لكن» (But)**.,ar,agentic,True,96,1055,1151,0.0012852,9.64100000000326,False,False,,,
+2026-09-20T13:28:43,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,c3a79cfe-8206-451f-aca8-3fec8ebe51d3,2,السنة هي 2022. أنا في متحف الطيران والفضاء الوطني شرق نهر بوتوماك. أريد الذهاب إلى محطة الإطفاء 301 DCA ARFF باستخدام المترو. أذهب في الاتجاه الخاطئ وأصل إلى المحطة الأقرب إلى مدرسة كليفلاند الابتدائية. كم عدد محطات المترو التي أبعد عنها عن وجهتي الأصلية إذا لم أغير الخطوط؟ يجب أن تكون إجابتك قيمة عددية صحيحة.,8,8,ar,agentic,True,215,1485,1700,0.001825,15.375,True,False,,,
+2026-09-20T13:28:58,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,853c8244-429e-46ca-89f2-addf40dfb2bd,2,"في معرض متحف المتروبوليتان للفنون لعام 2015 الذي يحمل عنوان حيوان البروج الصينية لعام 2015، كم من ""حيوانات البروج الصينية الاثني عشر"" لها يد مرئية؟",11,لستةٍ من حيوانات البروج الصينية الاثني عشر يدٌ مرئية.,ar,agentic,True,74,2907,2981,0.0035032,25.23399999999674,False,False,,,
+2026-09-20T13:29:24,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,e29834fd-413a-455c-a33e-c3915b07401c,2,"أود أن أتعرف أكثر على بعض برامج مسابقات تلفزيون الواقع الشهيرة. بحلول نهاية الموسم 44 من النسخة الأمريكية من برنامج ""سيرفايفر""، كم عدد الفائزين الفريدين الإضافيين الذين تم تتويجهم مقارنة بعدد الفائزين في برنامج ""أمريكان آيدول""؟",21,"بحلول نهاية الموسم 44 من النسخة الأمريكية من «سيرفايفر»، تُوِّج **42 فائزًا فريدًا**؛ إذ فاز كلٌّ من ساندرا دياز-توين وتوني فلاشوس باللقب مرتين.
+
+أما «أمريكان آيدول» فكان لديه **21 فائزًا** حتى نهاية موسمه الحادي والعشرين.
+
+لذلك، كان لدى «سيرفايفر» **21 فائزًا فريدًا إضافيًا** مقارنةً بـ«أمريكان آيدول».",ar,agentic,True,100,642,742,0.0007904,6.5,True,False,,,
+2026-09-20T13:29:30,c2,gpt-5.6-luna,openai,MAPS,GAIA,ar,48eb8242-1099-4c26-95d4-ef22b002457a,2,كم عدد التماسيح غير الأصلية التي عُثر عليها في فلوريدا من عام 2000 حتى عام 2020؟ يمكنك الحصول على البيانات من قاعدة بيانات الأنواع المائية غير الأصلية التابعة لهيئة المسح الجيولوجي الأمريكية.,6,"وفقًا لسجلات **قاعدة بيانات الأنواع المائية غير الأصلية التابعة لهيئة المسح الجيولوجي الأمريكية (USGS NAS)**، عُثر على **19 سجلًا لتماسيح غير أصلية في فلوريدا** خلال الفترة من **2000 إلى 2020**، شاملةً السنتين.
+
+يمثل الرقم **سجلات رصد أو بلاغات**، وليس بالضرورة عدد الحيوانات الفردية؛ فقد يشير سجل واحد إلى أكثر من تمساح.",ar,agentic,True,83,2518,2601,0.0030381999999999996,21.062999999994645,False,False,,,

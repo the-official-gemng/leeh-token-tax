@@ -640,3 +640,855 @@ unedited, in its original results CSV; this entry adds the "NEW" numbers
 alongside rather than replacing anything. Untouched, as always:
 `phase3_c1_raw.csv`, `phase3_c2_raw.csv`, `phase3_c4_raw.csv` (and every
 variant), all three `decision_rule_h*.csv`, and `docs/paper_draft.md`.
+
+---
+
+# Iteration 2, fair-comparison-by-design
+
+Second refinement pass on the three cells that failed the correction
+pass above (`deepseek-flash/es`, `deepseek-flash/zh`, `qwen3.5-flash/zh`).
+**Hard rule for this entire pass, pre-committed before any new data:**
+every candidate is tested on the target language and on English
+simultaneously, same round, identical wording. The reported ratio is
+always (fixed target-language cost) / (fixed English cost) -- never
+against the original unfixed baseline. Same standing caveat: **post-hoc
+engineering, product track, not part of the confirmatory study.**
+`gemini-3.5-flash-lite/es` (already verified fair) is untouched by this
+pass.
+
+### Step 1 -- qwen: is the looping translation-specific? (existing data, no new calls)
+
+Checked the *raw, unfixed* baseline (no instruction at all) for both
+languages: mean completion_tokens en=1923.3 (median 1178.0), zh=2720.5
+(median 1638.0) -- **ratio 1.41x**. English is already producing
+1900+ reasoning-heavy tokens on a simple MGSM problem with zero
+instruction. The looping is a generic model behavior, not a
+translation-specific one -- Chinese amplifies it by ~41%, it doesn't
+create it. This matches exactly what the correction pass already found
+empirically (the same anti-looping instruction applied to both arms
+brought the ratio from a misleading 0.748x down to 1.116x, CI
+[0.946, 1.390] -- spanning both sides of 1.0 *and* 1.2). Per Step 2's
+rule (generic fixes get applied to both arms from the start, and
+whatever's left over is the thing needing a translation-specific
+explanation): **the already-collected matched-arm data (`harness_
+hardening_qwen_zh_fix.csv` + `harness_hardening_fairness_qwen_en.csv`,
+same template, same N=50, same round) already satisfies this pass's hard
+rule.** Not redrawing identical data a third time -- reused as this
+iteration's qwen result, stated explicitly rather than silently
+re-presented as new.
+
+### Step 1 (continued) -- deepseek: decomposing the fair 1.303x / 1.149x gap
+
+Both shipped templates contain one generic clause ("no explanation")
+bundled with genuinely language-mechanical clauses ("reason in English
+internally", "give the final answer in '{lang}'", "no English in the
+output"). Per Step 2, stripped the generic clause, keeping only the
+language-mechanical core, to isolate what's actually left:
+
+| | shipped (mixed) | lang-only (this iteration) | tokens |
+|---|---|---|---|
+| es | "...give **only** the final answer in '{lang}', **no explanation**, no English in the output..." | "...give the final answer in '{lang}', no English in the output..." | 34 (was 38) |
+| zh | "...give **only** the final answer in '{lang}', **no explanation**..." | "...give the final answer in '{lang}'..." | 25 (was 29) |
+
+Both spot-checked on the standard 2 real questions before any batch run
+-- correct, in-language, no leakage, both cases.
+
+### Pre-committed design, before running the full batches
+
+- Fresh N=50 per arm per cell (target-language arm and English arm,
+  same round, identical lang-only template -- for the English arm, the
+  template is applied exactly as written with `{lang}`='en', including
+  the resulting self-referential oddity ("never 'en'... give the final
+  answer in 'en'"), same precedent as the correction pass, not smoothed
+  over.
+- Statistic: bootstrap CI of the median per-task ratio (fixed-target /
+  fixed-English), same `bootstrap_ci()` import as every other cell in
+  this project.
+- Pass = median <=1.2x **and** CI excludes 1.2 (CI_high < 1.2,
+  comfortably, matching the original C4 pilot's stricter-than-H1
+  criterion).
+- Accuracy tracked on **both** arms, every iteration -- a fix that only
+  gets checked on the target language could be silently breaking
+  English, exactly the failure mode this whole pass exists to catch.
+- After measuring, decompose any remaining gap into prompt-side vs.
+  completion-side (same dollar-weighted method used throughout this
+  project). If it's completion-side and traces to the target language's
+  own answer-token cost with no further instruction lever available,
+  document it as a structural tokenizer-fertility limit and stop --
+  not a target to keep chasing.
+
+## 2026-09-19 -- Iteration 2 results: es marginal pass, zh still fails and doesn't cleanly explain, qwen resolved as generic
+
+Fresh N=50 per arm, both arms same round, identical lang-only templates
+(`results/harness_hardening_iter2_deepseek.csv`, 200/200, 0 errors, 0
+truncated). Statistic and criterion exactly as pre-committed above.
+
+### deepseek-flash/es -- lang-only template
+
+| | median ratio | 95% CI | margin | accuracy (target / en) |
+|---|---|---|---|---|
+| es_lang_only vs en_lang_only | **1.006x** | **[0.853, 1.181]** | **+0.019** | 92.0% / 96.0% |
+
+**Technically clears the pre-committed criterion, but this is a bare
+pass, not a comfortable one** -- CI upper bound sits 0.019 below 1.2,
+not the kind of margin this project has otherwise required before
+calling something resolved. Accuracy gap (92.0% vs 96.0%, -4pts) noted,
+not dramatic but not zero either.
+
+**Decomposition (median-based, more robust than the dollar-sum here --
+see zh below for why the two can diverge):** median prompt_ratio=1.119x,
+median completion_ratio=0.976x. **The median-level driver is prompt-
+side**, not completion-side -- consistent with Spanish text itself
+needing more input tokens than English for equivalent content, which is
+this entire project's own core, already-established measurement (the
+baseline token tax). This is expected, structural input-side tokenizer
+fertility, not a translation-mechanics bug -- no further prompt lever
+addresses it. **Reasonable to treat as adequately resolved given the
+pass and the understood driver, without overselling the thin margin.**
+
+### deepseek-flash/zh -- lang-only template
+
+| | median ratio | 95% CI | margin | accuracy (target / en) |
+|---|---|---|---|---|
+| zh_lang_only vs en_lang_only | **1.330x** | **[1.183, 1.439]** | **-0.239** | 90.0% / 96.0% |
+
+**Fails clearly -- and got worse than the mixed-template fair result
+(1.149x -> 1.330x), not better, once the brevity clause was removed
+from both arms.** That direction is itself informative: the brevity
+clause was doing more real work for zh specifically than for its matched
+English arm, not just adding symmetric noise.
+
+**Decomposition: completion-side-dominated even at the median**
+(median completion_ratio=1.520x, prompt_ratio=0.975x -- prompt is
+*not* the driver here, unlike es). This does **not** cleanly fit Step
+4's "stop, it's tokenizer fertility" bucket -- that bucket is for
+prompt/input-side fertility on the question text, and here the gap is
+squarely completion-side, on the model's own generated output. **Read
+plainly, not forced into a resolved bucket: this most likely connects to
+the same completion-token cost anomaly documented earlier in this
+project's C2/C4 zh work** (`docs/methodology-notes.md`'s "unresolved,
+non-reproducible... most likely transient provider-side variance"
+finding, and the C4 pilot's own 30-36%-of-rows anomalous-cost group) --
+never fully explained there either, and not something a prompt-wording
+change is likely to reach given it already resisted direct
+reproduction attempts. **Status: open, not stopped, not solved.**
+Honestly unresolved rather than declared either a structural limit or a
+fixable bug.
+
+### qwen3.5-flash/zh -- resolved as generic, not translation-specific
+
+Using the already-collected matched-arm data (Step 1 above): fair
+ratio 1.116x, CI [0.946, 1.390] -- spans both sides of 1.0 *and* 1.2.
+Combined with the raw-baseline finding that English already shows
+1900+-token looping with zero instruction (1.41x zh/en ratio on raw
+completion length, not a language-specific multiplier), **the honest
+read is that there is no statistically confident residual zh-specific
+tax here** -- the original 1.395x finding is adequately explained by a
+generic verbosity/looping tendency this model has in both languages,
+amplified somewhat (not dramatically, and not reliably at this N) in
+Chinese. Not chased further with a new targeted fix, since there's no
+diagnosed language-specific mechanism left to target -- the generic fix
+already applied to both arms is the correct terminus here, not an
+under-powered result to iterate past.
+
+### Step 6 -- summary, per cell
+
+| cell | what was tried | gap closed? | verdict |
+|---|---|---|---|
+| deepseek-flash/es | lang-only template (brevity clause removed), both arms | Yes, barely (median 1.006x, margin +0.019) | **Resolved, thin margin** -- driver is expected input-side tokenizer fertility |
+| deepseek-flash/zh | lang-only template (brevity clause removed), both arms | No -- got worse (1.330x) | **Open, not structural, not solved** -- completion-side, likely the same unresolved anomaly documented earlier in this project |
+| qwen3.5-flash/zh | generic anti-looping fix, already fairly applied to both arms | Effectively yes -- no confident residual | **Resolved as generic model behavior**, not a translation-specific tax |
+
+### File state
+
+New this entry: this section, `scripts/harness_hardening_iter2_deepseek.py`,
+`results/harness_hardening_iter2_deepseek.csv`. No existing results file
+edited or overwritten. Untouched, as always: `phase3_c1_raw.csv`,
+`phase3_c2_raw.csv`, `phase3_c4_raw.csv` (and every variant), all three
+`decision_rule_h*.csv`, `docs/paper_draft.md`, and
+`gemini-3.5-flash-lite`'s already-verified es result.
+
+---
+
+## 2026-09-19 -- Iteration 2 continued: one more targeted attempt at deepseek-flash/zh
+
+Only cell still open after the above: deepseek-flash/zh (1.330x, CI
+[1.183, 1.439], completion-side-dominated, not explained by tokenizer
+fertility). Two tracks, pre-committed before running anything. Same
+standing caveat: **post-hoc engineering, product track, not part of the
+confirmatory study.**
+
+### Note on Step 1 -- this exact comparison already has one data point
+
+"Brevity clause applied to both arms simultaneously" is not entirely
+untested: the CORRECTION PASS's 1.149x figure (`phase3_c4_raw_v5_zh_lean_
+strong.csv` zh arm vs. `harness_hardening_fairness_deepseek_en.csv`'s
+`zh_template_on_en` rows) **is** exactly that comparison -- shipped
+template (incl. "no explanation") on both zh and en, same wording. It
+already has a CI ([1.098, 1.258]) that fails the strict bar (upper bound
+exceeds 1.2 by 0.058). Flagging this rather than re-presenting it as
+brand new. Running a **fresh, independent draw** of it anyway, both
+because this iteration's hard rule asks for fresh N=50 and because this
+project's own precedent (the 0.937x -> 0.981x -> ... zh reproducibility
+checks earlier in this log) treats a single draw as insufficient to
+trust on its own, especially given the completion-side variance already
+on record for this exact cell.
+
+### Note on Step 2 -- cap calibration, with a censoring caveat
+
+C0's own deepseek-flash/zh MGSM distribution (`phase1_raw.csv`): of 72
+attempts, **22 (30.6%) never returned a completion at all** -- hard
+timeouts (10 at a 90s wall, 10 at a 30s wall from an earlier version of
+the harness, 2 raw SDK "Request timed out"). Of the 50 that did complete:
+median 205, p95 1029.7, p99 5912.2, **max 6879**, 0% truncated. This
+means the observed distribution is **right-censored**: it's a lower
+bound on the true tail, since the slowest ~30% of generations never ran
+long enough to be measured at all. This is very plausibly the same
+mechanism as the previously-documented, never-reproduced-on-demand
+completion-cost anomaly (`methodology-notes.md`, "transient provider-side
+variance"; the C4 pilot's 30-36%-of-rows anomalous group) -- a small
+fraction of zh calls occasionally run away, and depending on how far
+they get before hitting the wall, they show up either as an extreme
+completion-token outlier or as an outright timeout/error.
+
+**Cap: `max_tokens=8192`.** Calibrated the same way as the original
+Equalizer fix (methodology-notes.md, 2026-09-16 entry) -- comfortably
+above the observed completed-call max, not guessed -- and specifically
+matches this project's own already-established MGSM-wide precedent
+(`MAX_TOKENS_BY_DATASET = {"MGSM": 8192, ...}`), rather than inventing a
+new number. Explicitly **not** claimed to be provably sufficient given
+the censoring above -- a genuinely runaway generation could in principle
+still exceed it, which is exactly what this step's truncation check is
+for. Spot-checked on 2 real zh MGSM questions before the batch run:
+correct answers, correct language, 103 and 92 completion tokens, 0%
+truncated, cap doesn't interfere with normal-length generations.
+
+### Pre-committed design (written before running the batch)
+
+Three template x cap combinations (`scripts/harness_hardening_iter2_zh_
+capfix.py`), zh arm and English arm, same round, fresh N=50 each (300
+calls total):
+
+| version | template | max_tokens |
+|---|---|---|
+| `brevity_both` | shipped zh template, incl. "no explanation" (fresh draw of the 1.149x comparison) | uncapped |
+| `capped_lang_only` | iteration 2's lang-only template (brevity removed) | 8192 |
+| `brevity_both_capped` | shipped zh template, incl. "no explanation" | 8192 |
+
+- Cap applied symmetrically to both arms wherever a version uses one --
+  it's generic infrastructure, not a language-specific lever, same
+  principle applied to every other generic clause in this pass.
+- Statistic: `bootstrap_ci()` import, median per-task ratio (fixed-zh /
+  fixed-en), same as every other cell in this project.
+- Pass = median <=1.2x **and** CI_high < 1.2, comfortably -- same bar as
+  always.
+- **Truncation must be 0% on every capped arm before trusting any cost
+  number from it** -- a cap that clips real answers is a new bug, not a
+  fix.
+- Accuracy tracked on all six version/arm cells -- a version that drops
+  cost by silently truncating or degrading answers gets discarded and
+  reported, not shipped.
+- All three versions run in the same batch regardless of `brevity_both`'s
+  own result, but `brevity_both_capped` (Step 3) is only reported as the
+  shipped candidate if `brevity_both` alone doesn't clear the bar --
+  consistent with pre-registering the full design rather than branching
+  after seeing partial results.
+- If nothing here clears the bar comfortably, that gets reported exactly
+  as plainly as every other honest non-result in this project -- not
+  forced.
+
+### Results
+
+`results/harness_hardening_iter2_zh_capfix.csv`, 300/300, **0 errors, 0
+truncated across all three versions** -- the cap never clipped a real
+answer in any capped arm, so every cost number below is trustworthy by
+this iteration's own pre-committed check.
+
+| version | median cost ratio | 95% CI | margin (1.2 - hi) | accuracy zh/en | median prompt/completion ratio |
+|---|---|---|---|---|---|
+| `brevity_both` | **1.190x** | **[1.100, 1.312]** | **-0.112** | 90.0% / 94.0% | 0.976x / 1.371x |
+| `capped_lang_only` | **1.312x** | **[1.230, 1.548]** | **-0.348** | 92.0% / 94.0% | 0.975x / 1.467x |
+| `brevity_both_capped` | **1.222x** | **[1.117, 1.316]** | **-0.116** | 86.0% / 94.0% | 0.976x / 1.409x |
+
+**All three fail the pre-committed bar.** None gets a CI upper bound
+under 1.2.
+
+**Step 1 result:** `brevity_both` is a fresh, independent draw of the
+CORRECTION PASS's 1.149x comparison. Second draw: 1.190x, CI
+[1.100, 1.312]. Same qualitative shape as the first draw (1.149x, CI
+[1.098, 1.258]) -- median close to but under 1.2, CI upper bound
+reliably above it. **Two independent draws now agree: this is a
+reproducible failure to comfortably clear the bar, not a one-off.**
+Brevity-on-both-arms does not resolve deepseek-flash/zh.
+
+**Step 2 result: the cap never engaged, in any version.** Observed zh
+completion-token max this round: 4172 (`brevity_both`), **7118**
+(`capped_lang_only`), 5456 (`brevity_both_capped`) -- all below the 8192
+ceiling, so truncated=0% everywhere and the cap changed nothing. This is
+not a coincidence to be redone with a lower number: the completion-token
+distribution's actual shape (all three versions) is a **moderate,
+persistent tail, not a single catastrophic spike** -- median 120-215
+tokens, but 8-16% of zh calls land above 1000 tokens, climbing smoothly
+through the 90th/95th/99th percentiles rather than jumping. A cap tight
+enough to bind on this tail without waiting for a rare true runaway would
+have to sit somewhere under ~1000-2000 tokens -- which would truncate a
+meaningful fraction of ordinary, correct, non-anomalous long answers
+(8-16% of all zh rows), exactly the "new bug, not a fix" outcome this
+step's own truncation check exists to prevent. **A truncation-safe cap
+cannot structurally address this tail. Not a calibration miss -- a
+mismatch between the tool (a hard ceiling) and the problem (a
+consistently heavy-but-not-catastrophic distribution).**
+
+**Step 3 result:** `brevity_both_capped` (1.222x, CI [1.117, 1.316]) is
+statistically indistinguishable from `brevity_both` alone (1.190x, CI
+[1.100, 1.312]) once accounting for draw-to-draw noise -- consistent with
+the cap being inert, as Step 2 predicts. **Accuracy note:** zh accuracy
+on this version (86.0%) is the lowest of the three, an 4-6pt gap versus
+the other two zh cells (90.0%, 92.0%) run in the same batch. The cap
+cannot be the mechanical cause (0% truncated, so no answer was cut off);
+most likely N=50 sampling noise, but flagged per this iteration's Step 4
+rule rather than silently absorbed -- **not treating this version as a
+safe combination to ship** on the strength of a slightly-better cost
+margin alone.
+
+### Step 5/6 -- plain verdict
+
+**deepseek-flash/zh remains open. No version tested this pass, or in
+Iteration 2 before it, comfortably clears the bar.** What this pass adds
+that wasn't known before:
+
+- The 1.1-1.2x-median / CI-fails-to-exclude-1.2 pattern is now
+  **reproduced on an independent draw** -- confidently a real, stable
+  property of this cell, not sampling noise from a single unlucky batch.
+- The completion-side inflation is now characterized precisely enough to
+  rule out the obvious structural fix: it is **not** a rare catastrophic
+  runaway (which a cap could safely clip) -- it is a **consistently
+  heavy tail present in roughly 1 in 8-10 zh calls**, at magnitudes that
+  overlap with genuine, correct, non-truncated long answers. No
+  max_tokens value threads that needle: too high to bind (this pass's
+  8192), too low and it starts truncating real answers instead of
+  anomalous ones.
+- No further prompt-side or cap-side lever is identified. Per this
+  iteration's own instruction not to force a number: **stopping here,
+  reported as genuinely unresolved** within the single-call architecture
+  as currently scoped -- not relabeled as "structural tokenizer
+  fertility" (Step 4's bucket is for prompt/input-side effects, and the
+  driver here is squarely completion-side), and not shipped as a pass.
+  A fix, if one exists, most likely requires a mechanism this
+  architecture doesn't have (e.g. a bounded retry/fallback path on
+  detecting the tail), which is out of scope for a single-call prompt
+  hardening pass.
+
+### File state
+
+New this entry: this section, `scripts/harness_hardening_iter2_zh_capfix.py`,
+`results/harness_hardening_iter2_zh_capfix.csv`. No existing results file
+edited or overwritten. Untouched, as always: `phase3_c1_raw.csv`,
+`phase3_c2_raw.csv`, `phase3_c4_raw.csv` (and every variant), all three
+`decision_rule_h*.csv`, `docs/paper_draft.md`, and every other model's
+already-verified results (`gemini-3.5-flash-lite`/es, `qwen3.5-flash`/zh).
+
+---
+
+## 2026-09-19 -- Iteration 2 continued: temperature sweep on deepseek-flash/zh
+
+The remaining lever short of an architecture change: does lower
+temperature shrink the completion-length tail identified above? Same
+fair-comparison discipline as every round -- matched setting on zh and
+en arms, always. Same standing caveat: **post-hoc engineering, product
+track, not part of the confirmatory study.**
+
+### Infra change: `harness/executor.py` gets a `temperature` passthrough
+
+`_run_loop()` and `execute()` both gain an optional `temperature: Optional[float]
+= None` parameter, threaded into `kwargs["temperature"]` only when not
+`None` -- identical pattern to the existing `max_tokens` passthrough
+added earlier in this track. Purely additive: every existing caller that
+doesn't pass it gets the provider default, unchanged. Confirmed accepted
+by deepseek's API with a trivial 2+2 smoke test at temp=0.3 and temp=0.0
+(no errors, sane answers) before touching the real prompt. Spot-checked
+on 2 real zh MGSM questions at all three planned settings (default,
+0.3, 0.0) using the brevity-on-both-arms template -- correct answers,
+correct language, no leakage, all three settings.
+
+### Note on Step 3's "combine" instruction
+
+Step 1 as literally specified already runs temperature x brevity-on-
+both-arms together (the "current best zh prompt" *is* brevity-on-both-
+arms, at each temperature setting) -- so Step 1's own design already is
+the combination Step 3 asks for. No separate Step 3 run is needed unless
+Step 1's results suggest a different combination is worth isolating;
+noted explicitly rather than silently skipped.
+
+### Tail threshold, carried over from the prior entry
+
+The previous entry characterized the anomaly as "8-16% of zh calls land
+above 1000 tokens" -- reusing that exact threshold (`completion_tokens
+> 1000`) as this entry's tail-occurrence-rate definition, tracked on
+both arms, not just zh.
+
+### Pre-committed design (written before running the batch)
+
+`scripts/harness_hardening_iter2_zh_temperature.py`. Three settings
+(`default` = provider default / no override, `t0.3`, `t0.0`), zh and en
+arms, same brevity-on-both-arms template, fresh N=50 each (300 calls
+total).
+
+- Statistic: `bootstrap_ci()` import, median per-task ratio (fixed-zh /
+  fixed-en, `statistic=np.median`), same as every other cell.
+- Pass = median <=1.2x **and** CI_high < 1.2, comfortably -- same bar as
+  always.
+- Tail-occurrence rate (`completion_tokens > 1000`) and accuracy tracked
+  on **both** arms, every setting.
+- **Step 2 (reproducibility gate):** if any setting passes comfortably
+  without hurting accuracy on either arm, it gets one independent fresh
+  N=50 re-draw at that exact setting before being called real -- same
+  bar already applied to the brevity result (which needed two draws to
+  trust).
+- **Step 4 (stop condition):** if nothing here clears the bar, stop --
+  no further prompt or sampling-parameter variations get tried. Report
+  plainly and name the one remaining lever: a bounded retry (detect an
+  anomalously long completion, re-issue the call once) would very likely
+  work, but it reintroduces a conditional second call, breaking this
+  track's single-call framing. That is an architecture decision, not a
+  prompt tweak -- flagged for a decision, not implemented.
+
+### Results
+
+`results/harness_hardening_iter2_zh_temperature.csv`, 300/300, 0 errors,
+0 truncated.
+
+| setting | median cost ratio | 95% CI | margin (1.2-hi) | tail rate zh/en (>1000 tok) | accuracy zh/en | median completion_ratio |
+|---|---|---|---|---|---|---|
+| `default` | **1.146x** | **[1.054, 1.230]** | **-0.030** | 8.0% / 4.0% | 88.0% / 94.0% | 1.216x |
+| `t0.3` | **1.282x** | **[1.101, 1.429]** | **-0.229** | 6.0% / 4.0% | 84.0% / 94.0% | 1.504x |
+| `t0.0` | **1.261x** | **[1.163, 1.430]** | **-0.230** | 8.0% / 6.0% | 88.0% / 94.0% | 1.484x |
+
+**All three fail. Lower temperature does not help -- it makes the ratio
+worse, not better.** `default` (provider default, no override) is the
+closest miss of any deepseek-flash/zh comparison run in this entire
+track (margin -0.030, CI upper bound 1.230), and it is now the **third**
+independent draw of essentially this same comparison:
+
+| draw | median | CI | margin |
+|---|---|---|---|
+| correction pass | 1.149x | [1.098, 1.258] | -0.058 |
+| iter2 cap-fix `brevity_both` | 1.190x | [1.100, 1.312] | -0.112 |
+| this entry `default` | 1.146x | [1.054, 1.230] | -0.030 |
+
+Three draws, same qualitative result every time: median clustered
+1.15-1.19x, CI upper bound clustered 1.23-1.31x, **never** excluding
+1.2. Consistent, reproducible, and a genuine near-miss -- but a miss.
+
+**Why lower temperature makes it worse, not better:** both `t0.3` and
+`t0.0` *do* shrink the single largest outlier relative to `default` (zh
+max completion_tokens: 10762 at default -> 1955 at t0.3 -> 3002 at
+t0.0), which looked promising going in. But the **median-level**
+completion ratio gets worse at both lower settings (1.216x at default ->
+1.504x at t0.3 -> 1.484x at t0.0) -- lower temperature doesn't shrink
+the *typical* zh/en gap, it just clips the rare extreme case while (if
+anything) making the model's ordinary-case verbosity asymmetry between
+languages slightly more consistent. Tail-occurrence rate (>1000 tokens)
+barely moves and isn't the thing driving the ratio either way. **Net
+effect: temperature is not a lever on this problem at all** -- it
+doesn't touch the mechanism, it only reshapes where the variance sits.
+
+**Accuracy note:** `t0.3` shows the largest accuracy asymmetry of
+anything measured in this whole track (84.0% zh vs. 94.0% en, a 10-point
+gap) -- an additional, independent reason not to pursue lower
+temperature even setting the cost ratio aside.
+
+**Step 2 (reproducibility gate) does not trigger** -- no setting passed
+comfortably, so no re-draw was needed or run. **Step 3 does not apply**
+-- there is no "best temperature" to combine with brevity; every
+temperature setting tested was worse than the no-override default, and
+default alone (already brevity-on-both-arms, per the note above) still
+misses.
+
+### Step 4 -- plain verdict, per the pre-committed stop condition
+
+**deepseek-flash/zh does not clear the bar under any prompt, cap, or
+temperature variation tried across this iteration.** Three independent
+draws of the best available prompt (brevity-on-both-arms, provider-
+default sampling) land in a tight, reproducible band just above the
+line (median 1.15-1.19x, CI upper bound 1.23-1.31x). Temperature
+reduction, tested properly (matched on both arms, two settings, with a
+tail-occurrence-rate and accuracy check), makes it worse, not better.
+The completion-side cap tested in the prior entry is structurally unable
+to bind without truncating real answers.
+
+**No further prompt, cap, or sampling-parameter variation is planned.**
+Per this pass's own stop condition: **the one remaining lever is a
+bounded retry** -- detect an anomalously long completion (e.g.
+completion_tokens crossing a threshold, or a wall-clock heuristic) and
+re-issue the call once. This would very likely work, since the anomaly
+is a minority-of-calls tail, not a universal property of every zh call.
+But it requires a **conditional second call**, which breaks the
+single-call framing this entire C4 track has held to from its original
+design (`docs/methodology-notes.md`'s C4 pilot section: "no Packer call
+... no Equalizer ... no Expander call"). That is an **architecture
+decision**, not a prompt-hardening fix, and is explicitly **not
+implemented here** -- flagged for a decision rather than built.
+
+### File state
+
+New this entry: this section, `harness/executor.py` (additive
+`temperature` passthrough, mirrors the existing `max_tokens` pattern,
+`None` default preserves every existing caller's behavior unchanged),
+`scripts/harness_hardening_iter2_zh_temperature.py`,
+`results/harness_hardening_iter2_zh_temperature.csv`. No existing
+results file edited or overwritten. Untouched, as always:
+`phase3_c1_raw.csv`, `phase3_c2_raw.csv`, `phase3_c4_raw.csv` (and every
+variant), all three `decision_rule_h*.csv`, `docs/paper_draft.md`, and
+every other model's already-verified results (`gemini-3.5-flash-lite`/es,
+`qwen3.5-flash`/zh).
+
+---
+
+## 2026-09-19 -- Bounded early-cutoff streaming retry for deepseek-flash/zh
+
+The lever named and deliberately not built at the end of the previous
+entry, now implemented on explicit instruction. Same standing caveat:
+**post-hoc engineering, product track, not part of the confirmatory
+study.**
+
+### Step 1 -- threshold calibration (not a guess)
+
+Pooled the three most recent independent draws of the current best zh
+prompt (shipped template, brevity-on-both-arms, uncapped, default
+temperature) that this track has already collected: `phase3_c4_raw_v5_
+zh_lean_strong.csv` (correction pass), `harness_hardening_iter2_zh_
+capfix.csv`'s `brevity_both` version, `harness_hardening_iter2_zh_
+temperature.csv`'s `default` setting -- 150 zh + 100 en completion-
+length observations, same template throughout.
+
+| percentile | zh completion_tokens | en completion_tokens |
+|---|---|---|
+| 50 | 120 | 87 |
+| 75 | 188 | 157 |
+| 80 | 227 | 188 |
+| 85 | 306 | 281 |
+| 90 | 653 | 328 |
+| 95 | 2101 | 533 |
+| 99 | 4827 | 1263 |
+| max | 10762 | 4669 |
+
+Clear inflection between p85 (306) and p90 (653), accelerating sharply
+by p95 (2101) -- consistent with "the tail" as previously characterized.
+**Threshold: 1000 tokens.** At this value, 8.7% of zh calls land above
+it vs. 4.0% of en calls -- matches the previously-reported "8-16%"
+characterization almost exactly, and gives clean separation from English
+(so the mechanism should rarely fire there, as Step 3 expects) without
+being so low it would catch ordinary mid-length answers (which extend
+smoothly out to ~650 tokens at p90 with no sign of anomaly yet).
+
+### Step 2 -- implementation
+
+`harness/executor.py` gains `execute_with_cutoff_retry()`, a new,
+narrow, purely-additive function -- does not touch `_run_loop()` or
+`execute()`, so every existing caller/condition (C0-C3a, every prior C4
+run) is completely unaffected. Mechanism:
+
+1. Stream the completion (`stream=True, stream_options={"include_usage":
+   True}`), accumulating `content` and `reasoning_content` deltas
+   together (both count toward billed `completion_tokens`, confirmed in
+   an earlier entry -- reasoning_tokens is a subset, not additive).
+2. After every chunk, re-estimate the running total via `tiktoken`
+   (`o200k_base`) -- the same approximate-token-counting convention this
+   project already uses elsewhere (`harness/conditions.py`,
+   `harness/packer.py`) to sanity-check prompt lengths, now applied
+   live. Not deepseek's real tokenizer, so this is an estimate, not an
+   exact count -- used **only** for the aborted call's completion-token
+   accounting, since a cancelled stream never receives a real `usage`
+   object (that only arrives on the final chunk of a normally-finishing
+   stream).
+3. If the estimate reaches 1000 before the model finishes: close the
+   stream immediately (`Stream.close()`) and re-issue the identical call
+   once. The retry is allowed to run to completion regardless of what it
+   does -- if it *also* crosses 1000, it is accepted as-is (bounded = one
+   retry maximum, no loop, per instruction).
+4. Cost accounting for a retried row = tiktoken-estimated cost of the
+   aborted first attempt (its real prompt-token count, reused from the
+   retry's own usage since both calls send identical messages, plus the
+   tiktoken-estimated completion count at the moment of cancellation) +
+   the retry's real, API-reported cost. Never the full first-attempt
+   generation length -- that's the entire point.
+
+**Billing-semantics caveat, stated plainly:** closing the stream is the
+standard client-side signal to stop generation, and empirically an
+aborted call returns in a fraction of the time a full one takes (a
+forced 15-token-cutoff test completed in 0.84s vs. 12.66s for an uncut
+~1700-token response on the same client) -- consistent with the
+provider halting generation on disconnect, not proof of it. This project
+has no visibility into DeepSeek's actual billing meter. If DeepSeek in
+fact bills the originally-intended full generation regardless of
+disconnect, true savings would be smaller than reported below (worst
+case zero) -- flagged rather than assumed.
+
+**Verification before any batch run:**
+- Trivial 2+2 smoke test with streaming: works, sane usage.
+- Forced artificial cutoff (`cutoff_tokens=20`) on 2 real zh MGSM
+  questions to deterministically exercise the retry path: both fired
+  (`retry_fired=True`), both also crossed on the retry given how low the
+  forced threshold was (`cutoff_hit_second=True`, correctly accepted
+  as-is), `est_completion_tokens_first=20` exactly in both cases
+  (confirms the estimator stops right at threshold), final accounting
+  (`wasted_cost_usd` + real retry cost) internally consistent, no
+  double- or under-charging, correct answers, correct language in both.
+- Real threshold (`cutoff_tokens=1000`) spot-checked on 2 real questions
+  per arm (zh, en): none fired (expected -- typical-length answers stay
+  well under 1000), normal path confirmed intact, correct answers,
+  correct language, both arms.
+
+### Pre-committed design (written before running the real batch)
+
+`scripts/harness_hardening_iter2_zh_cutoff_retry.py`. zh and en arms,
+same shipped template, `cutoff_tokens=1000` on both (Step 3 -- identical
+mechanism, identical threshold, not language-specific), fresh N=50 each.
+
+- Statistic: `bootstrap_ci()` import, median per-task ratio (fixed-zh /
+  fixed-en), same as every other cell.
+- Pass = median <=1.2x **and** CI_high < 1.2, comfortably -- same bar as
+  always.
+- Report per arm: retry-fire rate, fair cost ratio, accuracy.
+- **Step 2's reproducibility gate:** if it passes comfortably without
+  hurting accuracy on either arm, one independent second draw (same 50
+  questions, this project's standing definition of "independent draw"
+  -- fresh API calls, fresh model stochasticity, not a new sample) before
+  calling it real.
+- **Step 5:** spot-check a handful of retried rows' full token
+  accounting by hand to confirm no double-charging, and report plainly
+  whether the fair ratio actually clears 1.2x with the CI excluding it
+  -- not forced either way.
+
+### Results (draw 1)
+
+`results/harness_hardening_iter2_zh_cutoff_retry_draw1.csv`, 100/100, 0
+errors.
+
+| | median cost ratio | 95% CI | margin (1.2-hi) |
+|---|---|---|---|
+| cutoff-retry (fixed-zh/fixed-en) | **1.232x** | **[1.117, 1.341]** | **-0.141** |
+
+**Fails -- and comes in worse than every recent no-retry draw of the same
+template** (1.146x, 1.149x, 1.190x). Per arm:
+
+| arm | retry-fire rate | of those, also crossed on retry | accuracy | mean cost_usd |
+|---|---|---|---|---|
+| zh | 10.0% (5/50) | **100% (5/5)** | 88.0% | $0.0001952 |
+| en | 2.0% (1/50) | 0% (0/1) | 94.0% | $0.0000612 |
+
+Fire rate on en (2%) is well below zh (10%), as Step 3 expected -- the
+mechanism is not language-biased by construction, it just rarely
+triggers on English's naturally shorter completions.
+
+### Step 5 -- why it fails: the tail is question-specific, not per-call noise
+
+**Every single zh row that fired the retry also crossed the threshold
+again on the retry (5/5, 100%)** -- not the "rare coincidence" the
+bounded design was implicitly betting against. Checked whether these 5
+exact questions (`task_id` 184, 236, 177, 159, 146) were already in the
+tail in prior, independent draws of this same template:
+
+| task_id | correction pass | capfix `brevity_both` | temperature `default` |
+|---|---|---|---|
+| 184 | 2164 | 1113 | 2025 |
+| 236 | 4640 | 4172 | 966 |
+| 177 | 1577 | 1259 | 5006 |
+| 159 | 4347 | 2288 | 10762 |
+| 146 | 2487 | 701 | 1031 |
+
+**All five are already, consistently, in or near the tail across every
+prior draw** (17 of 20 comparison cells above sit above 1000; the
+lowest, 701, is still comfortably above the ordinary p75 of ~188). This
+is not five unlucky rolls -- **the tail is substantially a property of
+specific MGSM zh questions, not independent per-call stochastic noise.**
+That directly explains the 100% cutoff-hit-second rate: retrying the
+identical prompt on a question that reliably provokes long reasoning
+mostly reproduces the same long reasoning, not a lucky short one.
+
+**Consequence: for exactly the rows the mechanism exists to help, it
+adds a wasted ~1000-token first attempt on top of a second attempt that
+is usually just as expensive as the first would have been anyway.**
+Sanity-checked by comparing this draw's actual cutoff-retry cost per
+retried row against the same 5 questions' cost in the independent
+`temperature`/`default` no-retry draw (different draw, so not a true
+paired counterfactual, but the best available comparison):
+
+| task_id | cutoff-retry cost (this draw) | single-call cost (other draw, same Q) |
+|---|---|---|
+| 184 | $0.001519 | $0.000580 |
+| 236 | $0.001567 | $0.000286 |
+| 177 | $0.000734 | $0.001422 |
+| 159 | $0.002021 | $0.003030 |
+| 146 | $0.001446 | $0.000307 |
+| **sum** | **$0.007287** | **$0.005625** |
+
+Cutoff-retry costs ~30% *more* in total across these 5 rows than the
+comparison single-call realization -- directionally consistent with the
+mechanism backfiring on exactly its target cases, though this is a
+cross-draw comparison (real per-call stochastic variance exists even on
+these "hard" questions -- 2 of 5 individual rows happened to come in
+cheaper this way, 3 of 5 more expensive), not a controlled counterfactual
+of the identical un-cut attempt.
+
+**Excluding these 5 persistently-hard questions entirely, the remaining
+45-pair median ratio is 1.222x, CI [1.104, 1.294]** -- barely different
+from the full-sample 1.232x. The median statistic was never being pulled
+around by just these five rows (consistent with every earlier
+decomposition in this track already finding a broad completion-side
+effect, not one dominated by rare extremes) -- so even setting the
+backfire problem aside, the mechanism does not fix the ordinary case
+either.
+
+### Step 5 (continued) -- accounting verification, no double-charging found
+
+Manually verified `wasted_cost_usd` for all 5 retried zh rows: computed
+as `cost_usd(prompt_tokens, 1000)` using each row's real prompt-token
+count (identical between attempts, reused from the retry's usage) --
+matches the logged value to the cent in every case (~$0.000293-0.000301,
+consistent with 1000 completion tokens at deepseek-flash's $0.28/1M
+output rate plus a small prompt-token contribution). `cost_usd` (total)
+matches `wasted_cost_usd` + `cost_usd(prompt_tokens, <retry's real
+completion_tokens>)` exactly in every case -- no double-charging, no
+under-charging, internally consistent. **One accounting note for anyone
+reading this CSV later:** the `completion_tokens` column on a retried
+row holds only the **retry's** token count (the tokens that actually
+produced the final answer) -- the wasted first attempt's ~1000 tokens
+are folded into `cost_usd` but not into `completion_tokens`. This is
+intentional (the field means "tokens behind the returned answer") but
+worth remembering when eyeballing a row: `completion_tokens x price`
+will not reproduce `cost_usd` for a retried row on its own.
+
+### Step 2 (reproducibility gate) -- not triggered, by design
+
+This pass does not meet Step 2's own trigger condition ("shrinks the
+tail... and the ratio drops comfortably under 1.2... without hurting
+accuracy") -- it's worse than baseline, not better. Per the
+pre-committed design, **no second draw was run.** Re-drawing a result
+that already fails clearly and has a diagnosed causal explanation would
+not change the conclusion, only spend more calls confirming it -- the
+same judgment this track has applied throughout (e.g. not re-chasing
+qwen3.5-flash/zh once its residual was diagnosed as noise).
+
+### Step 4/6 -- plain verdict
+
+**The bounded early-cutoff retry does not clear the bar, and should not
+be shipped as implemented.** It is not merely ineffective -- for the
+specific rows it exists to help, it plausibly makes cost *worse*,
+because the completion-length tail on this cell is substantially a
+per-question property, not independent per-call noise, so a same-prompt
+retry mostly reproduces the same expensive behavior rather than
+resampling into a short one. The "bounded, accept-as-is" design that
+correctly avoids an infinite loop also means the mechanism has no way to
+avoid paying twice on exactly the questions most likely to need it.
+
+**deepseek-flash/zh remains open**, now with a sharper causal
+understanding than before this entry: the driver is a small,
+identifiable, largely *fixed* set of MGSM zh questions that reliably
+provoke long reasoning from this model, not a uniformly-distributed
+random tax across all zh calls. Every lever available within a
+single-call-per-question architecture (brevity wording, a truncation-
+safe max_tokens cap, temperature, and now a same-prompt bounded retry)
+has been tried and ruled out with a specific, verified reason each time.
+The one structural option that could plausibly work -- detecting the
+tail and re-issuing with a *different* strategy (not just an identical
+retry), e.g. falling back to English-only-then-translate for just the
+~10% of questions that trip a length trigger -- is a larger design
+change than a bounded retry and is **not** implemented or recommended
+here without a separate decision; it also reintroduces the two-call
+structure this track has avoided from the start, now for an even less
+trivial reason (conditional branching per-question, not just per-cutoff
+retry).
+
+### File state
+
+New this entry: this section, `harness/executor.py`
+(`execute_with_cutoff_retry()`, purely additive),
+`scripts/harness_hardening_iter2_zh_cutoff_retry.py`,
+`results/harness_hardening_iter2_zh_cutoff_retry_draw1.csv`. No existing
+results file edited or overwritten. Untouched, as always:
+`phase3_c1_raw.csv`, `phase3_c2_raw.csv`, `phase3_c4_raw.csv` (and every
+variant), all three `decision_rule_h*.csv`, `docs/paper_draft.md`, and
+every other model's already-verified results (`gemini-3.5-flash-lite`/es,
+`qwen3.5-flash`/zh).
+
+---
+
+## 2026-09-20 -- Four-part follow-up: accuracy compilation, canonical zh tables, gpt-5.6-luna/ar retest, multi-step pilot
+
+Full results reported in chat, in reference-table format. This entry
+covers only the two parts that involved new API calls/new infrastructure
+(parts 3 and 4); parts 1 (accuracy compilation) and 2 (canonical zh
+tables) were pure read-only recomputation directly from existing raw
+CSVs -- no new data, no files changed, sources cited inline in the chat
+report.
+
+### Part 3 -- gpt-5.6-luna/ar retested with the v2 lean-prompt fix
+
+New file: `results/harness_hardening_gpt_luna_ar_v2.csv` (40 rows: 20
+Math + 20 GAIA, 2 repeats each, matching MAPS_N_TASKS/MAPS_N_REPEATS
+exactly). `scripts/harness_hardening_gpt_luna_ar_v2.py` reuses
+`run_phase3.py`'s exact MAPS sampling logic (same SEED) so task_ids align
+with the existing English MAPS C2 rows already in `phase3_c2_raw.csv`
+(read, not modified -- English is not re-run, since it's architecturally
+unaffected by the Packer template version). Math scoring replicates the
+historical `\boxed{}`-extraction fix from the confirmatory study (that
+fix was a one-time data patch, never merged into code, so it had to be
+reproduced here -- verified against 10 known-correct `phase1_raw.csv`
+Math rows, 10/10 match, before use). Spot-checked on 1 Math + 1 GAIA real
+question before the batch. 40/40, 0 errors.
+
+**Result: median 0.996x, CI [0.898, 1.209]** -- essentially at cost
+parity (down from 0.999x/[0.837,1.204] originally, i.e. barely moved at
+the pooled level) but the CI still, barely, fails to exclude 1.2.
+Accuracy improved 40.0% -> 50.0% on the same 20 paired tasks (small N,
+but no regression). Full diagnosis and recommendation in the chat
+report.
+
+### Part 4 -- multi-step pilot infrastructure + result
+
+**Infra fix, purely additive:** `harness/executor.py`'s `_run_loop()`
+unconditionally set `reasoning_effort="none"` whenever `tools` was
+passed -- a gpt-5.6-luna-specific quirk that gemini's OpenAI-compat
+endpoint rejects outright (400 INVALID_ARGUMENT, confirmed via direct
+test). Scoped to `provider=="openai"`. Also added `"gemini"` as a
+provider to `run_phase1.py`'s `get_client()`/`PRICES` (previously only
+reachable via `harness_hardening_gemini.py`'s own standalone client) --
+both changes purely additive, verified via a forced 2-tool-call smoke
+test (47*6, then +15 -> 297, tool_calls_made=2) before the real pilot.
+
+**New file:** `results/harness_hardening_multistep_pilot.csv`.
+`scripts/harness_hardening_multistep_pilot.py`: same MGSM es/en problem
+set already used throughout this project, same verified gemini-3.5-
+flash-lite es v2 fix template, plus one added clause mandating a
+calculator tool for every arithmetic operation (a real, registered tool
+via `harness/executor.py`'s existing-but-never-exercised tool-call loop)
+-- most MGSM problems need 2+ sequential operations by construction, so
+this reliably forces genuine multi-turn tool use. N=30/arm, fair
+(identical template + tool on both arms). Spot-checked on 2 real
+questions per arm first -- correct answers, correct language, 2-3 tool
+calls each. 59/60 rows clean; 1 row (en, task_id 184) hit
+`MAX_TOOL_TURNS=8` without producing a final answer -- a new failure
+mode that never appeared in any single-call test in this project,
+reported as a real finding, not discarded.
+
+**Result: median 1.013x, CI [0.944, 1.041]** on the 29 cleanly-paired
+tasks -- the fix's near-parity cost ratio holds under multi-step
+execution. Accuracy 96.6% both arms. Mean tool_calls_made ~3.0 both
+arms (symmetric, confirms the mandate worked evenly). Full discussion in
+the chat report.
+
+### File state
+
+New this entry: this section, `results/harness_hardening_gpt_luna_ar_v2.csv`,
+`results/harness_hardening_multistep_pilot.csv`,
+`scripts/harness_hardening_gpt_luna_ar_v2.py`,
+`scripts/harness_hardening_multistep_pilot.py`. Additive-only changes to
+`harness/executor.py` (provider-scoped `reasoning_effort`, already-present
+`temperature`/cutoff-retry code untouched) and `scripts/run_phase1.py`
+(new `"gemini"` provider branch + `PRICES` entry) -- both verified to
+leave every existing caller's behavior unchanged. Untouched, as always:
+`phase3_c1_raw.csv`, `phase3_c2_raw.csv`, `phase3_c4_raw.csv` (and every
+variant), all three `decision_rule_h*.csv`, `docs/paper_draft.md`,
+`methodology-notes.md`'s C4 pilot section.
